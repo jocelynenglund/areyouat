@@ -25,21 +25,34 @@ body {
 }
 #site-title {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 #site-title a {
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  color: white;
-  background: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
 }
 #site-title a:hover {
-  opacity: 0.9;
+  color: var(--accent);
+}
+#site-title .logo-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--success);
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(90, 158, 111, 0.5);
+  animation: pulse 2s ease-out infinite;
+}
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(90, 158, 111, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(90, 158, 111, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(90, 158, 111, 0); }
 }
 #app {
   width: 100%;
