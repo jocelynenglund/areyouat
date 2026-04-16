@@ -1,0 +1,1730 @@
+{
+  "boards": {
+    "3e756b35-92d1-44bd-8ee0-b862d510e06d": {
+      "name": "Contract Financing"
+    }
+  },
+  "nodes": {
+    "3e756b35-92d1-44bd-8ee0-b862d510e06d": {
+      "nodes": [
+        {
+          "id": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "type": "timeline",
+          "position": {
+            "x": 562.3915405273438,
+            "y": 393.146728515625
+          },
+          "x": 562.3915405273438,
+          "y": 393.146728515625,
+          "data": {
+            "label": "Chapter",
+            "rows": [
+              {
+                "id": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "type": "actor",
+                "height": 320,
+                "label": "Actor"
+              },
+              {
+                "id": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "type": "interaction",
+                "height": 320,
+                "label": "Interaction"
+              },
+              {
+                "id": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "type": "swimlane",
+                "height": 320,
+                "label": "Swimlane"
+              },
+              {
+                "id": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "type": "swimlane",
+                "height": 320
+              },
+              {
+                "id": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "type": "spec",
+                "height": 320,
+                "label": "Spec Lane"
+              }
+            ],
+            "columns": [
+              {
+                "id": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "width": 450
+              },
+              {
+                "id": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "width": 450
+              },
+              {
+                "id": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "width": 450
+              },
+              {
+                "id": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "width": 450
+              },
+              {
+                "id": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "width": 450
+              },
+              {
+                "id": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "width": 450
+              },
+              {
+                "id": "74416502-fca9-4273-9308-7a355f17444f",
+                "width": 450
+              }
+            ],
+            "cells": [
+              {
+                "id": "9387134e-ab1e-407a-825d-259fdded202c",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "type": "empty"
+              },
+              {
+                "id": "6d655c1a-599b-4d73-b6d0-2ea5950506f4",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "type": "empty"
+              },
+              {
+                "id": "f19ddcbb-2f4c-40d5-b693-c61e7f8b9c4c",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "type": "empty"
+              },
+              {
+                "id": "7c6a9ff2-b420-4f9d-9e60-38152221e591",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "33471a12-7841-47f4-afac-d44fe63b655b"
+              },
+              {
+                "id": "87592910-f645-45a0-aac6-744919c1ad36",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "713b6168-91cb-4c22-be3f-b864c191858f"
+              },
+              {
+                "id": "61b13c19-dbe2-485b-babc-1c133cc83c20",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "5ab686c9-01df-4701-b48b-2c5ab098ed06"
+              },
+              {
+                "id": "46297e51-1af2-42af-b50e-b700bd5fa46a",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "c22152c6-a3a1-4c19-9504-2b99a49a6ff0"
+              },
+              {
+                "id": "b6580250-8bac-4302-b6e5-e25c084edae2",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "type": "empty"
+              },
+              {
+                "id": "27d31988-cd29-4872-ba92-dbdf2e065540",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "e0b2a76b-df9b-4814-b57c-69bb553d946d"
+              },
+              {
+                "id": "5091bfa8-f608-494b-b997-6296b6c7eeca",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "type": "empty"
+              },
+              {
+                "id": "301154d7-1153-46eb-a92b-001b1d99d020",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "type": "empty"
+              },
+              {
+                "id": "f763cc96-0f92-4a4c-bfa9-a7a94f69bed0",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "type": "empty"
+              },
+              {
+                "id": "cell-bb8086f5-77e4-412e-bfd8-fc94d606363e-bfd2a407-6aec-4783-bd67-2f63953849df",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "type": "empty"
+              },
+              {
+                "id": "cell-bb8086f5-77e4-412e-bfd8-fc94d606363e-9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "c16ce770-cecd-4398-9474-eabd793ead7c"
+              },
+              {
+                "id": "cell-bb8086f5-77e4-412e-bfd8-fc94d606363e-38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "type": "empty"
+              },
+              {
+                "id": "ae628310-c449-4449-bb04-fe2c807d7efa",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "type": "empty"
+              },
+              {
+                "id": "f911c744-8c8b-4eba-9a7c-aefcfd29bfca",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "type": "content",
+                "nodeType": "readmodel",
+                "nodeId": "a1bc1957-7072-434a-8e28-0d2b9237df11"
+              },
+              {
+                "id": "8d0ad502-ca26-4cce-b549-0812f91cca65",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "type": "empty"
+              },
+              {
+                "id": "497cc9c4-4c73-4b6a-ac42-478362249860",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "type": "empty"
+              },
+              {
+                "id": "27f59728-9779-4080-873e-57eb73d33929",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "type": "empty"
+              },
+              {
+                "id": "533e9e16-fece-497c-afe6-29fc24e0e3de",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "type": "empty"
+              },
+              {
+                "id": "673d8f52-e3df-4de6-a2f1-f686bee84b05",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "47353adf-6463-431e-a08a-b2ab55c266ae"
+              },
+              {
+                "id": "0b7f1026-34b2-46e9-8d5a-769ee5c86249",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "type": "empty"
+              },
+              {
+                "id": "c67cd25a-7ecd-404f-88d4-1fa1510ba662",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "a3714f4f-97af-4f3a-bda8-7a2976d79b26"
+              },
+              {
+                "id": "18700ac1-2607-4d74-b337-d1862f7150bf",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "type": "empty"
+              },
+              {
+                "id": "d99a77da-ea04-4800-a3d6-aa1cf434d52b",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "type": "empty"
+              },
+              {
+                "id": "8e8f11eb-718f-4a8f-9123-c6ccf57ba6e4",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "629060f6-0d85-46ea-838e-cad0c81e121b"
+              },
+              {
+                "id": "b9a9f393-5e55-4d91-89ca-29a3fee86654",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "c19e40fe-f55f-4a6a-91e3-134a2cceb68e"
+              },
+              {
+                "id": "dbf88fa3-012a-401c-a517-b52c5aa1f6cc",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "type": "empty"
+              },
+              {
+                "id": "dd96b002-f395-4b7f-a6f5-178688800480",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "type": "empty"
+              },
+              {
+                "id": "b7b2fda0-46cf-4a7d-abf4-f00204b17776",
+                "rowId": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "colId": "74416502-fca9-4273-9308-7a355f17444f",
+                "type": "empty"
+              },
+              {
+                "id": "d061914a-4e42-4543-83a6-ea36575f85d5",
+                "rowId": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "colId": "74416502-fca9-4273-9308-7a355f17444f",
+                "type": "empty"
+              },
+              {
+                "id": "91fbc072-420c-47c6-a10d-787991e94524",
+                "rowId": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "colId": "74416502-fca9-4273-9308-7a355f17444f",
+                "type": "empty"
+              },
+              {
+                "id": "d54bf745-e078-42d2-b4ac-313a751855a7",
+                "rowId": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "colId": "74416502-fca9-4273-9308-7a355f17444f",
+                "type": "empty"
+              },
+              {
+                "id": "fce56b16-15de-433a-935e-4198748f93f6",
+                "rowId": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "colId": "74416502-fca9-4273-9308-7a355f17444f",
+                "type": "empty"
+              }
+            ],
+            "width": 3174,
+            "height": 1656,
+            "backgroundColor": "#ffffff",
+            "rowsData": [
+              {
+                "id": "0236f2fe-4ce1-4602-ad00-2aa9c7377f22",
+                "type": "actor",
+                "height": 320,
+                "label": "Actor"
+              },
+              {
+                "id": "d083b414-da6d-4d71-acd6-803346e37fa7",
+                "type": "interaction",
+                "height": 320,
+                "label": "Interaction"
+              },
+              {
+                "id": "08e90f2f-744d-4273-bcdb-19d9b5a03be1",
+                "type": "swimlane",
+                "height": 320,
+                "label": "Swimlane"
+              },
+              {
+                "id": "bb8086f5-77e4-412e-bfd8-fc94d606363e",
+                "type": "swimlane",
+                "height": 320
+              },
+              {
+                "id": "4a7d230e-e39b-4b18-8d23-05c5d0ef3696",
+                "type": "spec",
+                "height": 320,
+                "label": "Spec Lane"
+              }
+            ],
+            "columnsData": [
+              {
+                "id": "bfd2a407-6aec-4783-bd67-2f63953849df",
+                "width": 450
+              },
+              {
+                "id": "9ce712aa-ca39-42bd-a55c-46444aa8c817",
+                "width": 450
+              },
+              {
+                "id": "7982b8f1-901c-424f-b644-dacef1d3a0a2",
+                "width": 450
+              },
+              {
+                "id": "38c6bc81-f865-481e-8a6a-63b45b94e149",
+                "width": 450
+              },
+              {
+                "id": "3981cb23-46c5-4278-93d2-6e9d6422970e",
+                "width": 450
+              },
+              {
+                "id": "2eab3e44-7ca7-4e1d-84c3-e50b62fabd10",
+                "width": 450
+              },
+              {
+                "id": "74416502-fca9-4273-9308-7a355f17444f",
+                "width": 450
+              }
+            ],
+            "rowHeights": [
+              320,
+              320,
+              320,
+              320,
+              320
+            ],
+            "columnStarts": [
+              24,
+              474,
+              924,
+              1374,
+              1824,
+              2274,
+              2724
+            ],
+            "columnWidths": [
+              450,
+              450,
+              450,
+              450,
+              450,
+              450,
+              450
+            ],
+            "name": "Draft Subscription",
+            "originalX": 562.3915405273438,
+            "originalY": 393.146728515625
+          },
+          "width": 3174,
+          "height": 1656,
+          "style": {
+            "width": 3174,
+            "height": 1656
+          },
+          "connectable": true,
+          "positionAbsolute": {
+            "x": 562.3915405273438,
+            "y": 393.146728515625
+          },
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "selected": true,
+          "dragging": false
+        },
+        {
+          "id": "33471a12-7841-47f4-afac-d44fe63b655b",
+          "type": "sticky_note",
+          "content": "draftId<br/>products[]<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- amount<br/>&nbsp;&nbsp;- discount",
+          "x": 124,
+          "y": 461,
+          "position": {
+            "x": 124,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "draftId<br/>products[]<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- amount<br/>&nbsp;&nbsp;- discount",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": "",
+            "title": "DraftContract",
+            "type": "COMMAND",
+            "listElement": false,
+            "metaHash": "wrsgbo",
+            "originalX": 249,
+            "originalY": 536,
+            "connectorIds": [
+              "221a6541-1d59-4f60-966d-1d8f3c9e9600"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_blue",
+            "textAlign": "center",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 811.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 124.39154052734375,
+          "yPos": 261.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "221a6541-1d59-4f60-966d-1d8f3c9e9600"
+          ]
+        },
+        {
+          "id": "c22152c6-a3a1-4c19-9504-2b99a49a6ff0",
+          "type": "sticky_note",
+          "content": "draftId<br/>products[]<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- amount<br/>&nbsp;&nbsp;- discount",
+          "x": 124,
+          "y": 781,
+          "position": {
+            "x": 124,
+            "y": 781
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "draftId<br/>products[]<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- amount<br/>&nbsp;&nbsp;- discount",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Event",
+            "type": "EVENT",
+            "listElement": false,
+            "metaHash": "1fwzhw",
+            "originalX": 249,
+            "originalY": 856,
+            "connectorIds": [
+              "221a6541-1d59-4f60-966d-1d8f3c9e9600"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "orange",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 811.3915405273438,
+            "y": 1249.146728515625
+          },
+          "xPos": 124.39154052734375,
+          "yPos": 581.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "221a6541-1d59-4f60-966d-1d8f3c9e9600"
+          ]
+        },
+        {
+          "id": "713b6168-91cb-4c22-be3f-b864c191858f",
+          "type": "sticky_note",
+          "content": "customerNumber<br/>crmId<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+          "x": 574,
+          "y": 461,
+          "position": {
+            "x": 574,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "customerNumber<br/>crmId<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "createCustomer",
+            "type": "COMMAND",
+            "listElement": false,
+            "metaHash": "186sei2",
+            "originalX": 699,
+            "originalY": 536,
+            "connectorIds": [
+              "15f9e4b3-9587-4c7b-94ed-181f3ffb4d9a",
+              "71c3b9e2-9f44-493a-b508-0da9f1c61865",
+              "241df370-a366-43ed-9860-248a2057500a"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "red",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 1261.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 574.3915405273438,
+          "yPos": 261.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "15f9e4b3-9587-4c7b-94ed-181f3ffb4d9a",
+            "71c3b9e2-9f44-493a-b508-0da9f1c61865",
+            "241df370-a366-43ed-9860-248a2057500a"
+          ]
+        },
+        {
+          "id": "c16ce770-cecd-4398-9474-eabd793ead7c",
+          "type": "sticky_note",
+          "content": "customerNumber<br/>crmId<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+          "x": 574,
+          "y": 1101,
+          "position": {
+            "x": 574,
+            "y": 1101
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "customerNumber<br/>crmId<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 9999,
+            "description": null,
+            "title": "customerCreated",
+            "type": "EVENT",
+            "listElement": false,
+            "metaHash": "1cnhomd",
+            "originalX": 699,
+            "originalY": 1176,
+            "connectorIds": [
+              "15f9e4b3-9587-4c7b-94ed-181f3ffb4d9a",
+              "425f01b9-6002-4575-b2ab-d85476ae8116"
+            ]
+          },
+          "style": {
+            "zIndex": 9999,
+            "minWidth": 250,
+            "fillColor": "orange",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 1261.3915405273438,
+            "y": 1569.146728515625
+          },
+          "xPos": 574.3915405273438,
+          "yPos": 581.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "15f9e4b3-9587-4c7b-94ed-181f3ffb4d9a",
+            "425f01b9-6002-4575-b2ab-d85476ae8116"
+          ],
+          "extent": "parent"
+        },
+        {
+          "id": "5ab686c9-01df-4701-b48b-2c5ab098ed06",
+          "type": "sticky_note",
+          "content": "draftId<br/>customerNumber",
+          "x": 1474,
+          "y": 461,
+          "position": {
+            "x": 1474,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "draftId<br/>customerNumber",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Assign Customer",
+            "type": "COMMAND",
+            "listElement": false,
+            "metaHash": "ms45j3",
+            "originalX": 1599,
+            "originalY": 536,
+            "connectorIds": [
+              "870c246b-6842-4b83-a000-99d9ec718922"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_blue",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 2161.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 1024.3915405273438,
+          "yPos": 101.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "870c246b-6842-4b83-a000-99d9ec718922"
+          ]
+        },
+        {
+          "id": "a1bc1957-7072-434a-8e28-0d2b9237df11",
+          "type": "sticky_note",
+          "content": "customerNumber<br/>mandateId",
+          "x": 1024,
+          "y": 461,
+          "position": {
+            "x": 1024,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#C8E6C9",
+            "content": "customerNumber<br/>mandateId",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Read Model",
+            "type": "READMODEL",
+            "listElement": false,
+            "metaHash": "dsyvse",
+            "originalX": 1149,
+            "originalY": 536,
+            "connectorIds": [
+              "425f01b9-6002-4575-b2ab-d85476ae8116"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_green",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 1711.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 799.3915405273438,
+          "yPos": 101.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "425f01b9-6002-4575-b2ab-d85476ae8116"
+          ]
+        },
+        {
+          "id": "e0b2a76b-df9b-4814-b57c-69bb553d946d",
+          "type": "sticky_note",
+          "content": "draftId<br/>customerNumber",
+          "x": 1474,
+          "y": 781,
+          "position": {
+            "x": 1474,
+            "y": 781
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "draftId<br/>customerNumber",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "CustomerAssigned",
+            "type": "EVENT",
+            "listElement": false,
+            "metaHash": "psxlv9",
+            "originalX": 1599,
+            "originalY": 856,
+            "connectorIds": [
+              "870c246b-6842-4b83-a000-99d9ec718922",
+              "241df370-a366-43ed-9860-248a2057500a"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "orange",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 2161.3915405273438,
+            "y": 1249.146728515625
+          },
+          "xPos": 1249.3915405273438,
+          "yPos": 421.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.589Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "870c246b-6842-4b83-a000-99d9ec718922",
+            "241df370-a366-43ed-9860-248a2057500a"
+          ]
+        },
+        {
+          "id": "47353adf-6463-431e-a08a-b2ab55c266ae",
+          "type": "sticky_note",
+          "content": "customerNo<br/>crmId<br/>customerNumber<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+          "x": 1924,
+          "y": 461,
+          "position": {
+            "x": 1924,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "customerNo<br/>crmId<br/>customerNumber<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "createPaymentResponsibleCustomer",
+            "type": "COMMAND",
+            "listElement": false,
+            "metaHash": "7hke3y",
+            "originalX": 2049,
+            "originalY": 536,
+            "connectorIds": [
+              "24da4508-2974-4bf0-81ee-44622c955544"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_blue",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 2611.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 1474.3915405273438,
+          "yPos": 101.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.590Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "24da4508-2974-4bf0-81ee-44622c955544"
+          ]
+        },
+        {
+          "id": "a3714f4f-97af-4f3a-bda8-7a2976d79b26",
+          "type": "sticky_note",
+          "content": "crmId<br/>customerNumber<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+          "x": 1924,
+          "y": 1101,
+          "position": {
+            "x": 1924,
+            "y": 1101
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "crmId<br/>customerNumber<br/>personalInfo<br/>&nbsp;&nbsp;- identifier<br/>&nbsp;&nbsp;- year<br/>&nbsp;&nbsp;- month<br/>&nbsp;&nbsp;- day",
+            "width": 250,
+            "height": 150,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Event",
+            "type": "EVENT",
+            "listElement": false,
+            "metaHash": "b4gir1",
+            "originalX": 2049,
+            "originalY": 1176,
+            "connectorIds": [
+              "24da4508-2974-4bf0-81ee-44622c955544"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "orange",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 2611.3915405273438,
+            "y": 1569.146728515625
+          },
+          "xPos": 1474.3915405273438,
+          "yPos": 741.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:04:24.590Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "24da4508-2974-4bf0-81ee-44622c955544"
+          ]
+        },
+        {
+          "id": "629060f6-0d85-46ea-838e-cad0c81e121b",
+          "type": "sticky_note",
+          "content": "draftId<br/>customerNumber",
+          "x": 2372.5,
+          "y": 436,
+          "position": {
+            "x": 2372.5,
+            "y": 436
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "draftId<br/>customerNumber",
+            "width": 253,
+            "height": 200,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Assign Payment Responsible",
+            "type": "COMMAND",
+            "listElement": false,
+            "metaHash": "1mzwcrp",
+            "originalX": 2499,
+            "originalY": 536,
+            "connectorIds": [
+              "daa4dee8-aa48-40d2-af29-7fb56fc97550"
+            ]
+          },
+          "style": {
+            "width": 253,
+            "height": 200
+          },
+          "width": 253,
+          "height": 200,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 3061.3915405273438,
+            "y": 929.146728515625
+          },
+          "xPos": 1474.3915405273438,
+          "yPos": 101.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 1000,
+          "modifiedAt": "2026-04-16T16:04:24.590Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "daa4dee8-aa48-40d2-af29-7fb56fc97550"
+          ]
+        },
+        {
+          "id": "c19e40fe-f55f-4a6a-91e3-134a2cceb68e",
+          "type": "sticky_note",
+          "content": "draftId<br/>customerNumber",
+          "x": 2372.5,
+          "y": 756,
+          "position": {
+            "x": 2372.5,
+            "y": 756
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "draftId<br/>customerNumber",
+            "width": 253,
+            "height": 200,
+            "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+            "zIndex": 1000,
+            "description": null,
+            "title": "Event",
+            "type": "EVENT",
+            "listElement": false,
+            "metaHash": "xsh399",
+            "originalX": 2499,
+            "originalY": 856,
+            "connectorIds": [
+              "daa4dee8-aa48-40d2-af29-7fb56fc97550"
+            ]
+          },
+          "style": {
+            "width": 253,
+            "height": 200,
+            "zIndex": 1000
+          },
+          "width": 253,
+          "height": 200,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 3061.3915405273438,
+            "y": 1249.146728515625
+          },
+          "xPos": 1474.3915405273438,
+          "yPos": 421.146728515625,
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 1000,
+          "modifiedAt": "2026-04-16T16:04:24.590Z",
+          "parentId": "8d7e5161-58d6-40e9-88c4-b9021040f5f3",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "daa4dee8-aa48-40d2-af29-7fb56fc97550"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "221a6541-1d59-4f60-966d-1d8f3c9e9600",
+          "source": "33471a12-7841-47f4-afac-d44fe63b655b",
+          "target": "c22152c6-a3a1-4c19-9504-2b99a49a6ff0",
+          "start": {
+            "item": "33471a12-7841-47f4-afac-d44fe63b655b"
+          },
+          "end": {
+            "item": "c22152c6-a3a1-4c19-9504-2b99a49a6ff0"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:16:57.137Z",
+          "captions": [],
+          "selected": false
+        },
+        {
+          "id": "15f9e4b3-9587-4c7b-94ed-181f3ffb4d9a",
+          "source": "713b6168-91cb-4c22-be3f-b864c191858f",
+          "target": "c16ce770-cecd-4398-9474-eabd793ead7c",
+          "start": {
+            "item": "713b6168-91cb-4c22-be3f-b864c191858f"
+          },
+          "end": {
+            "item": "c16ce770-cecd-4398-9474-eabd793ead7c"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:19:16.564Z",
+          "captions": [],
+          "selected": false
+        },
+        {
+          "id": "425f01b9-6002-4575-b2ab-d85476ae8116",
+          "source": "c16ce770-cecd-4398-9474-eabd793ead7c",
+          "target": "a1bc1957-7072-434a-8e28-0d2b9237df11",
+          "start": {
+            "item": "c16ce770-cecd-4398-9474-eabd793ead7c"
+          },
+          "end": {
+            "item": "a1bc1957-7072-434a-8e28-0d2b9237df11"
+          },
+          "sourceHandle": "source-top",
+          "targetHandle": "target-bottom",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#FF0000",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#FF0000",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:22:12.501Z",
+          "captions": [
+            {
+              "content": "!",
+              "textAlignVertical": "middle",
+              "position": 0.9
+            }
+          ],
+          "selected": false
+        },
+        {
+          "id": "870c246b-6842-4b83-a000-99d9ec718922",
+          "source": "5ab686c9-01df-4701-b48b-2c5ab098ed06",
+          "target": "e0b2a76b-df9b-4814-b57c-69bb553d946d",
+          "start": {
+            "item": "5ab686c9-01df-4701-b48b-2c5ab098ed06"
+          },
+          "end": {
+            "item": "e0b2a76b-df9b-4814-b57c-69bb553d946d"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:22:55.823Z",
+          "captions": [],
+          "selected": false
+        },
+        {
+          "id": "24da4508-2974-4bf0-81ee-44622c955544",
+          "source": "47353adf-6463-431e-a08a-b2ab55c266ae",
+          "target": "a3714f4f-97af-4f3a-bda8-7a2976d79b26",
+          "start": {
+            "item": "47353adf-6463-431e-a08a-b2ab55c266ae"
+          },
+          "end": {
+            "item": "a3714f4f-97af-4f3a-bda8-7a2976d79b26"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:25:21.997Z",
+          "captions": [],
+          "selected": false
+        },
+        {
+          "id": "daa4dee8-aa48-40d2-af29-7fb56fc97550",
+          "source": "629060f6-0d85-46ea-838e-cad0c81e121b",
+          "target": "c19e40fe-f55f-4a6a-91e3-134a2cceb68e",
+          "start": {
+            "item": "629060f6-0d85-46ea-838e-cad0c81e121b"
+          },
+          "end": {
+            "item": "c19e40fe-f55f-4a6a-91e3-134a2cceb68e"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-07T13:26:34.090Z",
+          "captions": [],
+          "selected": false
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "3e756b35-92d1-44bd-8ee0-b862d510e06d": {
+      "8d7e5161-58d6-40e9-88c4-b9021040f5f3": {
+        "meta": {
+          "title": "Draft Subscription",
+          "type": "SLICE_BORDER"
+        }
+      },
+      "33471a12-7841-47f4-afac-d44fe63b655b": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "DraftContract",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "products",
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "UUID",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "amount",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "discount",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "context": "INTERNAL",
+          "compact": true
+        }
+      },
+      "c22152c6-a3a1-4c19-9504-2b99a49a6ff0": {
+        "meta": {
+          "type": "EVENT",
+          "title": "Event",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "products",
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "UUID",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "amount",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "discount",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true
+        }
+      },
+      "713b6168-91cb-4c22-be3f-b864c191858f": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "createCustomer",
+          "fields": [
+            {
+              "name": "crmId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "personalInfo",
+              "type": "Custom",
+              "cardinality": "Single",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "year",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "month",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "day",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "c16ce770-cecd-4398-9474-eabd793ead7c": {
+        "meta": {
+          "type": "EVENT",
+          "title": "customerCreated",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "customerNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "crmId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "personalInfo",
+              "type": "Custom",
+              "cardinality": "Single",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "year",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "month",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "day",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true
+        }
+      },
+      "5ab686c9-01df-4701-b48b-2c5ab098ed06": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "Assign Customer",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "a1bc1957-7072-434a-8e28-0d2b9237df11": {
+        "meta": {
+          "type": "READMODEL",
+          "title": "Read Model",
+          "fields": [
+            {
+              "name": "customerNumber",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "mandateId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "e0b2a76b-df9b-4814-b57c-69bb553d946d": {
+        "meta": {
+          "type": "EVENT",
+          "title": "CustomerAssigned",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true
+        }
+      },
+      "47353adf-6463-431e-a08a-b2ab55c266ae": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "createPaymentResponsibleCustomer",
+          "fields": [
+            {
+              "name": "customerNo",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "crmId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "personalInfo",
+              "type": "Custom",
+              "cardinality": "Single",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "year",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "month",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "day",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "a3714f4f-97af-4f3a-bda8-7a2976d79b26": {
+        "meta": {
+          "type": "EVENT",
+          "title": "Event",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "crmId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "Int",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "personalInfo",
+              "type": "Custom",
+              "cardinality": "Single",
+              "subfields": [
+                {
+                  "name": "identifier",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "year",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "month",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "day",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true
+        }
+      },
+      "629060f6-0d85-46ea-838e-cad0c81e121b": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "Assign Payment Responsible",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "c19e40fe-f55f-4a6a-91e3-134a2cceb68e": {
+        "meta": {
+          "type": "EVENT",
+          "title": "Event",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "draftId",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "customerNumber",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true
+        }
+      }
+    }
+  },
+  "images": {
+    "3e756b35-92d1-44bd-8ee0-b862d510e06d": {}
+  },
+  "nodeSnapshots": {
+    "3e756b35-92d1-44bd-8ee0-b862d510e06d": {}
+  }
+}

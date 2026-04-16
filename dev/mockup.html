@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>areyouat — mockup</title>
+<style>
+  :root {
+    --bg: #f5ede0;
+    --card: #ffffff;
+    --ink: #2a2a2a;
+    --muted: #8a7f6f;
+    --accent: #ff6b35;
+    --accent-soft: #ffd4c2;
+    --success: #5a9e6f;
+    --border: #e8dfd0;
+    --radius: 20px;
+    --shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Helvetica Neue", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .page-header {
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+  .page-header h1 {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .page-header p {
+    color: var(--muted);
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .phone-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .phone-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .phone {
+    width: 320px;
+    height: 640px;
+    background: var(--card);
+    border-radius: 40px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--border);
+  }
+  .url-bar {
+    background: #ece4d5;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .url-bar::before {
+    content: "🔒";
+    font-size: 10px;
+  }
+  .screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    text-align: center;
+    gap: 24px;
+  }
+  .screen.has-content {
+    justify-content: flex-start;
+    padding-top: 60px;
+  }
+  .place-name {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .place-name .slash {
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: -12px;
+  }
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-family: inherit;
+    background: var(--card);
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type="text"]:focus, input[type="password"]:focus {
+    border-color: var(--accent);
+  }
+  .btn {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 17px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--ink);
+    border: 2px solid var(--border);
+  }
+  .state-empty {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 20px 0 8px;
+  }
+  .state-empty-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+  .presence-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .presence-item {
+    background: var(--accent-soft);
+    border-radius: 16px;
+    padding: 18px 20px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .presence-name {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .presence-time {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .there-banner {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .footnote {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .check-me-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    margin-top: 12px;
+  }
+  .design-notes {
+    max-width: 700px;
+    margin: 60px auto 0;
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+  }
+  .design-notes h2 {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .design-notes ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .design-notes li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 20px;
+    position: relative;
+  }
+  .design-notes li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>areyouat</h1>
+  <p>Är nån på bron? — mockup of all UI states</p>
+</div>
+
+<div class="phones">
+
+  <!-- State 1: Landing / passphrase -->
+  <div class="phone-wrap">
+    <div class="phone-label">1 · Landing</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="tagline">skriv lösenord</div>
+        <input type="password" placeholder="••••••" value="" />
+        <button class="btn btn-primary">fortsätt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 2: Empty (no one there) -->
+  <div class="phone-wrap">
+    <div class="phone-label">2 · Empty</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="state-empty">ingen e här</div>
+        <div class="state-empty-sub">kl 14:32 · 16 apr</div>
+        <button class="btn btn-primary">men jag är!</button>
+        <button class="check-me-btn">kolla igen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 3: Name prompt -->
+  <div class="phone-wrap">
+    <div class="phone-label">3 · Name prompt</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="tagline">vem e du?</div>
+        <input type="text" placeholder="ditt namn" value="Johan" />
+        <button class="btn btn-primary">jag är här!</button>
+        <button class="btn btn-secondary">avbryt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 4: Populated (one person) -->
+  <div class="phone-wrap">
+    <div class="phone-label">4 · One person here</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen has-content">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="there-banner"><span class="dot"></span>någon e här!</div>
+        <div class="presence-list">
+          <div class="presence-item">
+            <span class="presence-name">Johan</span>
+            <span class="presence-time">14:32</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top: 24px;">jag är också här!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 5: Multiple present -->
+  <div class="phone-wrap">
+    <div class="phone-label">5 · Multiple here</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen has-content">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="there-banner"><span class="dot"></span>3 e här</div>
+        <div class="presence-list">
+          <div class="presence-item">
+            <span class="presence-name">Johan</span>
+            <span class="presence-time">14:32</span>
+          </div>
+          <div class="presence-item">
+            <span class="presence-name">Lisa</span>
+            <span class="presence-time">14:48</span>
+          </div>
+          <div class="presence-item">
+            <span class="presence-name">Erik</span>
+            <span class="presence-time">15:02</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top: 24px;">jag med!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- State 6: Just arrived confirmation -->
+  <div class="phone-wrap">
+    <div class="phone-label">6 · You're here</div>
+    <div class="phone">
+      <div class="url-bar">areyouat.se/bron</div>
+      <div class="screen has-content">
+        <div class="place-name"><span class="slash">/</span>bron</div>
+        <div class="there-banner"><span class="dot"></span>du e här!</div>
+        <div class="state-empty-sub">andra i gruppen kan se dig nu</div>
+        <div class="presence-list">
+          <div class="presence-item" style="background: var(--success); color: white;">
+            <span class="presence-name">Johan (du)</span>
+            <span class="presence-time" style="color: rgba(255,255,255,0.8);">nu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="design-notes">
+  <h2>Design language</h2>
+  <ul>
+    <li>Warm sand background (#f5ede0), orange accent (#ff6b35) — feels like a Swedish summer evening</li>
+    <li>One action per screen. The button is always obvious.</li>
+    <li>Swinglish copy: "ingen e här", "men jag är!", "vem e du?" — casual, friend-group voice</li>
+    <li>Passphrase = free text, not PIN. More memorable, harder to guess.</li>
+    <li>Presence items show first name + time only. No avatars, no last names.</li>
+    <li>Everything resets at midnight — yesterday's presence never shows today.</li>
+    <li>Mobile-first. Will scale to desktop by centering the phone-width column.</li>
+  </ul>
+</div>
+
+</body>
+</html>

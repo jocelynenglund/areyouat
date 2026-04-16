@@ -1,0 +1,115 @@
+{
+  "project": "areyouat",
+  "updated_at": "2026-04-16T18:20:00Z",
+  "slices": [
+    {
+      "id": 0,
+      "name": "Mockup (approval gate)",
+      "layer": "design",
+      "description": "Static HTML mockup showing all 6 UI states — user approves visual design before any real code is built",
+      "status": "in_progress",
+      "depends_on": [],
+      "assigned_to": "claude",
+      "started_at": "2026-04-16T18:20:00Z",
+      "completed_at": null
+    },
+    {
+      "id": 1,
+      "name": "API module scaffold",
+      "layer": "backend",
+      "description": "New AreYouAt module in event-store-api: .csproj, AreYouAtModule.cs with IModule, Shared/IdGenerator.cs, Shared/PassphraseHasher.cs. Register in sln + Host csproj + Program.cs API key bypass",
+      "status": "todo",
+      "depends_on": [0],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 2,
+      "name": "AnnouncePresence command",
+      "layer": "backend",
+      "description": "POST /api/areyouat/places/{place}/announce — AnnouncePresence command writes PresenceAnnounced event. Stream: presence-{place}-{passphraseHash}. Payload: nickname, date, announcedAt",
+      "status": "todo",
+      "depends_on": [1],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 3,
+      "name": "GetPresenceToday query",
+      "layer": "backend",
+      "description": "POST /api/areyouat/places/{place}/today — body: {passphrase}. Reads stream, projects to PresenceToday view (nickname, announcedAt), filters by today's date. Returns empty list if none",
+      "status": "todo",
+      "depends_on": [1],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 4,
+      "name": "Integration tests",
+      "layer": "backend",
+      "description": "tests/AreYouAt.Tests with ApiFixture + WebApplicationFactory + real FileEventStore. Tests: announce writes event, query filters by date, wrong passphrase returns empty, yesterday's presence not returned today",
+      "status": "todo",
+      "depends_on": [2, 3],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 5,
+      "name": "Frontend scaffold",
+      "layer": "frontend",
+      "description": "Root index.html, 404.html SPA fallback, router resolving /{place} URLs. Three-file slice scaffold (slices/friend/presence/). Apply design tokens from mockup",
+      "status": "todo",
+      "depends_on": [0],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 6,
+      "name": "Presence slice (UI)",
+      "layer": "frontend",
+      "description": "slices/friend/presence/ — passphrase entry → query API → render empty/populated state. Includes all 6 mockup states wired to user flow",
+      "status": "todo",
+      "depends_on": [5],
+      "assigned_to": null,
+      "started_at": null,
+      "completed_at": null
+    },
+    {
+      "id": 7,
+      "name": "Announce flow (UI)",
+      "layer": "frontend",
+      "description": "Name prompt on 'men jag är!' click, POST to AnnouncePresence endpoint, re-query presence, show confirmation state",
+      "status": "todo",
+      "depends_on": [6, 2]
+    },
+    {
+      "id": 8,
+      "name": "API wiring & CORS",
+      "layer": "integration",
+      "description": "Config API base URL in frontend (dev vs prod), add /api/areyouat to CORS allowlist in event-store-api Program.cs, verify end-to-end flow locally",
+      "status": "todo",
+      "depends_on": [7, 3]
+    },
+    {
+      "id": 9,
+      "name": "GitHub repo + FTP secrets",
+      "layer": "infra",
+      "description": "gh repo create jawss/areyouat, push main branch. Use setup-ftp skill to push FTP_SERVER/USERNAME/PASSWORD secrets from ~/.secrets/ftp.env",
+      "status": "todo",
+      "depends_on": [8]
+    },
+    {
+      "id": 10,
+      "name": "FTP deploy workflow",
+      "layer": "infra",
+      "description": ".github/workflows/deploy.yml using SamKirkland/FTP-Deploy-Action. Deploys to server-dir: rdp/. Excludes .git, dev/, slices.json, event model JSONs, README. Triggers on push to main",
+      "status": "todo",
+      "depends_on": [9]
+    }
+  ]
+}

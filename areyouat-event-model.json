@@ -1,0 +1,714 @@
+{
+  "boards": {
+    "b0000000-0000-0000-0000-000000000001": {
+      "name": "areyouat"
+    }
+  },
+  "nodes": {
+    "b0000000-0000-0000-0000-000000000001": {
+      "nodes": [
+        {
+          "id": "10000000-0000-0000-0000-000000000001",
+          "type": "timeline",
+          "position": {
+            "x": 100,
+            "y": 100
+          },
+          "x": 100,
+          "y": 100,
+          "data": {
+            "label": "Chapter",
+            "rows": [
+              {
+                "id": "a0000000-0000-0000-0000-000000000001",
+                "type": "actor",
+                "height": 320,
+                "label": "Friend"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000002",
+                "type": "interaction",
+                "height": 320,
+                "label": "Interaction"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000003",
+                "type": "swimlane",
+                "height": 320,
+                "label": "Events"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000004",
+                "type": "spec",
+                "height": 320,
+                "label": "Spec"
+              }
+            ],
+            "columns": [
+              {
+                "id": "c0000000-0000-0000-0000-000000000001",
+                "width": 450
+              },
+              {
+                "id": "c0000000-0000-0000-0000-000000000002",
+                "width": 450
+              },
+              {
+                "id": "c0000000-0000-0000-0000-000000000003",
+                "width": 450
+              }
+            ],
+            "cells": [
+              {
+                "id": "ce110000-0000-0000-0000-000000000001",
+                "rowId": "a0000000-0000-0000-0000-000000000001",
+                "colId": "c0000000-0000-0000-0000-000000000001",
+                "type": "empty"
+              },
+              {
+                "id": "ce110000-0000-0000-0000-000000000002",
+                "rowId": "a0000000-0000-0000-0000-000000000001",
+                "colId": "c0000000-0000-0000-0000-000000000002",
+                "type": "empty"
+              },
+              {
+                "id": "ce110000-0000-0000-0000-000000000003",
+                "rowId": "a0000000-0000-0000-0000-000000000001",
+                "colId": "c0000000-0000-0000-0000-000000000003",
+                "type": "empty"
+              },
+              {
+                "id": "ce220000-0000-0000-0000-000000000001",
+                "rowId": "a0000000-0000-0000-0000-000000000002",
+                "colId": "c0000000-0000-0000-0000-000000000001",
+                "type": "content",
+                "nodeType": "readmodel",
+                "nodeId": "22222222-0000-0000-0000-000000000001"
+              },
+              {
+                "id": "ce220000-0000-0000-0000-000000000002",
+                "rowId": "a0000000-0000-0000-0000-000000000002",
+                "colId": "c0000000-0000-0000-0000-000000000002",
+                "type": "content",
+                "nodeType": "command",
+                "nodeId": "33333333-0000-0000-0000-000000000001"
+              },
+              {
+                "id": "ce220000-0000-0000-0000-000000000003",
+                "rowId": "a0000000-0000-0000-0000-000000000002",
+                "colId": "c0000000-0000-0000-0000-000000000003",
+                "type": "content",
+                "nodeType": "readmodel",
+                "nodeId": "22222222-0000-0000-0000-000000000002"
+              },
+              {
+                "id": "ce330000-0000-0000-0000-000000000001",
+                "rowId": "a0000000-0000-0000-0000-000000000003",
+                "colId": "c0000000-0000-0000-0000-000000000001",
+                "type": "empty"
+              },
+              {
+                "id": "ce330000-0000-0000-0000-000000000002",
+                "rowId": "a0000000-0000-0000-0000-000000000003",
+                "colId": "c0000000-0000-0000-0000-000000000002",
+                "type": "content",
+                "nodeType": "event",
+                "nodeId": "44444444-0000-0000-0000-000000000001"
+              },
+              {
+                "id": "ce330000-0000-0000-0000-000000000003",
+                "rowId": "a0000000-0000-0000-0000-000000000003",
+                "colId": "c0000000-0000-0000-0000-000000000003",
+                "type": "empty"
+              },
+              {
+                "id": "ce440000-0000-0000-0000-000000000001",
+                "rowId": "a0000000-0000-0000-0000-000000000004",
+                "colId": "c0000000-0000-0000-0000-000000000001",
+                "type": "empty"
+              },
+              {
+                "id": "ce440000-0000-0000-0000-000000000002",
+                "rowId": "a0000000-0000-0000-0000-000000000004",
+                "colId": "c0000000-0000-0000-0000-000000000002",
+                "type": "empty"
+              },
+              {
+                "id": "ce440000-0000-0000-0000-000000000003",
+                "rowId": "a0000000-0000-0000-0000-000000000004",
+                "colId": "c0000000-0000-0000-0000-000000000003",
+                "type": "empty"
+              }
+            ],
+            "width": 1398,
+            "height": 1336,
+            "backgroundColor": "#ffffff",
+            "rowsData": [
+              {
+                "id": "a0000000-0000-0000-0000-000000000001",
+                "type": "actor",
+                "height": 320,
+                "label": "Friend"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000002",
+                "type": "interaction",
+                "height": 320,
+                "label": "Interaction"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000003",
+                "type": "swimlane",
+                "height": 320,
+                "label": "Events"
+              },
+              {
+                "id": "a0000000-0000-0000-0000-000000000004",
+                "type": "spec",
+                "height": 320,
+                "label": "Spec"
+              }
+            ],
+            "columnsData": [
+              {
+                "id": "c0000000-0000-0000-0000-000000000001",
+                "width": 450
+              },
+              {
+                "id": "c0000000-0000-0000-0000-000000000002",
+                "width": 450
+              },
+              {
+                "id": "c0000000-0000-0000-0000-000000000003",
+                "width": 450
+              }
+            ],
+            "rowHeights": [
+              320,
+              320,
+              320,
+              320
+            ],
+            "columnStarts": [
+              24,
+              474,
+              924
+            ],
+            "columnWidths": [
+              450,
+              450,
+              450
+            ],
+            "name": "Are you at?",
+            "originalX": 100,
+            "originalY": 100
+          },
+          "width": 1398,
+          "height": 1336,
+          "style": {
+            "width": 1398,
+            "height": 1336
+          },
+          "connectable": true,
+          "positionAbsolute": {
+            "x": 100,
+            "y": 100
+          },
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "selected": false,
+          "dragging": false
+        },
+        {
+          "id": "22222222-0000-0000-0000-000000000001",
+          "type": "sticky_note",
+          "content": "place<br/>passphrase<br/>date<br/>presences[]<br/><br/><i>(empty)</i>",
+          "x": 124,
+          "y": 461,
+          "position": {
+            "x": 124,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#C8E6C9",
+            "content": "place<br/>passphrase<br/>date<br/>presences[]<br/><br/><i>(empty)</i>",
+            "width": 250,
+            "height": 150,
+            "parentId": "10000000-0000-0000-0000-000000000001",
+            "zIndex": 1000,
+            "description": "Nobody has announced yet today — UI shows \"ingen e har\" + [men jag ar!]",
+            "title": "PresenceToday",
+            "type": "READMODEL",
+            "listElement": false,
+            "originalX": 249,
+            "originalY": 536,
+            "connectorIds": []
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_green",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 349,
+            "y": 636
+          },
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "parentId": "10000000-0000-0000-0000-000000000001",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": []
+        },
+        {
+          "id": "33333333-0000-0000-0000-000000000001",
+          "type": "sticky_note",
+          "content": "place<br/>passphrase<br/>date<br/>nickname",
+          "x": 574,
+          "y": 461,
+          "position": {
+            "x": 574,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#BBDEFB",
+            "content": "place<br/>passphrase<br/>date<br/>nickname",
+            "width": 250,
+            "height": 150,
+            "parentId": "10000000-0000-0000-0000-000000000001",
+            "zIndex": 1000,
+            "description": "Triggered by clicking \"men jag ar!\" and entering name",
+            "title": "AnnouncePresence",
+            "type": "COMMAND",
+            "listElement": false,
+            "originalX": 699,
+            "originalY": 536,
+            "connectorIds": [
+              "e0000000-0000-0000-0000-000000000001"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_blue",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 799,
+            "y": 636
+          },
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "parentId": "10000000-0000-0000-0000-000000000001",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "e0000000-0000-0000-0000-000000000001"
+          ]
+        },
+        {
+          "id": "44444444-0000-0000-0000-000000000001",
+          "type": "sticky_note",
+          "content": "place<br/>passphrase<br/>date<br/>nickname<br/>announcedAt",
+          "x": 574,
+          "y": 781,
+          "position": {
+            "x": 574,
+            "y": 781
+          },
+          "data": {
+            "backgroundColor": "#FF9800",
+            "content": "place<br/>passphrase<br/>date<br/>nickname<br/>announcedAt",
+            "width": 250,
+            "height": 150,
+            "parentId": "10000000-0000-0000-0000-000000000001",
+            "zIndex": 1000,
+            "description": "Key = (place, passphraseHash, date). Daily reset is implicit via date filter.",
+            "title": "PresenceAnnounced",
+            "type": "EVENT",
+            "listElement": false,
+            "originalX": 699,
+            "originalY": 856,
+            "connectorIds": [
+              "e0000000-0000-0000-0000-000000000001",
+              "e0000000-0000-0000-0000-000000000002"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "orange",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 799,
+            "y": 956
+          },
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "parentId": "10000000-0000-0000-0000-000000000001",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "e0000000-0000-0000-0000-000000000001",
+            "e0000000-0000-0000-0000-000000000002"
+          ]
+        },
+        {
+          "id": "22222222-0000-0000-0000-000000000002",
+          "type": "sticky_note",
+          "content": "place<br/>passphrase<br/>date<br/>presences[]<br/>&nbsp;&nbsp;- nickname<br/>&nbsp;&nbsp;- announcedAt",
+          "x": 1024,
+          "y": 461,
+          "position": {
+            "x": 1024,
+            "y": 461
+          },
+          "data": {
+            "backgroundColor": "#C8E6C9",
+            "content": "place<br/>passphrase<br/>date<br/>presences[]<br/>&nbsp;&nbsp;- nickname<br/>&nbsp;&nbsp;- announcedAt",
+            "width": 250,
+            "height": 150,
+            "parentId": "10000000-0000-0000-0000-000000000001",
+            "zIndex": 1000,
+            "description": "Second visitor with same place+passphrase sees \"Johan e här\"",
+            "title": "PresenceToday",
+            "type": "READMODEL",
+            "listElement": false,
+            "originalX": 1149,
+            "originalY": 536,
+            "connectorIds": [
+              "e0000000-0000-0000-0000-000000000002"
+            ]
+          },
+          "style": {
+            "zIndex": 1000,
+            "minWidth": 250,
+            "fillColor": "light_green",
+            "textAlign": "left",
+            "width": 250,
+            "height": 150
+          },
+          "width": 250,
+          "height": 150,
+          "tagIds": [],
+          "positionAbsolute": {
+            "x": 1249,
+            "y": 636
+          },
+          "selected": false,
+          "isConnectable": true,
+          "sourcePosition": "bottom",
+          "targetPosition": "top",
+          "dragging": false,
+          "zIndex": 0,
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "parentId": "10000000-0000-0000-0000-000000000001",
+          "draggable": true,
+          "resizable": false,
+          "connectorIds": [
+            "e0000000-0000-0000-0000-000000000002"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "e0000000-0000-0000-0000-000000000001",
+          "source": "33333333-0000-0000-0000-000000000001",
+          "target": "44444444-0000-0000-0000-000000000001",
+          "start": {
+            "item": "33333333-0000-0000-0000-000000000001"
+          },
+          "end": {
+            "item": "44444444-0000-0000-0000-000000000001"
+          },
+          "sourceHandle": "source-bottom",
+          "targetHandle": "target-top",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#7291aa",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#7291aa",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "captions": [],
+          "selected": false
+        },
+        {
+          "id": "e0000000-0000-0000-0000-000000000002",
+          "source": "44444444-0000-0000-0000-000000000001",
+          "target": "22222222-0000-0000-0000-000000000002",
+          "start": {
+            "item": "44444444-0000-0000-0000-000000000001"
+          },
+          "end": {
+            "item": "22222222-0000-0000-0000-000000000002"
+          },
+          "sourceHandle": "source-top",
+          "targetHandle": "target-bottom",
+          "connector": true,
+          "type": "default",
+          "animated": true,
+          "style": {
+            "stroke": "#FF0000",
+            "strokeWidth": 3,
+            "startStrokeCap": "none",
+            "endStrokeCap": "arrow",
+            "strokeStyle": "normal",
+            "strokeColor": "#FF0000",
+            "opacity": 0.5
+          },
+          "markerEnd": {
+            "type": "arrowclosed"
+          },
+          "zIndex": 500,
+          "data": {},
+          "x": 0,
+          "y": 0,
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "modifiedAt": "2026-04-16T16:00:00.000Z",
+          "captions": [
+            {
+              "content": "projects",
+              "textAlignVertical": "middle",
+              "position": 0.9
+            }
+          ],
+          "selected": false
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "b0000000-0000-0000-0000-000000000001": {
+      "10000000-0000-0000-0000-000000000001": {
+        "meta": {
+          "title": "Are you at?",
+          "type": "SLICE_BORDER"
+        }
+      },
+      "22222222-0000-0000-0000-000000000001": {
+        "meta": {
+          "type": "READMODEL",
+          "title": "PresenceToday",
+          "fields": [
+            {
+              "name": "place",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "passphrase",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "date",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "presences",
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "nickname",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "announcedAt",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "33333333-0000-0000-0000-000000000001": {
+        "meta": {
+          "type": "COMMAND",
+          "title": "AnnouncePresence",
+          "fields": [
+            {
+              "name": "place",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "passphrase",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "date",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "nickname",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      },
+      "44444444-0000-0000-0000-000000000001": {
+        "meta": {
+          "type": "EVENT",
+          "title": "PresenceAnnounced",
+          "context": "INTERNAL",
+          "fields": [
+            {
+              "name": "place",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "passphrase",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "date",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "nickname",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "announcedAt",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "compact": true
+        }
+      },
+      "22222222-0000-0000-0000-000000000002": {
+        "meta": {
+          "type": "READMODEL",
+          "title": "PresenceToday",
+          "fields": [
+            {
+              "name": "place",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "passphrase",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "date",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "presences",
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "nickname",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "announcedAt",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "showAttributes": true
+            }
+          ],
+          "compact": true,
+          "context": "INTERNAL"
+        }
+      }
+    }
+  },
+  "images": {
+    "b0000000-0000-0000-0000-000000000001": {}
+  },
+  "nodeSnapshots": {
+    "b0000000-0000-0000-0000-000000000001": {}
+  }
+}

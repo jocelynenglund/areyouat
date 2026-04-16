@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:       #0A0A0F;
+  --bg-card:  #12121A;
+  --bg-elev:  #1A1A25;
+  --accent:   #00FF88;
+  --danger:   #FF3344;
+  --warning:  #FFB800;
+  --info:     #3B9EFF;
+  --text:     #F0F0F5;
+  --muted:    #55556A;
+  --border:   #2A2A3A;
+  --mono:     'Space Mono', 'Courier New', monospace;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+#progress-wrap { height: 3px; background: var(--border); flex-shrink: 0; }
+#progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #00CC77); transition: width .6s ease; width: 0%; }
+
+.hdr { display: flex; align-items: center; gap: 16px; padding: 18px 32px; border-bottom: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; row-gap: 10px; }
+.hdr-left { display: flex; align-items: center; gap: 14px; }
+.hdr h1 { font-size: 20px; font-weight: 900; letter-spacing: -.03em; }
+.live-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,255,136,.07); border: 1px solid rgba(0,255,136,.2); border-radius: 99px; padding: 3px 10px; font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--accent); letter-spacing: .12em; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+.hdr-right { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.hdr-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+.stats-bar { display: flex; gap: 10px; padding: 14px 32px; border-bottom: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; align-items: center; }
+.stat { display: flex; align-items: baseline; gap: 7px; padding: 5px 14px; border-radius: 8px; font-family: var(--mono); font-size: 11px; font-weight: 700; }
+.stat__n { font-size: 20px; line-height: 1; font-weight: 900; }
+.stat--done        { background: rgba(0,255,136,.07);  color: var(--accent); }
+.stat--in_progress { background: rgba(255,184,0,.08);  color: var(--warning); }
+.stat--todo        { background: rgba(59,158,255,.07); color: var(--info); }
+.stat--blocked     { background: rgba(255,51,68,.07);  color: var(--danger); }
+.stat--total       { background: rgba(240,240,245,.04);color: var(--text); }
+.sep { width: 1px; height: 28px; background: var(--border); margin: 0 2px; }
+
+.tl-scroll { flex: 1; overflow-x: auto; overflow-y: auto; padding: 28px 0 48px; }
+.tl-inner { position: relative; display: inline-flex; flex-direction: column; gap: 10px; padding: 0 32px; min-width: 100%; }
+
+.tl-col-headers { display: flex; }
+.tl-col-lbl-spacer { flex-shrink: 0; }
+.tl-col-header { flex-shrink: 0; font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .15em; text-transform: uppercase; text-align: center; opacity: .4; padding-bottom: 6px; }
+
+.lane { display: flex; align-items: stretch; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.lane-lbl { flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--border); background: var(--bg-elev); }
+.lane-lbl span { font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: .2em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+.lane-track { display: flex; align-items: flex-start; padding: 10px 0; }
+
+.slot { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; padding: 0 8px; }
+
+.card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; cursor: default; transition: border-color .15s, box-shadow .15s; }
+.card:hover { border-color: rgba(240,240,245,.18); box-shadow: 0 4px 18px rgba(0,0,0,.5); }
+.card--done        { border-color: rgba(0,255,136,.25); }
+.card--in_progress { border-color: rgba(255,184,0,.35); background: rgba(255,184,0,.02); }
+.card--todo        { border-color: rgba(59,158,255,.12); }
+.card--blocked     { border-color: rgba(255,51,68,.22); }
+
+@keyframes flash-green { 0% { box-shadow: 0 0 0 3px rgba(0,255,136,.75); border-color: var(--accent); } 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0); } }
+.card--flash { animation: flash-green 1.8s ease-out; }
+
+.card__hdr { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 5px; }
+.card__id { font-family: var(--mono); font-size: 10px; color: var(--muted); flex-shrink: 0; padding-top: 1px; }
+.card__name { font-size: 12px; font-weight: 700; line-height: 1.35; margin-bottom: 4px; }
+.card__desc { font-size: 11px; color: var(--muted); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card__assigned { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 5px; opacity: .7; }
+
+.badge { display: inline-flex; padding: 2px 7px; border-radius: 99px; font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+.badge--done        { background: rgba(0,255,136,.12); color: var(--accent); }
+.badge--in_progress { background: rgba(255,184,0,.15); color: var(--warning); }
+.badge--todo        { background: rgba(59,158,255,.1);  color: var(--info); }
+.badge--blocked     { background: rgba(255,51,68,.1);   color: var(--danger); }
+
+.tl-svg { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; overflow: visible; }
+
+.error-msg { color: var(--danger); font-family: var(--mono); font-size: 12px; padding: 32px; line-height: 1.7; }
+.error-msg code { background: var(--bg-elev); padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div id="progress-wrap"><div id="progress-fill"></div></div>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <h1 id="project-name">Project</h1>
+    <span class="live-chip"><span class="live-dot"></span>LIVE</span>
+  </div>
+  <div class="hdr-right">
+    <span class="hdr-meta" id="updated-txt">—</span>
+    <span class="hdr-meta" id="refresh-txt">—</span>
+  </div>
+</header>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<div class="tl-scroll">
+  <div class="tl-inner" id="tl-inner">
+    <div class="tl-col-headers" id="col-headers"></div>
+    <div id="lanes"></div>
+    <svg class="tl-svg" id="tl-svg"></svg>
+  </div>
+</div>
+
+<script>
+const SLOT_W  = 212;
+const CARD_W  = 188;
+const LABEL_W = 72;
+const POLL_MS = 5000;
+
+let lastData      = null;
+let secondsAgo    = 0;
+let pollCountdown = POLL_MS / 1000;
+
+function computeColumns(slices) {
+  const idMap = Object.fromEntries(slices.map(s => [s.id, s]));
+  const memo  = {};
+  function col(id) {
+    if (memo[id] !== undefined) return memo[id];
+    const s = idMap[id];
+    if (!s || !s.depends_on || s.depends_on.length === 0) return (memo[id] = 0);
+    return (memo[id] = Math.max(...s.depends_on.map(d => col(d))) + 1);
+  }
+  slices.forEach(s => col(s.id));
+  return memo;
+}
+
+function effectiveStatus(slice, idMap) {
+  if (slice.status !== 'todo') return slice.status;
+  const blocked = (slice.depends_on || []).some(d => { const dep = idMap[d]; return dep && dep.status !== 'done'; });
+  return blocked ? 'blocked' : 'todo';
+}
+
+function updateProgress(slices) {
+  document.getElementById('progress-fill').style.width =
+    (slices.filter(s => s.status === 'done').length / slices.length * 100) + '%';
+}
+
+function renderStats(slices, idMap) {
+  const counts = { done: 0, in_progress: 0, todo: 0, blocked: 0 };
+  slices.forEach(s => { const st = effectiveStatus(s, idMap); counts[st] = (counts[st] || 0) + 1; });
+  document.getElementById('stats-bar').innerHTML =
+    [{ key: 'done', label: 'Done' }, { key: 'in_progress', label: 'In Progress' },
+     { key: 'todo', label: 'Todo' }, { key: 'blocked', label: 'Blocked' }]
+    .map(({ key, label }) => `<div class="stat stat--${key}"><span class="stat__n">${counts[key]}</span>${label}</div>`)
+    .join('') +
+    `<span class="sep"></span><div class="stat stat--total"><span class="stat__n">${slices.length}</span>Total</div>`;
+}
+
+function renderTimeline(data, flashIds = new Set()) {
+  const { slices } = data;
+  const idMap  = Object.fromEntries(slices.map(s => [s.id, s]));
+  const colMap = computeColumns(slices);
+  const maxCol = Math.max(...Object.values(colMap));
+  const layers = [...new Set(slices.map(s => s.layer))];
+
+  const headersEl = document.getElementById('col-headers');
+  headersEl.innerHTML = '';
+  const spacer = document.createElement('div');
+  spacer.className = 'tl-col-lbl-spacer';
+  spacer.style.width = LABEL_W + 'px';
+  headersEl.appendChild(spacer);
+  for (let c = 0; c <= maxCol; c++) {
+    const h = document.createElement('div');
+    h.className = 'tl-col-header';
+    h.style.width = SLOT_W + 'px';
+    h.textContent = 'Phase ' + (c + 1);
+    headersEl.appendChild(h);
+  }
+
+  const lanesEl = document.getElementById('lanes');
+  lanesEl.innerHTML = '';
+
+  layers.forEach(layer => {
+    const byCol = {};
+    slices.filter(s => s.layer === layer).forEach(s => {
+      const c = colMap[s.id];
+      (byCol[c] = byCol[c] || []).push(s);
+    });
+
+    const lane  = document.createElement('div');
+    lane.className = 'lane';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'lane-lbl';
+    lbl.style.width = LABEL_W + 'px';
+    lbl.innerHTML = '<span>' + layer + '</span>';
+    lane.appendChild(lbl);
+
+    const track = document.createElement('div');
+    track.className = 'lane-track';
+
+    for (let c = 0; c <= maxCol; c++) {
+      const slot = document.createElement('div');
+      slot.className = 'slot';
+      slot.style.width = SLOT_W + 'px';
+
+      (byCol[c] || []).forEach(s => {
+        const status = effectiveStatus(s, idMap);
+        const card   = document.createElement('div');
+        card.className = 'card card--' + status + (flashIds.has(s.id) ? ' card--flash' : '');
+        card.dataset.id = String(s.id);
+        card.style.width = CARD_W + 'px';
+        card.innerHTML =
+          '<div class="card__hdr">' +
+          '<span class="card__id">#' + s.id + '</span>' +
+          '<span class="badge badge--' + status + '">' + status.replace('_', ' ') + '</span>' +
+          '</div>' +
+          '<div class="card__name">' + s.name + '</div>' +
+          '<div class="card__desc">' + s.description + '</div>' +
+          (s.assigned_to ? '<div class="card__assigned">\u2192 ' + s.assigned_to + '</div>' : '');
+        slot.appendChild(card);
+      });
+
+      track.appendChild(slot);
+    }
+
+    lane.appendChild(track);
+    lanesEl.appendChild(lane);
+  });
+
+  requestAnimationFrame(() => requestAnimationFrame(() => drawArrows(slices, idMap)));
+}
+
+function drawArrows(slices, idMap) {
+  const svg    = document.getElementById('tl-svg');
+  const inner  = document.getElementById('tl-inner');
+  const scroll = inner.parentElement;
+
+  svg.setAttribute('width',  inner.scrollWidth);
+  svg.setAttribute('height', inner.scrollHeight);
+  svg.style.width  = inner.scrollWidth  + 'px';
+  svg.style.height = inner.scrollHeight + 'px';
+  svg.innerHTML = '';
+
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  [['ah-done','rgba(0,255,136,0.45)'],['ah-todo','rgba(59,158,255,0.35)'],
+   ['ah-block','rgba(255,51,68,0.35)'],['ah-cross','rgba(85,85,106,0.4)']].forEach(([id, color]) => {
+    const m = document.createElementNS('http://www.w3.org/2000/svg', 'marker');
+    m.setAttribute('id', id);
+    m.setAttribute('markerWidth', '7'); m.setAttribute('markerHeight', '7');
+    m.setAttribute('refX', '6.5');     m.setAttribute('refY', '3');
+    m.setAttribute('orient', 'auto');
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    p.setAttribute('points', '0 0, 7 3, 0 6'); p.setAttribute('fill', color);
+    m.appendChild(p); defs.appendChild(m);
+  });
+  svg.appendChild(defs);
+
+  const ir = inner.getBoundingClientRect();
+
+  slices.forEach(s => {
+    if (!s.depends_on || s.depends_on.length === 0) return;
+    const tgtEl = document.querySelector('.card[data-id="' + s.id + '"]');
+    if (!tgtEl) return;
+    const tr = tgtEl.getBoundingClientRect();
+    const x2 = tr.left - ir.left + scroll.scrollLeft;
+    const y2 = tr.top  - ir.top  + scroll.scrollTop + tr.height / 2;
+
+    s.depends_on.forEach(depId => {
+      const srcEl = document.querySelector('.card[data-id="' + depId + '"]');
+      if (!srcEl) return;
+      const dep = idMap[depId];
+      const sr  = srcEl.getBoundingClientRect();
+      const x1  = sr.right - ir.left + scroll.scrollLeft;
+      const y1  = sr.top   - ir.top  + scroll.scrollTop + sr.height / 2;
+
+      const isDone     = dep.status === 'done';
+      const crossLayer = dep.layer !== s.layer;
+      const isBlocked  = s.status === 'blocked';
+
+      let stroke, mid, dash;
+      if (isDone)         { stroke = 'rgba(0,255,136,0.2)';  mid = 'ah-done';  dash = 'none'; }
+      else if (crossLayer){ stroke = 'rgba(85,85,106,0.28)'; mid = 'ah-cross'; dash = '4 3'; }
+      else if (isBlocked) { stroke = 'rgba(255,51,68,0.2)';  mid = 'ah-block'; dash = 'none'; }
+      else                { stroke = 'rgba(59,158,255,0.2)'; mid = 'ah-todo';  dash = 'none'; }
+
+      const dx = Math.max(30, Math.abs(x2 - x1) * 0.42);
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M ' + x1 + ',' + y1 + ' C ' + (x1+dx) + ',' + y1 + ' ' + (x2-dx) + ',' + y2 + ' ' + x2 + ',' + y2);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', stroke);
+      path.setAttribute('stroke-width', '1.5');
+      if (dash !== 'none') path.setAttribute('stroke-dasharray', dash);
+      path.setAttribute('marker-end', 'url(#' + mid + ')');
+      svg.appendChild(path);
+    });
+  });
+}
+
+function tick() {
+  secondsAgo++;
+  pollCountdown = Math.max(0, pollCountdown - 1);
+  const u = document.getElementById('updated-txt');
+  const r = document.getElementById('refresh-txt');
+  if      (secondsAgo < 5)  u.textContent = 'Updated just now';
+  else if (secondsAgo < 60) u.textContent = 'Updated ' + secondsAgo + 's ago';
+  else                      u.textContent = 'Updated ' + Math.floor(secondsAgo / 60) + 'm ago';
+  r.textContent = pollCountdown > 0 ? 'Refresh in ' + pollCountdown + 's' : 'Refreshing\u2026';
+}
+
+async function poll() {
+  pollCountdown = POLL_MS / 1000;
+  try {
+    const res  = await fetch('../slices.json', { cache: 'no-store' });
+    const data = await res.json();
+
+    const flashIds = new Set();
+    if (lastData) {
+      data.slices.forEach(s => {
+        const prev = lastData.slices.find(o => o.id === s.id);
+        if (prev && prev.status !== s.status) flashIds.add(s.id);
+      });
+    }
+
+    if (!lastData || flashIds.size > 0 || data.updated_at !== lastData.updated_at) {
+      const idMap = Object.fromEntries(data.slices.map(s => [s.id, s]));
+      document.getElementById('project-name').textContent = data.project;
+      document.title = data.project + ' \u2014 Build Dashboard';
+      updateProgress(data.slices);
+      renderStats(data.slices, idMap);
+      renderTimeline(data, flashIds);
+      lastData   = data;
+      secondsAgo = 0;
+    }
+  } catch (e) {
+    document.getElementById('lanes').innerHTML =
+      '<div class="error-msg">Could not load slices.json \u2014 serve with a static server.<br>' +
+      '<code>python3 -m http.server 3002 --directory /path/to/your/project</code></div>';
+  }
+}
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (!lastData) return;
+    const idMap = Object.fromEntries(lastData.slices.map(s => [s.id, s]));
+    drawArrows(lastData.slices, idMap);
+  }, 100);
+});
+
+poll();
+setInterval(poll, POLL_MS);
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
