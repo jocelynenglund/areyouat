@@ -11,8 +11,7 @@
   if (!place || place === 'about') {
     app.innerHTML = `
       <div class="presence-card">
-        <div class="place-name">är du på?</div>
-        <div class="tagline">skriv ett platsnamn och ett lösenord</div>
+        <div class="tagline" style="margin-top:0">vart ska ni?</div>
         <input class="presence-input" id="place-input" type="text" placeholder="bron, gymmet, kontoret…" autocomplete="off" />
         <input class="presence-input" id="pp-input" type="password" placeholder="lösenord" autocomplete="off" />
         <button class="btn btn-primary" id="go-btn">fortsätt →</button>
