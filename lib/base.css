@@ -24,19 +24,19 @@ body {
   min-height: 100svh;
 }
 #site-title {
-  font-size: 13px;
-  color: var(--muted);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--ink);
   text-align: center;
-  margin-bottom: 20px;
-  letter-spacing: 0.03em;
+  margin-bottom: 24px;
 }
 #site-title a {
-  color: var(--muted);
+  color: var(--ink);
   text-decoration: none;
-  opacity: 0.6;
 }
 #site-title a:hover {
-  opacity: 1;
+  color: var(--accent);
 }
 #app {
   width: 100%;
