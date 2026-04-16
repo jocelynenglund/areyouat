@@ -1,0 +1,27 @@
+{
+  "name": "areyouat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jocelynenglund/areyouat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jocelynenglund/areyouat/issues"
+  },
+  "homepage": "https://github.com/jocelynenglund/areyouat#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}
