@@ -17,10 +17,18 @@ body {
   color: var(--ink);
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
   min-height: 100svh;
+}
+#site-title {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 0.03em;
 }
 #app {
   width: 100%;
