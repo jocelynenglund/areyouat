@@ -160,7 +160,7 @@
   function queryPresence() {
     window.AREYOUAT.getPresenceToday(place, passphrase)
       .then(function (data) {
-        const entries = data.presence || data || [];
+        const entries = data.presences || data.presence || data || [];
         if (entries.length === 0) {
           renderEmpty();
         } else {
@@ -180,7 +180,7 @@
         return window.AREYOUAT.getPresenceToday(place, passphrase);
       })
       .then(function (data) {
-        const entries = data.presence || data || [];
+        const entries = data.presences || data.presence || data || [];
         renderPopulated(entries);
       })
       .catch(function () {
