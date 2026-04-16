@@ -30,6 +30,14 @@ body {
   margin-bottom: 20px;
   letter-spacing: 0.03em;
 }
+#site-title a {
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0.6;
+}
+#site-title a:hover {
+  opacity: 1;
+}
 #app {
   width: 100%;
   max-width: 360px;

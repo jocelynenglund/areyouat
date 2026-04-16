@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Är du på? — om</title>
+  <link rel="stylesheet" href="/lib/base.css">
+  <style>
+    .about-card {
+      width: 100%;
+      max-width: 360px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 40px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .about-title {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .about-body {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .about-body strong {
+      color: var(--ink);
+    }
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 8px;
+      padding: 2px 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .back-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .back-link:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div id="site-title">är du på…</div>
+  <div class="about-card">
+    <div class="about-title">hur funkar det?</div>
+    <div class="about-body">
+      <p>Dela en plats med vänner — se vem som är där just nu.</p>
+      <div class="step">
+        <span class="step-num">1</span>
+        <span>Hitta på ett <strong>platsnamn</strong> — t.ex. <em>bron</em>, <em>gymmet</em>, <em>kontoret</em></span>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <span>Hitta på ett <strong>lösenord</strong> som bara ni i gruppen känner till</span>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <span>Dela länken <strong>rdp.itsybit.se/platsnamn</strong> med dina vänner</span>
+      </div>
+      <p>Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
+    </div>
+    <a class="back-link" href="/">← tillbaka</a>
+  </div>
+</body>
+</html>
