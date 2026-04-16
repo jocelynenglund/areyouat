@@ -139,6 +139,50 @@
   font-size: 13px;
 }
 
+.leave-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.8);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.leave-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.history-section {
+  width: 100%;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.history-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: line-through;
+  text-decoration-color: var(--border);
+}
+
 .check-again-btn {
   padding: 12px 20px;
   font-size: 14px;

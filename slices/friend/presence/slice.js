@@ -145,7 +145,8 @@
     input.focus();
   }
 
-  function renderPopulated(entries) {
+  function renderPopulated(entries, history) {
+    history = history || [];
     const count = entries.length;
     const banner = count === 1 ? 'någon e här!' : `${count} e här`;
     const isAlreadyHere = myNickname && entries.some(function (e) {
@@ -161,9 +162,19 @@
         <div class="presence-item${isMe ? ' is-you' : ''}">
           <span class="presence-name">${nameLabel}</span>
           <span class="presence-time">${timeLabel}</span>
+          ${isMe ? '<button class="leave-btn" id="leave-btn">lämna</button>' : ''}
         </div>
       `;
     }).join('');
+
+    const historyHtml = history.length ? `
+      <div class="history-section">
+        <div class="history-label">var här tidigare</div>
+        ${history.map(function (e) {
+          return `<div class="history-item"><span>${e.nickname}</span><span class="presence-time">${fmt(e.announcedAt)}</span></div>`;
+        }).join('')}
+      </div>
+    ` : '';
 
     app.innerHTML = `
       <div class="presence-card">
@@ -171,6 +182,7 @@
         <div class="there-banner"><span class="dot"></span>${banner}</div>
         ${isAlreadyHere ? '<div class="state-sub">andra i gruppen kan se dig nu</div>' : ''}
         <div class="presence-list">${listHtml}</div>
+        ${historyHtml}
         ${joinLabel ? `<button class="btn btn-primary" id="join-btn" style="margin-top:4px">${joinLabel}</button>` : ''}
         <button class="check-again-btn" id="check-btn">kolla igen</button>
       </div>
@@ -178,6 +190,17 @@
 
     if (joinLabel) {
       document.getElementById('join-btn').addEventListener('click', renderNamePrompt);
+    }
+    if (document.getElementById('leave-btn')) {
+      document.getElementById('leave-btn').addEventListener('click', function () {
+        window.AREYOUAT.leavePresence(place, passphrase, myNickname)
+          .then(function () {
+            myNickname = null;
+            renderLoading();
+            queryPresence();
+          })
+          .catch(function () { renderLoading(); queryPresence(); });
+      });
     }
     document.getElementById('check-btn').addEventListener('click', function () {
       renderLoading();
@@ -191,10 +214,13 @@
     window.AREYOUAT.getPresenceToday(place, passphrase)
       .then(function (data) {
         const entries = data.presences || data.presence || data || [];
-        if (entries.length === 0) {
+        const history = data.history || [];
+        if (entries.length === 0 && history.length === 0) {
+          renderEmpty();
+        } else if (entries.length === 0) {
           renderEmpty();
         } else {
-          renderPopulated(entries);
+          renderPopulated(entries, history);
         }
       })
       .catch(function () {
