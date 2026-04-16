@@ -7,6 +7,23 @@
   let myNickname = null;
 
   // --- guard ---
+  if (place === 'about') {
+    app.innerHTML = `
+      <div class="presence-card">
+        <div class="place-name" style="font-size:28px">hur funkar det?</div>
+        <div style="color:var(--muted);font-size:15px;line-height:1.6;text-align:left;display:flex;flex-direction:column;gap:14px">
+          <p>Dela en plats med vänner — se vem som är där just nu.</p>
+          <p><strong style="color:var(--ink)">1.</strong> Hitta på ett platsnamn — t.ex. <em>bron</em>, <em>gymmet</em></p>
+          <p><strong style="color:var(--ink)">2.</strong> Hitta på ett lösenord som bara ni känner till</p>
+          <p><strong style="color:var(--ink)">3.</strong> Dela <strong style="color:var(--ink)">rdp.itsybit.se/platsnamn</strong> med dina vänner</p>
+          <p>Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
+        </div>
+        <a href="/" style="font-size:13px;color:var(--muted);text-decoration:none;margin-top:4px">← tillbaka</a>
+      </div>
+    `;
+    return;
+  }
+
   if (!place) {
     app.innerHTML = '<p style="color:var(--muted);text-align:center;margin-top:40px">Ange en plats i URL:en, t.ex. /bron</p>';
     return;
