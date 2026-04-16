@@ -3,29 +3,42 @@
   const place = window.location.pathname.replace(/^\//, '').split('/')[0] || null;
   const app = document.getElementById('app');
 
-  let passphrase = null;
+  const params = new URLSearchParams(window.location.search);
+  let passphrase = params.get('pp') || null;
   let myNickname = null;
 
   // --- guard ---
-  if (place === 'about') {
+  if (!place || place === 'about') {
     app.innerHTML = `
       <div class="presence-card">
-        <div class="place-name" style="font-size:28px">hur funkar det?</div>
-        <div style="color:var(--muted);font-size:15px;line-height:1.6;text-align:left;display:flex;flex-direction:column;gap:14px">
-          <p>Dela en plats med vänner — se vem som är där just nu.</p>
-          <p><strong style="color:var(--ink)">1.</strong> Hitta på ett platsnamn — t.ex. <em>bron</em>, <em>gymmet</em></p>
-          <p><strong style="color:var(--ink)">2.</strong> Hitta på ett lösenord som bara ni känner till</p>
-          <p><strong style="color:var(--ink)">3.</strong> Dela <strong style="color:var(--ink)">rdp.itsybit.se/platsnamn</strong> med dina vänner</p>
-          <p>Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
+        <div class="place-name">var e ni?</div>
+        <div class="tagline">skriv ett platsnamn och ett lösenord</div>
+        <input class="presence-input" id="place-input" type="text" placeholder="bron, gymmet, kontoret…" autocomplete="off" />
+        <input class="presence-input" id="pp-input" type="password" placeholder="lösenord" autocomplete="off" />
+        <button class="btn btn-primary" id="go-btn">fortsätt →</button>
+        <div style="color:var(--muted);font-size:13px;line-height:1.7;text-align:center;margin-top:8px;border-top:1px solid var(--border);padding-top:20px;width:100%">
+          hitta på ett platsnamn och ett lösenord som bara ni känner till —
+          dela länken med vänner så ser ni vem som är där just nu.<br><br>
+          ingen app. inget konto. allt nollställs vid midnatt.
         </div>
-        <a href="/" style="font-size:13px;color:var(--muted);text-decoration:none;margin-top:4px">← tillbaka</a>
       </div>
     `;
-    return;
-  }
 
-  if (!place) {
-    app.innerHTML = '<p style="color:var(--muted);text-align:center;margin-top:40px">Ange en plats i URL:en, t.ex. /bron</p>';
+    const placeInput = document.getElementById('place-input');
+    const ppInput = document.getElementById('pp-input');
+    const goBtn = document.getElementById('go-btn');
+
+    function submit() {
+      const p = placeInput.value.trim().toLowerCase().replace(/\s+/g, '-');
+      const pp = ppInput.value.trim();
+      if (!p) { placeInput.focus(); return; }
+      if (!pp) { ppInput.focus(); return; }
+      window.location.href = `/${p}?pp=${encodeURIComponent(pp)}`;
+    }
+
+    goBtn.addEventListener('click', submit);
+    [placeInput, ppInput].forEach(el => el.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); }));
+    placeInput.focus();
     return;
   }
 
@@ -206,5 +219,10 @@
   }
 
   // --- boot ---
-  renderPassphrase();
+  if (passphrase) {
+    renderLoading();
+    queryPresence();
+  } else {
+    renderPassphrase();
+  }
 })();
