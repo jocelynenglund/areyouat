@@ -1,127 +1,118 @@
 {
-  "project": "areyouat",
-  "updated_at": "2026-04-16T18:35:00Z",
+  "project": "areyouat \u2014 ETA + status + history cap",
+  "updated_at": "2026-04-17T20:04:00Z",
   "slices": [
     {
       "id": 0,
-      "name": "Mockup (approval gate)",
-      "layer": "design",
-      "description": "Static HTML mockup showing all 6 UI states — user approves visual design before any real code is built",
+      "name": "AnnounceEta + CancelEta endpoints + events",
+      "layer": "backend",
+      "description": "New files in src/AreYouAt/Features/Presence/: AnnounceEta.cs (POST /places/{place}/eta, body {magicword, nickname, minutes}, validate minutes in {5,15,30,45}, append Presence/EtaAnnounced event), CancelEta.cs (POST /places/{place}/eta/cancel, body {magicword, nickname}, append Presence/EtaCancelled). Register both in AreYouAtModule.cs MapEndpoints.",
       "status": "done",
       "depends_on": [],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T18:20:00Z",
-      "completed_at": "2026-04-16T18:35:00Z"
+      "started_at": "2026-04-17T19:16:52Z",
+      "completed_at": "2026-04-17T19:27:16Z"
     },
     {
       "id": 1,
-      "name": "API module scaffold",
+      "name": "SetStatus endpoint + event",
       "layer": "backend",
-      "description": "New AreYouAt module in event-store-api: .csproj, AreYouAtModule.cs with IModule, Shared/IdGenerator.cs, Shared/PassphraseHasher.cs. Register in sln + Host csproj + Program.cs API key bypass",
+      "description": "New file src/AreYouAt/Features/Presence/SetStatus.cs (POST /places/{place}/status, body {magicword, nickname, status}, trim and slice status to 30 chars, append Presence/StatusSet event). Empty string is a valid clear. Register in AreYouAtModule.cs.",
       "status": "done",
-      "depends_on": [0],
+      "depends_on": [],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T19:00:00Z",
-      "completed_at": "2026-04-16T19:05:00Z"
+      "started_at": "2026-04-17T19:17:16Z",
+      "completed_at": "2026-04-17T19:27:16Z"
     },
     {
       "id": 2,
-      "name": "AnnouncePresence command",
+      "name": "Projection: fold ETA + Status into PresenceToday",
       "layer": "backend",
-      "description": "POST /api/areyouat/places/{place}/announce — AnnouncePresence command writes PresenceAnnounced event. Stream: presence-{place}-{passphraseHash}. Payload: nickname, date, announcedAt",
+      "description": "Extend PresenceProjection.cs: add EtaEntry(Nickname, Minutes, AnnouncedAt, Status?) record. Add Status field to PresenceEntry. Add Etas List to PresenceToday. Fold rules: Presence/EtaAnnounced adds to etas dict (keyed by nickname, latest wins); Presence/EtaCancelled removes from etas; Presence/Announced for a nickname implicitly cancels its active eta; Presence/StatusSet updates status for that nickname (both presence and eta views). Ignore non-today events (match existing date filter).",
       "status": "done",
-      "depends_on": [1],
+      "depends_on": [
+        0,
+        1
+      ],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T19:10:00Z",
-      "completed_at": "2026-04-16T19:15:00Z"
+      "started_at": "2026-04-17T19:27:16Z",
+      "completed_at": "2026-04-17T19:29:20Z"
     },
     {
       "id": 3,
-      "name": "GetPresenceToday query",
+      "name": "Deploy backend + curl-verify endpoints",
       "layer": "backend",
-      "description": "POST /api/areyouat/places/{place}/today — body: {passphrase}. Reads stream, projects to PresenceToday view (nickname, announcedAt), filters by today's date. Returns empty list if none",
+      "description": "Commit + push backend slices 0-2 (GitHub Actions auto-deploys to Azure). Once deployed, curl the new endpoints against prod labsapi-hmeva5cfhdfkejhz.westeurope-01.azurewebsites.net to verify: announce eta, cancel eta, set status, then GET /today and confirm etas array and status field appear correctly in response.",
       "status": "done",
-      "depends_on": [1],
+      "depends_on": [
+        2
+      ],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T20:00:00Z",
-      "completed_at": "2026-04-16T20:05:00Z"
+      "started_at": "2026-04-17T19:29:20Z",
+      "completed_at": "2026-04-17T19:41:30Z"
     },
     {
       "id": 4,
-      "name": "Integration tests",
-      "layer": "backend",
-      "description": "tests/AreYouAt.Tests with ApiFixture + WebApplicationFactory + real FileEventStore. Tests: announce writes event, query filters by date, wrong passphrase returns empty, yesterday's presence not returned today",
+      "name": "Ship staged UI fixes (field swap + titles)",
+      "layer": "frontend",
+      "description": "Commit + push the already-staged changes in slices/friend/landing/landing.js (place field first with slash prefix, magicword second) and slices/friend/i18n/i18n.js (landing_heading_a/b restored to '\u00e4r du p\u00e5?' / 'are you in?'). Standalone warmup commit, independent of other work.",
       "status": "done",
-      "depends_on": [2, 3],
+      "depends_on": [],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T21:30:00Z",
-      "completed_at": "2026-04-16T21:50:00Z"
+      "started_at": "2026-04-17T19:16:04Z",
+      "completed_at": "2026-04-17T19:16:16Z"
     },
     {
       "id": 5,
-      "name": "Frontend scaffold",
+      "name": "API wrappers + i18n keys",
       "layer": "frontend",
-      "description": "Root index.html, 404.html SPA fallback, router resolving /{place} URLs. Three-file slice scaffold (slices/friend/presence/). Apply design tokens from mockup",
+      "description": "Add to lib/api.js: setEta(place, pp, nickname, minutes), cancelEta(place, pp, nickname), setStatus(place, pp, nickname, status). Add i18n keys in both sv and en per design bundle: onTheWay, etaPrompt, etaHint, setEta, arrived, cancelEta, status, statusPlaceholder, showMore (with {n} interp), showLess. No UI changes yet \u2014 just the plumbing.",
       "status": "done",
-      "depends_on": [0],
+      "depends_on": [],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T20:30:00Z",
-      "completed_at": "2026-04-16T20:31:00Z"
+      "started_at": "2026-04-17T19:20:00Z",
+      "completed_at": "2026-04-17T19:20:30Z"
     },
     {
       "id": 6,
-      "name": "Presence slice (UI)",
+      "name": "Status slice: render + tap-to-edit on self pill",
       "layer": "frontend",
-      "description": "slices/friend/presence/ — passphrase entry → query API → render empty/populated state. Includes all 6 mockup states wired to user flow",
+      "description": "New slice slices/friend/status/ with status.js + slice.css. Added to index.html and 404.html. Exposes PRESENCE.renderStatus(entry, isSelf) returning HTML, and PRESENCE.mountStatusEditor() wiring the tap-to-edit flow (swap to inline input maxlength=30, autofocus, commit on Enter/blur via AREYOUAT.setStatus, revert on Escape). get-today.js calls into these but holds no status logic itself. Italic Instrument Serif with curly quotes, ellipsis truncate.",
       "status": "done",
-      "depends_on": [5],
+      "depends_on": [
+        3,
+        5
+      ],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T21:30:00Z",
-      "completed_at": "2026-04-16T21:45:00Z"
+      "started_at": "2026-04-17T19:41:30Z",
+      "completed_at": "2026-04-17T19:58:00Z"
     },
     {
       "id": 7,
-      "name": "Announce flow (UI)",
+      "name": "History cap + expand toggle",
       "layer": "frontend",
-      "description": "Name prompt on 'men jag är!' click, POST to AnnouncePresence endpoint, re-query presence, show confirmation state",
+      "description": "In slices/friend/presence/get-today.js: cap rendered history at 3 entries by default. Below the visible set, add mono 10px uppercase toggle button. Collapsed label: showMore with hidden count. Expanded label: showLess. Client-only state (module-scoped var is fine). CSS for .history-toggle in slice.css.",
       "status": "done",
-      "depends_on": [6, 2],
+      "depends_on": [
+        5
+      ],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T21:30:00Z",
-      "completed_at": "2026-04-16T21:45:00Z"
+      "started_at": "2026-04-17T19:35:38Z",
+      "completed_at": "2026-04-17T19:36:11Z"
     },
     {
       "id": 8,
-      "name": "API wiring & CORS",
-      "layer": "integration",
-      "description": "Config API base URL in frontend (dev vs prod), add /api/areyouat to CORS allowlist in event-store-api Program.cs, verify end-to-end flow locally",
+      "name": "ETA slice: on-the-way band + chooser + self pill",
+      "layer": "frontend",
+      "description": "New slice slices/friend/eta/ with eta.js + slice.css. Added to index.html and 404.html. Exposes PRESENCE.renderOnTheWayBand(etas), PRESENCE.renderEtaChooser(), PRESENCE.mountEtaHandlers(), PRESENCE.selfHasEta(etas). In get-today.js renderPopulated: render on-the-way band (centered label with horizontal rules, then eta pills \u2014 self first with dashed ink border, [i'm here] ink button that calls announcePresence then refreshes, \u00d7 cancel that calls cancelEta; others dashed soft border 0.85 opacity) above presence pills. Inject ETA chooser CTA below presence pills (only when self has no active presence and no active eta). Collapsed: dashed box with italic prompt + 'SET ETA' mono label. Expanded: 4 equal-flex chips labeled 5m/15m/30m/45m calling setEta then refresh.",
       "status": "done",
-      "depends_on": [7, 3],
+      "depends_on": [
+        3,
+        5
+      ],
       "assigned_to": "claude",
-      "started_at": "2026-04-16T18:40:00Z",
-      "completed_at": "2026-04-16T18:42:00Z"
-    },
-    {
-      "id": 9,
-      "name": "GitHub repo + FTP secrets",
-      "layer": "infra",
-      "description": "gh repo create jawss/areyouat, push main branch. Use setup-ftp skill to push FTP_SERVER/USERNAME/PASSWORD secrets from ~/.secrets/ftp.env",
-      "status": "done",
-      "depends_on": [8],
-      "assigned_to": "claude",
-      "started_at": "2026-04-16T21:55:00Z",
-      "completed_at": "2026-04-16T22:00:00Z"
-    },
-    {
-      "id": 10,
-      "name": "FTP deploy workflow",
-      "layer": "infra",
-      "description": ".github/workflows/deploy.yml using SamKirkland/FTP-Deploy-Action. Deploys to server-dir: rdp/. Excludes .git, dev/, slices.json, event model JSONs, README. Triggers on push to main",
-      "status": "done",
-      "depends_on": [9],
-      "assigned_to": "claude",
-      "started_at": "2026-04-16T22:00:00Z",
-      "completed_at": "2026-04-16T22:02:00Z"
+      "started_at": "2026-04-17T19:58:00Z",
+      "completed_at": "2026-04-17T20:04:00Z"
     }
   ]
 }

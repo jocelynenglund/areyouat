@@ -154,7 +154,8 @@ PRESENCE.renderNamePrompt = function () {
       .then(function (data) {
         const entries = data.presences || data.presence || data || [];
         const history = data.history || [];
-        PRESENCE.renderPopulated(entries, history);
+        const etas = data.etas || [];
+        PRESENCE.renderPopulated(entries, history, etas);
       })
       .catch(function () { PRESENCE.renderPassphrase(I18N.t('error_generic')); });
   }

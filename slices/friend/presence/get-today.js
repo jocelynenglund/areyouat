@@ -1,5 +1,8 @@
 window.PRESENCE = window.PRESENCE || {};
 
+const HISTORY_CAP = 3;
+let historyExpanded = false;
+
 function topChrome() {
   return `
     <div class="scandi-presence-chrome">
@@ -62,8 +65,9 @@ PRESENCE.renderEmpty = function () {
   });
 };
 
-PRESENCE.renderPopulated = function (entries, history) {
+PRESENCE.renderPopulated = function (entries, history, etas) {
   history = history || [];
+  etas = etas || [];
   const app = document.getElementById('app');
   const count = entries.length;
   const locale = I18N.t('date_locale');
@@ -71,6 +75,8 @@ PRESENCE.renderPopulated = function (entries, history) {
   const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
     return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
   });
+  const selfHasEta = PRESENCE.selfHasEta ? PRESENCE.selfHasEta(etas) : false;
+  const showEtaChooser = !isAlreadyHere && !selfHasEta;
 
   const others = isAlreadyHere ? count - 1 : count;
   let subLabel;
@@ -105,6 +111,7 @@ PRESENCE.renderPopulated = function (entries, history) {
 
   const pillsHtml = sorted.map(function (e) {
     const isMe = PRESENCE.myNickname && e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+    const statusHtml = PRESENCE.renderStatus ? PRESENCE.renderStatus(e, isMe) : '';
     if (isMe) {
       return `
         <div class="pill pill--self">
@@ -112,6 +119,7 @@ PRESENCE.renderPopulated = function (entries, history) {
           <div class="pill-time">${I18N.t('time_now')}</div>
           <button class="pill-leave-btn" id="leave-btn">${I18N.t('leave')}</button>
           <div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${bellSvg(false)}</button></div>
+          ${statusHtml}
         </div>
       `;
     }
@@ -119,10 +127,16 @@ PRESENCE.renderPopulated = function (entries, history) {
       <div class="pill">
         <div class="pill-name">${e.nickname}</div>
         <div class="pill-time">${fmt(e.announcedAt)}</div>
+        ${statusHtml}
       </div>
     `;
   }).join('');
 
+  const hiddenCount = Math.max(0, history.length - HISTORY_CAP);
+  const visibleHistory = historyExpanded ? history : history.slice(0, HISTORY_CAP);
+  const toggleLabel = historyExpanded
+    ? I18N.t('show_less')
+    : I18N.t('show_more', { n: hiddenCount });
   const historyHtml = history.length ? `
     <div class="history-divider">
       <div class="rule"></div>
@@ -130,7 +144,7 @@ PRESENCE.renderPopulated = function (entries, history) {
       <div class="rule"></div>
     </div>
     <div class="scandi-pills">
-      ${history.map(function (e) {
+      ${visibleHistory.map(function (e) {
         return `
           <div class="pill pill--history">
             <div class="pill-name">${e.nickname}</div>
@@ -139,6 +153,9 @@ PRESENCE.renderPopulated = function (entries, history) {
         `;
       }).join('')}
     </div>
+    ${hiddenCount > 0 || historyExpanded ? `
+      <button class="history-toggle" id="history-toggle-btn">${toggleLabel}</button>
+    ` : ''}
   ` : '';
 
   app.innerHTML = `
@@ -157,6 +174,10 @@ PRESENCE.renderPopulated = function (entries, history) {
       `}
 
       ${pillsHtml ? `<div class="scandi-pills">${pillsHtml}</div>` : ''}
+
+      ${PRESENCE.renderOnTheWayBand ? PRESENCE.renderOnTheWayBand(etas) : ''}
+
+      ${showEtaChooser && PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
 
       <div class="scandi-actions">
         ${joinLabel ? `<button class="scandi-btn--ghost" id="join-btn">${joinLabel}</button>` : ''}
@@ -186,6 +207,13 @@ PRESENCE.renderPopulated = function (entries, history) {
   if (leaveBtn) leaveBtn.addEventListener('click', PRESENCE.leave);
   const bellBtn = document.getElementById('bell-btn');
   if (bellBtn) PRESENCE.initBell(bellBtn);
+  if (PRESENCE.mountStatusEditor) PRESENCE.mountStatusEditor();
+  if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
+  const historyToggle = document.getElementById('history-toggle-btn');
+  if (historyToggle) historyToggle.addEventListener('click', function () {
+    historyExpanded = !historyExpanded;
+    PRESENCE.renderPopulated(entries, history, etas);
+  });
 };
 
 PRESENCE.query = function () {
@@ -193,10 +221,11 @@ PRESENCE.query = function () {
     .then(function (data) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
-      if (entries.length === 0 && history.length === 0) {
+      const etas = data.etas || [];
+      if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();
       } else {
-        PRESENCE.renderPopulated(entries, history);
+        PRESENCE.renderPopulated(entries, history, etas);
       }
     })
     .catch(function () {
