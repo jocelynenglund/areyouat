@@ -1,4 +1,8 @@
 (function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').catch(function () {});
+  }
+
   const place = window.location.pathname.replace(/^\//, '').split('/')[0] || '';
   if (!place || place === 'about') return;
 
