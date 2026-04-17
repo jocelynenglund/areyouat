@@ -177,13 +177,13 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
       ${PRESENCE.renderOnTheWayBand ? PRESENCE.renderOnTheWayBand(etas) : ''}
 
-      ${showEtaChooser && PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
-
       <div class="scandi-actions">
         ${joinLabel ? `<button class="scandi-btn--ghost" id="join-btn">${joinLabel}</button>` : ''}
         <button class="scandi-btn--ghost" id="share-btn">+ ${I18N.t('share')}</button>
         <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
       </div>
+
+      ${showEtaChooser && PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
 
       ${historyHtml}
     </div>
