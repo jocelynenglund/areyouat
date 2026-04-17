@@ -8,7 +8,7 @@
     <div class="presence-card">
       <div class="tagline" style="margin-top:0">vart ska ni?</div>
       <input class="presence-input" id="place-input" type="text" placeholder="bron, gymmet, kontoret…" autocomplete="off" />
-      <input class="presence-input" id="pp-input" type="password" placeholder="vad brukar vi säga?" autocomplete="off" />
+      <input class="presence-input" id="pp-input" type="text" placeholder="vad brukar vi säga?" autocomplete="off" />
       <button class="btn btn-primary" id="go-btn">fortsätt →</button>
       <div class="about-text">
         hitta på ett platsnamn och ett magicword som bara ni känner till —
