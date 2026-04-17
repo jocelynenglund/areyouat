@@ -33,9 +33,18 @@
   opacity: 0.45;
 }
 
-.pill-status-input {
+.pill-status-edit {
   flex-basis: 100%;
   order: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.pill-status-input {
+  flex: 1;
+  min-width: 0;
   font-family: var(--font-display);
   font-style: italic;
   font-size: 14px;
@@ -44,15 +53,38 @@
   border: none;
   border-bottom: 1px dashed rgba(250,250,247,0.3);
   outline: none;
-  padding: 4px 2px;
+  padding: 6px 2px;
   margin: 0;
-  width: 100%;
   letter-spacing: -0.1px;
 }
 .pill-status-input::placeholder {
   color: var(--pill-self-ink);
   opacity: 0.35;
   font-style: italic;
+}
+
+.pill-status-save {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--pill-self-ink);
+  color: var(--pill-self);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.08s ease, background 0.12s ease;
+}
+.pill-status-save:active {
+  transform: scale(0.92);
 }
 
 .pill:not(.pill--self) .pill-status {

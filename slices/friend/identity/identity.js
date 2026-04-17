@@ -81,9 +81,15 @@ PRESENCE.renderPassphrase = function (errorMsg) {
   }
 };
 
-PRESENCE.renderNamePrompt = function () {
+PRESENCE.renderNamePrompt = function (opts) {
+  opts = opts || {};
+  const headingA = opts.headingA || I18N.t('name_prompt_a');
+  const headingB = opts.headingB || I18N.t('name_prompt_b');
+  const submitLabel = opts.submitLabel || I18N.t('name_submit');
+  const onSubmit = opts.onSubmit || defaultAnnounceSubmit;
+
   const app = document.getElementById('app');
-  const initial = PRESENCE.storedNickname || '';
+  const initial = PRESENCE.storedNickname || PRESENCE.myNickname || '';
   app.innerHTML = `
     <div class="scandi-screen">
       <div class="scandi-chrome">
@@ -93,8 +99,8 @@ PRESENCE.renderNamePrompt = function () {
 
       <div class="scandi-hero">
         <div class="display-heading">
-          ${I18N.t('name_prompt_a')}<br/>
-          <span class="italic">${I18N.t('name_prompt_b')}</span>
+          ${headingA}<br/>
+          <span class="italic">${headingB}</span>
         </div>
       </div>
 
@@ -109,7 +115,7 @@ PRESENCE.renderNamePrompt = function () {
       <div style="display:flex; gap:10px; margin-top:28px;">
         <button class="scandi-btn scandi-btn--ghost-soft" id="cancel-btn" style="flex:0 0 auto;">${I18N.t('name_cancel')}</button>
         <button class="scandi-btn" id="confirm-btn" style="flex:1;">
-          <span>${I18N.t('name_submit')}</span><span>→</span>
+          <span>${submitLabel}</span><span>→</span>
         </button>
       </div>
     </div>
@@ -149,14 +155,18 @@ PRESENCE.renderNamePrompt = function () {
     PRESENCE.myNickname = val;
     localStorage.setItem(PRESENCE.storageKey, JSON.stringify({ nickname: val, passphrase: PRESENCE.passphrase }));
     PRESENCE.renderLoading();
-    window.AREYOUAT.announcePresence(PRESENCE.place, PRESENCE.passphrase, val)
-      .then(function () { return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase); })
-      .then(function (data) {
-        const entries = data.presences || data.presence || data || [];
-        const history = data.history || [];
-        const etas = data.etas || [];
-        PRESENCE.renderPopulated(entries, history, etas);
-      })
-      .catch(function () { PRESENCE.renderPassphrase(I18N.t('error_generic')); });
+    onSubmit(val);
   }
 };
+
+function defaultAnnounceSubmit(nickname) {
+  window.AREYOUAT.announcePresence(PRESENCE.place, PRESENCE.passphrase, nickname)
+    .then(function () { return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase); })
+    .then(function (data) {
+      const entries = data.presences || data.presence || data || [];
+      const history = data.history || [];
+      const etas = data.etas || [];
+      PRESENCE.renderPopulated(entries, history, etas);
+    })
+    .catch(function () { PRESENCE.renderPassphrase(I18N.t('error_generic')); });
+}

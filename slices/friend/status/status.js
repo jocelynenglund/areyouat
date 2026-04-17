@@ -22,6 +22,9 @@ PRESENCE.mountStatusEditor = function () {
 
 function openEditor(node) {
   const current = node.classList.contains('pill-status--empty') ? '' : stripQuotes(node.textContent);
+  const wrap = document.createElement('div');
+  wrap.className = 'pill-status-edit';
+
   const input = document.createElement('input');
   input.className = 'pill-status-input';
   input.type = 'text';
@@ -30,8 +33,17 @@ function openEditor(node) {
   input.placeholder = I18N.t('status_placeholder');
   input.setAttribute('aria-label', 'status');
 
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'pill-status-save';
+  saveBtn.type = 'button';
+  saveBtn.setAttribute('aria-label', 'save');
+  saveBtn.textContent = '\u2713';
+
+  wrap.appendChild(input);
+  wrap.appendChild(saveBtn);
+
   let settled = false;
-  node.replaceWith(input);
+  node.replaceWith(wrap);
   input.focus();
   input.setSelectionRange(input.value.length, input.value.length);
 
@@ -58,7 +70,11 @@ function openEditor(node) {
     if (e.key === 'Enter') { e.preventDefault(); commit(); }
     else if (e.key === 'Escape') { e.preventDefault(); revert(); }
   });
-  input.addEventListener('blur', commit);
+  input.addEventListener('blur', function () {
+    setTimeout(commit, 120);
+  });
+  saveBtn.addEventListener('pointerdown', function (e) { e.preventDefault(); });
+  saveBtn.addEventListener('click', commit);
 }
 
 function stripQuotes(s) {

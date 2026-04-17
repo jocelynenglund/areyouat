@@ -82,7 +82,17 @@ PRESENCE.selfHasEta = function (etas) {
 
 function commitEta(minutes) {
   if (!PRESENCE.myNickname) {
-    PRESENCE.renderNamePrompt();
+    PRESENCE.renderNamePrompt({
+      submitLabel: I18N.t('set_eta'),
+      onSubmit: function (nickname) {
+        AREYOUAT.setEta(PRESENCE.place, PRESENCE.passphrase, nickname, minutes)
+          .then(function () {
+            etaChooserExpanded = false;
+            PRESENCE.query();
+          })
+          .catch(function () { PRESENCE.query(); });
+      }
+    });
     return;
   }
   AREYOUAT.setEta(PRESENCE.place, PRESENCE.passphrase, PRESENCE.myNickname, minutes)
