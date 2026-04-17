@@ -21,16 +21,16 @@
 
       <div class="scandi-form">
         <div class="scandi-field">
-          <div class="section-label">${I18N.t('landing_pp_label')}</div>
+          <div class="section-label">${I18N.t('landing_place_label')}</div>
           <div class="scandi-input-wrap">
             <span class="slash">/</span>
-            <input class="scandi-input scandi-input--mono" id="pp-input" type="text" placeholder="${I18N.t('landing_pp_placeholder')}" autocomplete="off" />
+            <input class="scandi-input scandi-input--mono" id="place-input" type="text" placeholder="${I18N.t('landing_place_placeholder')}" autocomplete="off" />
           </div>
         </div>
         <div class="scandi-field">
-          <div class="section-label">${I18N.t('landing_place_label')}</div>
+          <div class="section-label">${I18N.t('landing_pp_label')}</div>
           <div class="scandi-input-wrap">
-            <input class="scandi-input scandi-input--serif" id="place-input" type="text" placeholder="${I18N.t('landing_place_placeholder')}" autocomplete="off" />
+            <input class="scandi-input scandi-input--serif" id="pp-input" type="text" placeholder="${I18N.t('landing_pp_placeholder')}" autocomplete="off" />
           </div>
         </div>
       </div>
@@ -61,5 +61,5 @@
   [placeInput, ppInput].forEach(function (el) {
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
   });
-  ppInput.focus();
+  placeInput.focus();
 })();
