@@ -68,7 +68,7 @@ async function unsubscribe(storageKey) {
 
 function updateBell(btn, subscribed) {
   btn.textContent = subscribed ? '🔔' : '🔕';
-  btn.title = subscribed ? 'notiser på — klicka för att stänga av' : 'få notis när någon dyker upp';
+  btn.title = subscribed ? I18N.t('bell_on') : I18N.t('bell_off');
 }
 
 function urlBase64ToUint8Array(base64String) {

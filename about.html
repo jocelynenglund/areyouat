@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Är du på? — om</title>
+  <title data-i18n="about_page_title">Är du på? — om</title>
   <link rel="stylesheet" href="/lib/base.css">
+  <link rel="stylesheet" href="/slices/friend/i18n/slice.css">
   <style>
     .about-card {
       width: 100%;
@@ -59,26 +60,27 @@
   </style>
 </head>
 <body>
-  <div id="site-title">är du på…</div>
+  <div id="site-title"><span data-i18n="app_title_short">är du på…</span></div>
   <div class="about-card">
-    <div class="about-title">hur funkar det?</div>
+    <div class="about-title" data-i18n="about_heading">hur funkar det?</div>
     <div class="about-body">
-      <p>Dela en plats med vänner — se vem som är där just nu.</p>
+      <p data-i18n="about_intro">Dela en plats med vänner — se vem som är där just nu.</p>
       <div class="step">
         <span class="step-num">1</span>
-        <span>Hitta på ett <strong>platsnamn</strong> — t.ex. <em>bron</em>, <em>gymmet</em>, <em>kontoret</em></span>
+        <span data-i18n="about_step1" data-i18n-html>Hitta på ett <strong>platsnamn</strong> — t.ex. <em>bron</em>, <em>gymmet</em>, <em>kontoret</em></span>
       </div>
       <div class="step">
         <span class="step-num">2</span>
-        <span>Hitta på ett <strong>lösenord</strong> som bara ni i gruppen känner till</span>
+        <span data-i18n="about_step2" data-i18n-html>Hitta på ett <strong>lösenord</strong> som bara ni i gruppen känner till</span>
       </div>
       <div class="step">
         <span class="step-num">3</span>
-        <span>Dela länken <strong>rdp.itsybit.se/platsnamn</strong> med dina vänner</span>
+        <span data-i18n="about_step3" data-i18n-html>Dela länken <strong>rdp.itsybit.se/platsnamn</strong> med dina vänner</span>
       </div>
-      <p>Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
+      <p data-i18n="about_footer">Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
     </div>
-    <a class="back-link" href="/">← tillbaka</a>
+    <a class="back-link" href="/" data-i18n="about_back">← tillbaka</a>
   </div>
+  <script src="/slices/friend/i18n/i18n.js"></script>
 </body>
 </html>

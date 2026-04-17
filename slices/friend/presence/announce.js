@@ -4,10 +4,10 @@ PRESENCE.renderPassphrase = function (errorMsg) {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="presence-card">
-      <div class="tagline">vad brukar vi säga?</div>
+      <div class="tagline">${I18N.t('passphrase_prompt')}</div>
       ${errorMsg ? `<div class="error-text">${errorMsg}</div>` : ''}
       <input class="presence-input" id="pp-input" type="text" placeholder="••••••" autocomplete="off" />
-      <button class="btn btn-primary" id="pp-btn">fortsätt</button>
+      <button class="btn btn-primary" id="pp-btn">${I18N.t('passphrase_submit')}</button>
     </div>
   `;
 
@@ -29,10 +29,10 @@ PRESENCE.renderNamePrompt = function () {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="presence-card">
-      <div class="tagline">vem e du?</div>
-      <input class="presence-input" id="name-input" type="text" placeholder="ditt namn" value="${PRESENCE.storedNickname || ''}" autocomplete="off" />
-      <button class="btn btn-primary" id="confirm-btn">jag är här!</button>
-      <button class="btn btn-secondary" id="cancel-btn">avbryt</button>
+      <div class="tagline">${I18N.t('name_prompt')}</div>
+      <input class="presence-input" id="name-input" type="text" placeholder="${I18N.t('name_placeholder')}" value="${PRESENCE.storedNickname || ''}" autocomplete="off" />
+      <button class="btn btn-primary" id="confirm-btn">${I18N.t('name_submit')}</button>
+      <button class="btn btn-secondary" id="cancel-btn">${I18N.t('name_cancel')}</button>
     </div>
   `;
 
@@ -55,6 +55,6 @@ PRESENCE.renderNamePrompt = function () {
         const history = data.history || [];
         PRESENCE.renderPopulated(entries, history);
       })
-      .catch(function () { PRESENCE.renderPassphrase('något gick fel — försök igen'); });
+      .catch(function () { PRESENCE.renderPassphrase(I18N.t('error_generic')); });
   }
 };

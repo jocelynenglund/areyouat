@@ -4,25 +4,26 @@ PRESENCE.renderLoading = function () {
   document.getElementById('app').innerHTML = `
     <div class="presence-card">
       <div class="spinner"></div>
-      <div class="loading-text">kollar…</div>
+      <div class="loading-text">${I18N.t('loading')}</div>
     </div>
   `;
 };
 
 PRESENCE.renderEmpty = function () {
   const app = document.getElementById('app');
+  const locale = I18N.t('date_locale');
   const d = new Date();
-  const timeStr = d.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
-  const dateStr = d.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' });
+  const timeStr = d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+  const dateStr = d.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
 
   PRESENCE.setLogoDot('none');
 
   app.innerHTML = `
     <div class="presence-card">
-      <div class="state-heading">ingen e här</div>
-      <div class="state-sub">kl ${timeStr} · ${dateStr}</div>
-      <button class="btn btn-primary" id="announce-btn">men jag är!</button>
-      <button class="check-again-btn" id="check-btn">kolla igen</button>
+      <div class="state-heading">${I18N.t('empty_heading')}</div>
+      <div class="state-sub">${I18N.t('empty_time_sub', { time: timeStr, date: dateStr })}</div>
+      <button class="btn btn-primary" id="announce-btn">${I18N.t('but_im_here')}</button>
+      <button class="check-again-btn" id="check-btn">${I18N.t('check_again')}</button>
     </div>
   `;
 
@@ -37,39 +38,40 @@ PRESENCE.renderPopulated = function (entries, history) {
   history = history || [];
   const app = document.getElementById('app');
   const count = entries.length;
+  const locale = I18N.t('date_locale');
 
   PRESENCE.setLogoDot(count > 0 ? 'active' : 'none');
 
-  const banner = count === 0 ? 'ingen e här nu'
-    : count === 1 ? 'någon e här!'
-    : `${count} e här`;
+  const banner = count === 0 ? I18N.t('banner_zero')
+    : count === 1 ? I18N.t('banner_one')
+    : I18N.t('banner_many', { n: count });
 
   const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
     return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
   });
   const joinLabel = isAlreadyHere ? null
-    : count === 0 ? 'men jag är!'
-    : count === 1 ? 'jag är också här!'
-    : 'jag med!';
+    : count === 0 ? I18N.t('join_zero')
+    : count === 1 ? I18N.t('join_one')
+    : I18N.t('join_many');
 
   function fmt(iso) {
-    return new Date(iso).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' });
+    return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
   }
 
   const listHtml = entries.map(function (e) {
     const isMe = PRESENCE.myNickname && e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
     return `
       <div class="presence-item${isMe ? ' is-you' : ''}">
-        <span class="presence-name">${isMe ? e.nickname + ' (du)' : e.nickname}</span>
-        <span class="presence-time">${isMe ? 'nu' : fmt(e.announcedAt)}</span>
-        ${isMe ? '<button class="leave-btn" id="leave-btn">lämna</button><button class="bell-btn" id="bell-btn">🔕</button>' : ''}
+        <span class="presence-name">${isMe ? e.nickname + ' ' + I18N.t('you_suffix') : e.nickname}</span>
+        <span class="presence-time">${isMe ? I18N.t('time_now') : fmt(e.announcedAt)}</span>
+        ${isMe ? `<button class="leave-btn" id="leave-btn">${I18N.t('leave')}</button><button class="bell-btn" id="bell-btn">🔕</button>` : ''}
       </div>
     `;
   }).join('');
 
   const historyHtml = history.length ? `
     <div class="history-section">
-      <div class="history-label">var här tidigare</div>
+      <div class="history-label">${I18N.t('history_label')}</div>
       ${history.map(function (e) {
         return `<div class="history-item"><span>${e.nickname}</span><span class="presence-time">${fmt(e.announcedAt)}</span></div>`;
       }).join('')}
@@ -79,11 +81,11 @@ PRESENCE.renderPopulated = function (entries, history) {
   app.innerHTML = `
     <div class="presence-card">
       ${count > 0 ? `<div class="there-banner">${banner}</div>` : `<div class="state-heading">${banner}</div>`}
-      ${isAlreadyHere ? '<div class="state-sub">andra i gruppen kan se dig nu</div>' : ''}
+      ${isAlreadyHere ? `<div class="state-sub">${I18N.t('others_can_see')}</div>` : ''}
       ${count > 0 ? `<div class="presence-list">${listHtml}</div>` : ''}
       ${historyHtml}
       ${joinLabel ? `<button class="btn btn-primary" id="join-btn" style="margin-top:4px">${joinLabel}</button>` : ''}
-      <button class="check-again-btn" id="check-btn">kolla igen</button>
+      <button class="check-again-btn" id="check-btn">${I18N.t('check_again')}</button>
     </div>
   `;
 
@@ -112,7 +114,7 @@ PRESENCE.query = function () {
     .catch(function () {
       PRESENCE.passphrase = null;
       PRESENCE.myNickname = null;
-      PRESENCE.renderPassphrase('fel lösenord eller nätverksfel — försök igen');
+      PRESENCE.renderPassphrase(I18N.t('error_wrong_pass'));
     });
 };
 

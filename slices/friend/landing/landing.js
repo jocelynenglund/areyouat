@@ -6,14 +6,13 @@
 
   app.innerHTML = `
     <div class="presence-card">
-      <div class="tagline" style="margin-top:0">vart ska ni?</div>
-      <input class="presence-input" id="place-input" type="text" placeholder="bron, gymmet, kontoret…" autocomplete="off" />
-      <input class="presence-input" id="pp-input" type="text" placeholder="vad brukar vi säga?" autocomplete="off" />
-      <button class="btn btn-primary" id="go-btn">fortsätt →</button>
+      <div class="tagline" style="margin-top:0">${I18N.t('landing_heading')}</div>
+      <input class="presence-input" id="place-input" type="text" placeholder="${I18N.t('landing_place_placeholder')}" autocomplete="off" />
+      <input class="presence-input" id="pp-input" type="text" placeholder="${I18N.t('landing_pp_placeholder')}" autocomplete="off" />
+      <button class="btn btn-primary" id="go-btn">${I18N.t('landing_submit')}</button>
       <div class="about-text">
-        hitta på ett platsnamn och ett magicword som bara ni känner till —
-        dela länken med vänner så ser ni vem som är där just nu.<br><br>
-        ingen app. inget konto. allt nollställs vid midnatt.
+        ${I18N.t('landing_about')}<br><br>
+        ${I18N.t('landing_about2')}
       </div>
     </div>
   `;
