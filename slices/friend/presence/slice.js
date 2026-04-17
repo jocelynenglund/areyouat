@@ -151,7 +151,7 @@
   function renderPopulated(entries, history) {
     history = history || [];
     const count = entries.length;
-    const banner = count === 1 ? 'någon e här!' : `${count} e här`;
+    const banner = count === 0 ? 'ingen e här nu' : count === 1 ? 'någon e här!' : `${count} e här`;
     const isAlreadyHere = myNickname && entries.some(function (e) {
       return e.nickname.toLowerCase() === myNickname.toLowerCase();
     });
@@ -220,8 +220,6 @@
         const entries = data.presences || data.presence || data || [];
         const history = data.history || [];
         if (entries.length === 0 && history.length === 0) {
-          renderEmpty();
-        } else if (entries.length === 0) {
           renderEmpty();
         } else {
           renderPopulated(entries, history);
