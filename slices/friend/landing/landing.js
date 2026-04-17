@@ -27,7 +27,7 @@
     const pp = ppInput.value.trim();
     if (!p) { placeInput.focus(); return; }
     if (!pp) { ppInput.focus(); return; }
-    window.location.href = `/${p}?pp=${encodeURIComponent(pp)}`;
+    window.location.href = `/${p}?magicword=${encodeURIComponent(pp)}`;
   }
 
   goBtn.addEventListener('click', submit);

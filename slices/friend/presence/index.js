@@ -8,7 +8,7 @@
 
   window.PRESENCE = window.PRESENCE || {};
   PRESENCE.place = place;
-  PRESENCE.passphrase = params.get('pp') || (stored && stored.passphrase) || null;
+  PRESENCE.passphrase = params.get('magicword') || (stored && stored.passphrase) || null;
   PRESENCE.myNickname = stored ? stored.nickname : null;
   PRESENCE.storageKey = storageKey;
 
