@@ -106,16 +106,22 @@
       "name": "GitHub repo + FTP secrets",
       "layer": "infra",
       "description": "gh repo create jawss/areyouat, push main branch. Use setup-ftp skill to push FTP_SERVER/USERNAME/PASSWORD secrets from ~/.secrets/ftp.env",
-      "status": "todo",
-      "depends_on": [8]
+      "status": "done",
+      "depends_on": [8],
+      "assigned_to": "claude",
+      "started_at": "2026-04-16T21:55:00Z",
+      "completed_at": "2026-04-16T22:00:00Z"
     },
     {
       "id": 10,
       "name": "FTP deploy workflow",
       "layer": "infra",
       "description": ".github/workflows/deploy.yml using SamKirkland/FTP-Deploy-Action. Deploys to server-dir: rdp/. Excludes .git, dev/, slices.json, event model JSONs, README. Triggers on push to main",
-      "status": "todo",
-      "depends_on": [9]
+      "status": "done",
+      "depends_on": [9],
+      "assigned_to": "claude",
+      "started_at": "2026-04-16T22:00:00Z",
+      "completed_at": "2026-04-16T22:02:00Z"
     }
   ]
 }
