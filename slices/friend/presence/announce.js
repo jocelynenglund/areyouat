@@ -4,7 +4,7 @@ PRESENCE.renderPassphrase = function (errorMsg) {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="presence-card">
-      <div class="tagline">skriv lösenord</div>
+      <div class="tagline">vad brukar vi säga?</div>
       ${errorMsg ? `<div class="error-text">${errorMsg}</div>` : ''}
       <input class="presence-input" id="pp-input" type="password" placeholder="••••••" autocomplete="off" />
       <button class="btn btn-primary" id="pp-btn">fortsätt</button>
