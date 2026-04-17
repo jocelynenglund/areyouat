@@ -1,12 +1,28 @@
 window.PRESENCE = window.PRESENCE || {};
 
-PRESENCE.renderLoading = function () {
-  document.getElementById('app').innerHTML = `
-    <div class="presence-card">
-      <div class="spinner"></div>
-      <div class="loading-text">${I18N.t('loading')}</div>
+function topChrome() {
+  return `
+    <div class="scandi-presence-chrome">
+      <div class="live-chrome">
+        <div class="live-dot" id="live-dot"></div>
+        <div class="live-title">${I18N.t('app_title_short')}</div>
+        <div class="live-pass">/${PRESENCE.place}</div>
+      </div>
+      <div class="lang-switcher"></div>
     </div>
   `;
+}
+
+PRESENCE.renderLoading = function () {
+  document.getElementById('app').innerHTML = `
+    <div class="scandi-presence">
+      ${topChrome()}
+      <div class="scandi-count">
+        <div class="scandi-count-sub">${I18N.t('loading')}</div>
+      </div>
+    </div>
+  `;
+  I18N.mountSwitcher();
 };
 
 PRESENCE.renderEmpty = function () {
@@ -16,16 +32,28 @@ PRESENCE.renderEmpty = function () {
   const timeStr = d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
   const dateStr = d.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
 
-  PRESENCE.setLogoDot('none');
-
   app.innerHTML = `
-    <div class="presence-card">
-      <div class="state-heading">${I18N.t('empty_heading')}</div>
-      <div class="state-sub">${I18N.t('empty_time_sub', { time: timeStr, date: dateStr })}</div>
-      <button class="btn btn-primary" id="announce-btn">${I18N.t('but_im_here')}</button>
-      <button class="check-again-btn" id="check-btn">${I18N.t('check_again')}</button>
+    <div class="scandi-presence">
+      ${topChrome()}
+      <div class="scandi-empty">
+        <div class="scandi-empty-heading">${I18N.t('empty_heading')}</div>
+        <div class="scandi-empty-sub">${I18N.t('empty_time_sub', { time: timeStr, date: dateStr })}</div>
+      </div>
+
+      <div class="scandi-actions" style="padding: 24px 28px 8px;">
+        <button class="scandi-btn" id="announce-btn" style="max-width:280px;">
+          <span>${I18N.t('but_im_here')}</span><span>→</span>
+        </button>
+      </div>
+      <div class="scandi-actions">
+        <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
+      </div>
     </div>
   `;
+
+  I18N.mountSwitcher();
+  const liveDot = document.getElementById('live-dot');
+  if (liveDot) liveDot.classList.add('live-dot--off');
 
   document.getElementById('announce-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   document.getElementById('check-btn').addEventListener('click', function () {
@@ -40,15 +68,24 @@ PRESENCE.renderPopulated = function (entries, history) {
   const count = entries.length;
   const locale = I18N.t('date_locale');
 
-  PRESENCE.setLogoDot(count > 0 ? 'active' : 'none');
-
-  const banner = count === 0 ? I18N.t('banner_zero')
-    : count === 1 ? I18N.t('banner_one')
-    : I18N.t('banner_many', { n: count });
-
   const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
     return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
   });
+
+  const others = isAlreadyHere ? count - 1 : count;
+  let subLabel;
+  if (count === 0) {
+    subLabel = '';
+  } else if (isAlreadyHere && count === 1) {
+    subLabel = I18N.t('sub_alone');
+  } else if (isAlreadyHere && others === 1) {
+    subLabel = I18N.t('sub_you_plus_one');
+  } else if (isAlreadyHere) {
+    subLabel = I18N.t('sub_you_plus_many', { n: others });
+  } else {
+    subLabel = count === 1 ? I18N.t('banner_one') : '';
+  }
+
   const joinLabel = isAlreadyHere ? null
     : count === 0 ? I18N.t('join_zero')
     : count === 1 ? I18N.t('join_one')
@@ -58,46 +95,97 @@ PRESENCE.renderPopulated = function (entries, history) {
     return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
   }
 
-  const listHtml = entries.map(function (e) {
+  const sorted = [].concat(entries).sort(function (a, b) {
+    const aSelf = PRESENCE.myNickname && a.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+    const bSelf = PRESENCE.myNickname && b.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+    if (aSelf && !bSelf) return -1;
+    if (bSelf && !aSelf) return 1;
+    return new Date(b.announcedAt) - new Date(a.announcedAt);
+  });
+
+  const pillsHtml = sorted.map(function (e) {
     const isMe = PRESENCE.myNickname && e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+    if (isMe) {
+      return `
+        <div class="pill pill--self">
+          <div class="pill-name">${e.nickname}<span class="pill-you">${I18N.t('you_label')}</span></div>
+          <div class="pill-time">${I18N.t('time_now')}</div>
+          <button class="pill-leave-btn" id="leave-btn">${I18N.t('leave')}</button>
+          <div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${bellSvg(false)}</button></div>
+        </div>
+      `;
+    }
     return `
-      <div class="presence-item${isMe ? ' is-you' : ''}">
-        <span class="presence-name">${isMe ? e.nickname + ' ' + I18N.t('you_suffix') : e.nickname}</span>
-        <span class="presence-time">${isMe ? I18N.t('time_now') : fmt(e.announcedAt)}</span>
-        ${isMe ? `<button class="leave-btn" id="leave-btn">${I18N.t('leave')}</button><button class="bell-btn" id="bell-btn">🔕</button>` : ''}
+      <div class="pill">
+        <div class="pill-name">${e.nickname}</div>
+        <div class="pill-time">${fmt(e.announcedAt)}</div>
       </div>
     `;
   }).join('');
 
   const historyHtml = history.length ? `
-    <div class="history-section">
-      <div class="history-label">${I18N.t('history_label')}</div>
+    <div class="history-divider">
+      <div class="rule"></div>
+      <div class="section-label">${I18N.t('history_label')}</div>
+      <div class="rule"></div>
+    </div>
+    <div class="scandi-pills">
       ${history.map(function (e) {
-        return `<div class="history-item"><span>${e.nickname}</span><span class="presence-time">${fmt(e.announcedAt)}</span></div>`;
+        return `
+          <div class="pill pill--history">
+            <div class="pill-name">${e.nickname}</div>
+            <div class="pill-time">${fmt(e.announcedAt)}</div>
+          </div>
+        `;
       }).join('')}
     </div>
   ` : '';
 
   app.innerHTML = `
-    <div class="presence-card">
-      ${count > 0 ? `<div class="there-banner">${banner}</div>` : `<div class="state-heading">${banner}</div>`}
-      ${isAlreadyHere ? `<div class="state-sub">${I18N.t('others_can_see')}</div>` : ''}
-      ${count > 0 ? `<div class="presence-list">${listHtml}</div>` : ''}
+    <div class="scandi-presence">
+      ${topChrome()}
+
+      ${count > 0 ? `
+        <div class="scandi-count">
+          <div class="scandi-count-num">${count}<span class="suffix">${I18N.t('banner_here')}</span></div>
+          ${subLabel ? `<div class="scandi-count-sub">${subLabel}</div>` : ''}
+        </div>
+      ` : `
+        <div class="scandi-empty">
+          <div class="scandi-empty-heading">${I18N.t('banner_zero')}</div>
+        </div>
+      `}
+
+      ${pillsHtml ? `<div class="scandi-pills">${pillsHtml}</div>` : ''}
+
+      <div class="scandi-actions">
+        ${joinLabel ? `<button class="scandi-btn--ghost" id="join-btn">${joinLabel}</button>` : ''}
+        <button class="scandi-btn--ghost" id="share-btn">+ ${I18N.t('share')}</button>
+        <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
+      </div>
+
       ${historyHtml}
-      ${joinLabel ? `<button class="btn btn-primary" id="join-btn" style="margin-top:4px">${joinLabel}</button>` : ''}
-      <button class="check-again-btn" id="check-btn">${I18N.t('check_again')}</button>
     </div>
   `;
 
-  if (joinLabel) document.getElementById('join-btn').addEventListener('click', PRESENCE.renderNamePrompt);
-  if (document.getElementById('leave-btn')) document.getElementById('leave-btn').addEventListener('click', PRESENCE.leave);
-  if (document.getElementById('bell-btn')) {
-    PRESENCE.initBell(document.getElementById('bell-btn'));
+  I18N.mountSwitcher();
+
+  const liveDot = document.getElementById('live-dot');
+  if (liveDot) {
+    if (count === 0) liveDot.classList.add('live-dot--off');
   }
+
+  if (joinLabel) document.getElementById('join-btn').addEventListener('click', PRESENCE.renderNamePrompt);
+  const shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.addEventListener('click', function () { PRESENCE.openShare && PRESENCE.openShare(); });
   document.getElementById('check-btn').addEventListener('click', function () {
     PRESENCE.renderLoading();
     PRESENCE.query();
   });
+  const leaveBtn = document.getElementById('leave-btn');
+  if (leaveBtn) leaveBtn.addEventListener('click', PRESENCE.leave);
+  const bellBtn = document.getElementById('bell-btn');
+  if (bellBtn) PRESENCE.initBell(bellBtn);
 };
 
 PRESENCE.query = function () {
@@ -118,8 +206,13 @@ PRESENCE.query = function () {
     });
 };
 
-PRESENCE.setLogoDot = function (state) {
-  const dot = document.getElementById('logo-dot');
-  if (!dot) return;
-  dot.className = 'logo-dot logo-dot--' + state;
-};
+function bellSvg(on) {
+  const dot = on ? '<circle cx="18" cy="5" r="3" fill="currentColor" stroke="none"/>' : '';
+  return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 01-3.46 0"/>
+    ${dot}
+  </svg>`;
+}
+
+PRESENCE.bellSvg = bellSvg;

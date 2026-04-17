@@ -17,15 +17,6 @@
   PRESENCE.storedNickname = stored ? stored.nickname : null;
   PRESENCE.storageKey = storageKey;
 
-  // Inject place into the header
-  const header = document.getElementById('site-title');
-  if (header) {
-    const placeSpan = document.createElement('span');
-    placeSpan.className = 'header-place';
-    placeSpan.textContent = `/${place}`;
-    header.appendChild(placeSpan);
-  }
-
   if (PRESENCE.passphrase) {
     PRESENCE.renderLoading();
     PRESENCE.query();

@@ -67,7 +67,8 @@ async function unsubscribe(storageKey) {
 }
 
 function updateBell(btn, subscribed) {
-  btn.textContent = subscribed ? '🔔' : '🔕';
+  btn.innerHTML = PRESENCE.bellSvg ? PRESENCE.bellSvg(subscribed) : (subscribed ? '🔔' : '🔕');
+  btn.classList.toggle('is-on', !!subscribed);
   btn.title = subscribed ? I18N.t('bell_on') : I18N.t('bell_off');
 }
 

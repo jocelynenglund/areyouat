@@ -4,82 +4,124 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="about_page_title">Är du på? — om</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/lib/base.css">
   <link rel="stylesheet" href="/slices/friend/i18n/slice.css">
+  <link rel="stylesheet" href="/slices/friend/presence/slice.css">
   <style>
-    .about-card {
-      width: 100%;
-      max-width: 360px;
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      padding: 40px 28px 32px;
+    .about-screen {
+      padding: 32px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      flex: 1;
+    }
+    .about-heading {
+      font-family: var(--font-display);
+      font-size: 52px;
+      line-height: 1.02;
+      letter-spacing: -2px;
+      color: var(--ink);
+    }
+    .about-heading .italic { font-style: italic; }
+    .about-intro {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .about-steps {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
     }
-    .about-title {
-      font-size: 36px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-    .about-body {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.6;
+    .about-step {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
+      gap: 18px;
+      align-items: flex-start;
+      padding-top: 16px;
     }
-    .about-body strong {
+    .about-step-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--ink-soft);
+      flex-shrink: 0;
+      padding-top: 2px;
+      min-width: 32px;
+    }
+    .about-step-body {
+      font-size: 15px;
+      line-height: 1.55;
       color: var(--ink);
     }
-    .step {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
+    .about-step-body strong {
+      font-weight: 600;
     }
-    .step-num {
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 13px;
-      border-radius: 8px;
-      padding: 2px 8px;
-      flex-shrink: 0;
-      margin-top: 2px;
+    .about-step-body em {
+      font-style: italic;
+      font-family: var(--font-display);
+      font-size: 17px;
     }
-    .back-link {
-      font-size: 13px;
-      color: var(--muted);
+    .about-footer {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.2px;
+      color: var(--ink-soft);
+      text-transform: uppercase;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .about-back {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ink);
       text-decoration: none;
-      margin-top: 4px;
+      padding-top: 8px;
     }
-    .back-link:hover { color: var(--ink); }
+    .about-back:hover { color: var(--ink-soft); }
   </style>
 </head>
 <body>
-  <div id="site-title"><span data-i18n="app_title_short">är du på…</span></div>
-  <div class="about-card">
-    <div class="about-title" data-i18n="about_heading">hur funkar det?</div>
-    <div class="about-body">
-      <p data-i18n="about_intro">Dela en plats med vänner — se vem som är där just nu.</p>
-      <div class="step">
-        <span class="step-num">1</span>
-        <span data-i18n="about_step1" data-i18n-html>Hitta på ett <strong>platsnamn</strong> — t.ex. <em>bron</em>, <em>gymmet</em>, <em>kontoret</em></span>
+  <div id="app">
+    <div class="scandi-screen">
+      <div class="scandi-chrome">
+        <div class="section-label" data-i18n="app_title_short">är du på?</div>
+        <div class="lang-switcher"></div>
       </div>
-      <div class="step">
-        <span class="step-num">2</span>
-        <span data-i18n="about_step2" data-i18n-html>Hitta på ett <strong>lösenord</strong> som bara ni i gruppen känner till</span>
+
+      <div class="about-screen">
+        <div class="about-heading">
+          <span class="italic" data-i18n="about_heading">hur funkar det?</span>
+        </div>
+
+        <div class="about-intro" data-i18n="about_intro">dela en plats med vänner — se vem som är där just nu.</div>
+
+        <div class="about-steps">
+          <div class="about-step">
+            <div class="about-step-num">N°01</div>
+            <div class="about-step-body" data-i18n="about_step1" data-i18n-html>hitta på ett <strong>platsnamn</strong> — t.ex. <em>bron</em>, <em>gymmet</em>, <em>kontoret</em></div>
+          </div>
+          <div class="about-step">
+            <div class="about-step-num">N°02</div>
+            <div class="about-step-body" data-i18n="about_step2" data-i18n-html>hitta på ett <strong>magicword</strong> som bara ni i gruppen känner till</div>
+          </div>
+          <div class="about-step">
+            <div class="about-step-num">N°03</div>
+            <div class="about-step-body" data-i18n="about_step3" data-i18n-html>dela länken <strong>rdp.itsybit.se/platsnamn</strong> med dina vänner</div>
+          </div>
+        </div>
+
+        <div class="about-footer" data-i18n="about_footer">ingen registrering. ingen app. allt nollställs vid midnatt.</div>
+
+        <a class="about-back" href="/" data-i18n="about_back">← tillbaka</a>
       </div>
-      <div class="step">
-        <span class="step-num">3</span>
-        <span data-i18n="about_step3" data-i18n-html>Dela länken <strong>rdp.itsybit.se/platsnamn</strong> med dina vänner</span>
-      </div>
-      <p data-i18n="about_footer">Ingen registrering. Ingen app. Allt nollställs vid midnatt.</p>
     </div>
-    <a class="back-link" href="/" data-i18n="about_back">← tillbaka</a>
   </div>
   <script src="/slices/friend/i18n/i18n.js"></script>
 </body>

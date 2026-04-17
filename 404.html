@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="app_title">Är du på?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/lib/base.css">
   <link rel="stylesheet" href="/slices/friend/i18n/slice.css">
   <link rel="stylesheet" href="/slices/friend/presence/slice.css">
+  <link rel="stylesheet" href="/slices/friend/share/slice.css">
 </head>
 <body>
-  <div id="site-title"><a href="/"><span class="logo-dot logo-dot--none" id="logo-dot"></span><span data-i18n="app_title_short">är du på?</span></a></div>
   <div id="app"></div>
   <script src="/slices/friend/i18n/i18n.js"></script>
   <script src="/lib/api.js"></script>
@@ -17,7 +20,8 @@
   <script src="/slices/friend/presence/get-today.js"></script>
   <script src="/slices/friend/presence/announce.js"></script>
   <script src="/slices/friend/presence/leave.js"></script>
-  <script src="/slices/friend/presence/index.js"></script>
+  <script src="/slices/friend/share/share.js"></script>
   <script src="/slices/friend/presence/subscribe.js"></script>
+  <script src="/slices/friend/presence/index.js"></script>
 </body>
 </html>

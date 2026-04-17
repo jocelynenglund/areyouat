@@ -5,17 +5,45 @@
   const app = document.getElementById('app');
 
   app.innerHTML = `
-    <div class="presence-card">
-      <div class="tagline" style="margin-top:0">${I18N.t('landing_heading')}</div>
-      <input class="presence-input" id="place-input" type="text" placeholder="${I18N.t('landing_place_placeholder')}" autocomplete="off" />
-      <input class="presence-input" id="pp-input" type="text" placeholder="${I18N.t('landing_pp_placeholder')}" autocomplete="off" />
-      <button class="btn btn-primary" id="go-btn">${I18N.t('landing_submit')}</button>
-      <div class="about-text">
-        ${I18N.t('landing_about')}<br><br>
-        ${I18N.t('landing_about2')}
+    <div class="scandi-screen">
+      <div class="scandi-chrome">
+        <div class="section-label">${I18N.t('section_label_01')}</div>
+        <div class="lang-switcher"></div>
       </div>
+
+      <div class="scandi-hero">
+        <div class="display-heading">
+          ${I18N.t('landing_heading_a')}<br/>
+          <span class="italic">${I18N.t('landing_heading_b')}</span>
+        </div>
+        <div class="scandi-sub">${I18N.t('landing_about')}</div>
+      </div>
+
+      <div class="scandi-form">
+        <div class="scandi-field">
+          <div class="section-label">${I18N.t('landing_pp_label')}</div>
+          <div class="scandi-input-wrap">
+            <span class="slash">/</span>
+            <input class="scandi-input scandi-input--mono" id="pp-input" type="text" placeholder="${I18N.t('landing_pp_placeholder')}" autocomplete="off" />
+          </div>
+        </div>
+        <div class="scandi-field">
+          <div class="section-label">${I18N.t('landing_place_label')}</div>
+          <div class="scandi-input-wrap">
+            <input class="scandi-input scandi-input--serif" id="place-input" type="text" placeholder="${I18N.t('landing_place_placeholder')}" autocomplete="off" />
+          </div>
+        </div>
+      </div>
+
+      <button class="scandi-btn" id="go-btn">
+        <span>${I18N.t('landing_submit')}</span><span>→</span>
+      </button>
+
+      <div class="scandi-footer-note">${I18N.t('landing_about2')}</div>
     </div>
   `;
+
+  I18N.mountSwitcher();
 
   const placeInput = document.getElementById('place-input');
   const ppInput = document.getElementById('pp-input');
@@ -24,8 +52,8 @@
   function submit() {
     const p = placeInput.value.trim().toLowerCase().replace(/\s+/g, '-');
     const pp = ppInput.value.trim();
-    if (!p) { placeInput.focus(); return; }
     if (!pp) { ppInput.focus(); return; }
+    if (!p) { placeInput.focus(); return; }
     window.location.href = `/${p}?magicword=${encodeURIComponent(pp)}`;
   }
 
@@ -33,5 +61,5 @@
   [placeInput, ppInput].forEach(function (el) {
     el.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
   });
-  placeInput.focus();
+  ppInput.focus();
 })();
