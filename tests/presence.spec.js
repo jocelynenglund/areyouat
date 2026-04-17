@@ -46,6 +46,33 @@ test.describe('Announce flow', () => {
     await expect(page.locator(`text=${nickname}`)).toBeVisible({ timeout: 10000 });
   });
 
+  test('leave then rejoin pre-fills nickname', async ({ page }) => {
+    const leavePlace = 'leave-test-' + Date.now();
+    const leavePass = 'leave-pass-' + Date.now();
+    const leaveName = 'Återvändaren';
+
+    await page.goto(`/${leavePlace}`);
+    await page.fill('input[type="password"]', leavePass);
+    await page.click('button:has-text("fortsätt")');
+    await expect(page.locator('button:has-text("men jag är!")')).toBeVisible({ timeout: 10000 });
+
+    // Check in
+    await page.click('button:has-text("men jag är!")');
+    await page.fill('input[type="text"]', leaveName);
+    await page.click('button:has-text("jag är här!")');
+    await expect(page.locator(`text=${leaveName}`)).toBeVisible({ timeout: 10000 });
+
+    // Leave
+    await page.click('button:has-text("lämna")');
+    await expect(page.locator('button:has-text("men jag är!")')).toBeVisible({ timeout: 10000 });
+
+    // Rejoin — name should be pre-filled
+    await page.click('button:has-text("men jag är!")');
+    const nameInput = page.locator('input[type="text"]');
+    await expect(nameInput).toBeVisible();
+    await expect(nameInput).toHaveValue(leaveName);
+  });
+
   test('second visitor with same passphrase sees first person', async ({ browser }) => {
     const ctx1 = await browser.newContext();
     const ctx2 = await browser.newContext();

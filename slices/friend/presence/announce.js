@@ -30,7 +30,7 @@ PRESENCE.renderNamePrompt = function () {
   app.innerHTML = `
     <div class="presence-card">
       <div class="tagline">vem e du?</div>
-      <input class="presence-input" id="name-input" type="text" placeholder="ditt namn" autocomplete="off" />
+      <input class="presence-input" id="name-input" type="text" placeholder="ditt namn" value="${PRESENCE.storedNickname || ''}" autocomplete="off" />
       <button class="btn btn-primary" id="confirm-btn">jag är här!</button>
       <button class="btn btn-secondary" id="cancel-btn">avbryt</button>
     </div>

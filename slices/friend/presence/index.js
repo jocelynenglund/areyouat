@@ -13,7 +13,8 @@
   window.PRESENCE = window.PRESENCE || {};
   PRESENCE.place = place;
   PRESENCE.passphrase = params.get('magicword') || (stored && stored.passphrase) || null;
-  PRESENCE.myNickname = stored ? stored.nickname : null;
+  PRESENCE.myNickname = (stored && stored.checkedIn !== false) ? stored.nickname : null;
+  PRESENCE.storedNickname = stored ? stored.nickname : null;
   PRESENCE.storageKey = storageKey;
 
   // Inject place into the header
