@@ -5,7 +5,10 @@
 
   const params = new URLSearchParams(window.location.search);
   let passphrase = params.get('pp') || null;
-  let myNickname = null;
+  const storageKey = `areyouat:${place}`;
+  const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+  let myNickname = stored ? stored.nickname : null;
+  if (!passphrase && stored) passphrase = stored.passphrase;
 
   // --- guard ---
   if (!place || place === 'about') {
@@ -134,6 +137,7 @@
       const val = input.value.trim();
       if (!val) { input.focus(); return; }
       myNickname = val;
+      localStorage.setItem(storageKey, JSON.stringify({ nickname: val, passphrase }));
       renderLoading();
       announce(val);
     }
@@ -195,6 +199,7 @@
         window.AREYOUAT.leavePresence(place, passphrase, myNickname)
           .then(function () {
             myNickname = null;
+            localStorage.removeItem(storageKey);
             renderLoading();
             queryPresence();
           })
