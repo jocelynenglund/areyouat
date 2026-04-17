@@ -7,8 +7,10 @@ function topChrome() {
   return `
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
-        <div class="live-dot" id="live-dot"></div>
-        <div class="live-title">${I18N.t('app_title_short')}</div>
+        <a class="live-logo" href="/about" aria-label="about">
+          <div class="live-dot" id="live-dot"></div>
+          <div class="live-title">${I18N.t('app_title_short')}</div>
+        </a>
         <div class="live-pass">/${PRESENCE.place}</div>
       </div>
       <div class="lang-switcher"></div>

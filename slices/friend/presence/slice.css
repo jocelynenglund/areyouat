@@ -214,6 +214,21 @@
   gap: 8px;
   min-width: 0;
 }
+.live-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.live-logo:hover .live-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--ink-soft);
+}
 .live-dot {
   width: 8px;
   height: 8px;
