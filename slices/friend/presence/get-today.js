@@ -78,7 +78,7 @@ PRESENCE.renderPopulated = function (entries, history) {
 
   app.innerHTML = `
     <div class="presence-card">
-      ${count > 0 ? `<div class="there-banner"><span class="dot"></span>${banner}</div>` : `<div class="state-heading">${banner}</div>`}
+      ${count > 0 ? `<div class="there-banner">${banner}</div>` : `<div class="state-heading">${banner}</div>`}
       ${isAlreadyHere ? '<div class="state-sub">andra i gruppen kan se dig nu</div>' : ''}
       ${count > 0 ? `<div class="presence-list">${listHtml}</div>` : ''}
       ${historyHtml}

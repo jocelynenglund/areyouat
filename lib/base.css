@@ -57,7 +57,7 @@ body {
   flex-shrink: 0;
   transition: background 0.4s;
 }
-.logo-dot--none    { background: transparent; }
+.logo-dot--none    { background: #e05252; }
 .logo-dot--active  { background: var(--success); animation: pulse 2s ease-out infinite; }
 
 @keyframes pulse {
