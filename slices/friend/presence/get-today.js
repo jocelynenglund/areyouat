@@ -62,7 +62,7 @@ PRESENCE.renderPopulated = function (entries, history) {
       <div class="presence-item${isMe ? ' is-you' : ''}">
         <span class="presence-name">${isMe ? e.nickname + ' (du)' : e.nickname}</span>
         <span class="presence-time">${isMe ? 'nu' : fmt(e.announcedAt)}</span>
-        ${isMe ? '<button class="leave-btn" id="leave-btn">lämna</button>' : ''}
+        ${isMe ? '<button class="leave-btn" id="leave-btn">lämna</button><button class="bell-btn" id="bell-btn">🔕</button>' : ''}
       </div>
     `;
   }).join('');
@@ -89,6 +89,9 @@ PRESENCE.renderPopulated = function (entries, history) {
 
   if (joinLabel) document.getElementById('join-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   if (document.getElementById('leave-btn')) document.getElementById('leave-btn').addEventListener('click', PRESENCE.leave);
+  if (document.getElementById('bell-btn')) {
+    PRESENCE.initBell(document.getElementById('bell-btn'));
+  }
   document.getElementById('check-btn').addEventListener('click', function () {
     PRESENCE.renderLoading();
     PRESENCE.query();
