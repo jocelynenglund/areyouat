@@ -7,6 +7,11 @@
   const districtById = new Map(DISTRICTS.map(d => [d.id, d]));
   const genreById = new Map(GENRES.map(g => [g.id, g]));
   const eventById = new Map(EVENTS.map(e => [e.id, e]));
+  const eventBySvId = new Map(EVENTS.map(e => [e.svId, e]));
+  // Shared-URL lookup: accepts either English id or Swedish svId.
+  function findEvent(anyId) {
+    return eventById.get(anyId) || eventBySvId.get(anyId) || null;
+  }
 
   const LS_FAVS = 'kn.favs.v1';
   const LS_SHOW = 'kn.view.v1';
@@ -334,7 +339,9 @@
   }
 
   function favIds() {
-    return EVENTS.filter(e => favs.has(e.id)).map(e => e.id);
+    // Share URL expects Swedish IDs (svId) — that's what the official
+    // delad-kulturnatt page matches against.
+    return EVENTS.filter(e => favs.has(e.id)).map(e => e.svId);
   }
 
   function updateSheet() {
@@ -528,8 +535,9 @@
       const ids = extractIdsFromUrls(text);
       let added = 0, unknown = 0;
       ids.forEach(id => {
-        if (!eventById.has(id)) { unknown++; return; }
-        if (!favs.has(id)) { favs.add(id); added++; }
+        const ev = findEvent(id);
+        if (!ev) { unknown++; return; }
+        if (!favs.has(ev.id)) { favs.add(ev.id); added++; }
       });
       saveFavs();
       const parts = [];
@@ -558,11 +566,14 @@
   bindSheet();
   render();
 
-  // If URL has ?ids= on load, seed favorites once
+  // If URL has ?ids= on load, seed favorites once (accepts en or sv IDs).
   const urlIds = extractIdsFromUrls(location.search);
   if (urlIds.length) {
     let added = 0;
-    urlIds.forEach(id => { if (eventById.has(id) && !favs.has(id)) { favs.add(id); added++; } });
+    urlIds.forEach(id => {
+      const ev = findEvent(id);
+      if (ev && !favs.has(ev.id)) { favs.add(ev.id); added++; }
+    });
     if (added) { saveFavs(); render(); }
   }
 })();
