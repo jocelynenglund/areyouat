@@ -8,7 +8,7 @@ function topChrome() {
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
         <a class="live-logo" href="/about" aria-label="about">
-          <div class="live-dot" id="live-dot"></div>
+          <div class="mark-wrap"><span class="mark-core"></span></div>
           <div class="live-title">${I18N.t('app_title_short')}</div>
         </a>
         <div class="live-pass">/${PRESENCE.place}</div>
@@ -57,8 +57,6 @@ PRESENCE.renderEmpty = function () {
   `;
 
   I18N.mountSwitcher();
-  const liveDot = document.getElementById('live-dot');
-  if (liveDot) liveDot.classList.add('live-dot--off');
 
   document.getElementById('announce-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   document.getElementById('check-btn').addEventListener('click', function () {
@@ -193,11 +191,6 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
   I18N.mountSwitcher();
 
-  const liveDot = document.getElementById('live-dot');
-  if (liveDot) {
-    if (count === 0) liveDot.classList.add('live-dot--off');
-  }
-
   if (joinLabel) document.getElementById('join-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   const shareBtn = document.getElementById('share-btn');
   if (shareBtn) shareBtn.addEventListener('click', function () { PRESENCE.openShare && PRESENCE.openShare(); });
@@ -218,12 +211,14 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   });
 };
 
-PRESENCE.query = function () {
+PRESENCE.query = function (opts) {
+  const silent = !!(opts && opts.silent);
   window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
     .then(function (data) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
       const etas = data.etas || [];
+      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
       if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();
       } else {
@@ -231,6 +226,7 @@ PRESENCE.query = function () {
       }
     })
     .catch(function () {
+      if (silent) return;
       PRESENCE.passphrase = null;
       PRESENCE.myNickname = null;
       PRESENCE.renderPassphrase(I18N.t('error_wrong_pass'));

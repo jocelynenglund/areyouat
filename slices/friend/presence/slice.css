@@ -36,20 +36,6 @@
   text-underline-offset: 3px;
   text-decoration-color: var(--ink-soft);
 }
-.live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--live);
-  box-shadow: 0 0 0 4px rgba(46,125,82,0.13);
-  animation: scandi-pulse-dot 2s ease-out infinite;
-  flex-shrink: 0;
-}
-.live-dot--off {
-  background: var(--ink-faint);
-  box-shadow: none;
-  animation: none;
-}
 .live-title {
   font-family: var(--font-display);
   font-size: 19px;
