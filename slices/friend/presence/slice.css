@@ -24,6 +24,16 @@
   font-family: var(--font-body);
 }
 
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.brand-mark:active { transform: scale(0.94); }
+
 .display-heading {
   font-family: var(--font-display);
   font-size: 68px;
