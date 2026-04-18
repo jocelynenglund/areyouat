@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kulturnatt Stockholm — Planner</title>
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1A1A18" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital,wght@0,400;1,400&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/lib/base.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <a href="/" class="backlink" aria-label="Back to Är du på?">← <span class="display">är du på?</span></a>
+  <div class="top-row">
+    <h1><span class="display">Kulturnatt</span> <span class="muted">· Planner</span></h1>
+    <div class="top-actions">
+      <button id="view-toggle" class="btn" aria-pressed="false">All</button>
+      <button id="export-btn" class="btn primary">Export <span id="fav-count" class="count">0</span></button>
+    </div>
+  </div>
+  <div class="filters">
+    <input id="search" type="search" placeholder="Search title, promoter, address…" autocomplete="off">
+    <select id="district"><option value="">All districts</option></select>
+    <select id="genre"><option value="">All genres</option></select>
+    <label class="chk"><input type="checkbox" id="english"> English</label>
+    <label class="chk"><input type="checkbox" id="wheelchair"> ♿</label>
+    <label class="chk"><input type="checkbox" id="late"> After midnight</label>
+    <button id="clear-filters" class="link" type="button">Clear</button>
+  </div>
+  <div class="meta">
+    <span id="count">0 events</span>
+    <span class="sep">·</span>
+    <span><span id="fav-count-2">0</span> starred</span>
+  </div>
+</header>
+
+<main id="list" class="list"></main>
+
+<div class="backdrop" id="backdrop" hidden></div>
+
+<aside class="sheet" id="sheet" hidden aria-labelledby="sheet-title">
+  <header class="sheet-head">
+    <h2 id="sheet-title">Export favorites</h2>
+    <button class="btn-icon" id="sheet-close" aria-label="Close">×</button>
+  </header>
+
+  <section class="sheet-section">
+    <label class="field">
+      <span class="field-label">Event date (for calendar export)</span>
+      <input type="date" id="kn-date" value="2026-04-25">
+    </label>
+  </section>
+
+  <section class="sheet-section">
+    <h3>Share link</h3>
+    <p class="muted small">Copy this to send to a friend. Opens on the official site.</p>
+    <div class="inline">
+      <input type="text" id="share-url" readonly>
+      <button class="btn" id="copy-share">Copy</button>
+      <a class="btn" id="open-share" target="_blank" rel="noopener">Open</a>
+    </div>
+  </section>
+
+  <section class="sheet-section">
+    <h3>Download</h3>
+    <div class="inline wrap">
+      <button class="btn" id="download-ics">.ics (calendar)</button>
+      <button class="btn" id="download-json">JSON</button>
+      <button class="btn" id="copy-titles">Copy titles</button>
+    </div>
+  </section>
+
+  <section class="sheet-section">
+    <h3>Import from a friend</h3>
+    <p class="muted small">Paste one or more share URLs (one per line). IDs will be added to your favorites.</p>
+    <textarea id="import-urls" rows="3" placeholder="https://kulturnattstockholm.se/delad-kulturnatt/?lang=en&amp;ids=123,456"></textarea>
+    <div class="inline">
+      <button class="btn" id="import-go">Add to favorites</button>
+      <span class="muted small" id="import-msg"></span>
+    </div>
+  </section>
+
+  <section class="sheet-section danger">
+    <button class="link danger" id="clear-favs">Clear all favorites</button>
+  </section>
+</aside>
+
+<script src="events.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
