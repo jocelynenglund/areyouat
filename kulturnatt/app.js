@@ -400,10 +400,33 @@
     }
   }
 
-  function openSheet() {
+  function openSheet(focusSection) {
     $('#backdrop').hidden = false;
     $('#sheet').hidden = false;
     updateSheet();
+    if (focusSection === 'import') {
+      // Defer so sheet is visible before scrolling
+      requestAnimationFrame(() => {
+        const ta = $('#import-urls');
+        if (!ta) return;
+        ta.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        ta.focus();
+        tryPrefillFromClipboard(ta);
+      });
+    }
+  }
+
+  async function tryPrefillFromClipboard(ta) {
+    if (ta.value) return;
+    if (!navigator.clipboard || !navigator.clipboard.readText) return;
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && /[?&]ids=\d/.test(text)) {
+        ta.value = text.trim();
+        const msg = $('#import-msg');
+        if (msg) msg.textContent = 'Pasted from clipboard — click "Add to favorites".';
+      }
+    } catch (_) { /* no permission — ignore */ }
   }
   function closeSheet() {
     $('#backdrop').hidden = true;
@@ -536,7 +559,8 @@
   }
 
   function bindSheet() {
-    $('#export-btn').addEventListener('click', openSheet);
+    $('#export-btn').addEventListener('click', () => openSheet());
+    $('#import-btn').addEventListener('click', () => openSheet('import'));
     $('#sheet-close').addEventListener('click', closeSheet);
     $('#backdrop').addEventListener('click', closeSheet);
     document.addEventListener('keydown', e => {
