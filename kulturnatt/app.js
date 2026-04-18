@@ -344,6 +344,27 @@
     return EVENTS.filter(e => favs.has(e.id)).map(e => e.svId);
   }
 
+  function favsForRoute() {
+    return EVENTS
+      .filter(e => favs.has(e.id) && e.position && typeof e.position.lat === 'number')
+      .map(e => {
+        const first = (e.programItems || []).find(p => p.startTime) || {};
+        return { e, time: first.startTime || '99:99', lat: e.position.lat, lng: e.position.lng };
+      })
+      .sort((a, b) => a.time.localeCompare(b.time));
+  }
+
+  function walkingRouteUrl() {
+    const stops = favsForRoute();
+    if (!stops.length) return null;
+    if (stops.length === 1) {
+      return `https://www.google.com/maps/search/?api=1&query=${stops[0].lat},${stops[0].lng}`;
+    }
+    // /maps/dir/A/B/C/... format accepts many stops; !3e2 = walking mode.
+    const points = stops.map(s => `${s.lat},${s.lng}`).join('/');
+    return `https://www.google.com/maps/dir/${points}/data=!4m2!4m1!3e2`;
+  }
+
   function updateSheet() {
     const ids = favIds();
     const url = shareUrl(ids);
@@ -355,6 +376,28 @@
       const b = document.getElementById(id);
       b.disabled = !hasAny;
     });
+
+    const routeUrl = walkingRouteUrl();
+    const stops = favsForRoute();
+    const routeBtn = $('#open-route');
+    const routeMeta = $('#route-meta');
+    if (routeUrl) {
+      routeBtn.href = routeUrl;
+      routeBtn.classList.remove('btn-disabled');
+      routeBtn.removeAttribute('aria-disabled');
+    } else {
+      routeBtn.href = '#';
+      routeBtn.classList.add('btn-disabled');
+      routeBtn.setAttribute('aria-disabled', 'true');
+    }
+    const missing = EVENTS.filter(e => favs.has(e.id)).length - stops.length;
+    if (stops.length >= 2) {
+      routeMeta.textContent = `${stops.length} stops, ordered by start time` + (missing ? ` (${missing} skipped, no coords)` : '');
+    } else if (stops.length === 1) {
+      routeMeta.textContent = 'Only one stop — opens as a pin';
+    } else {
+      routeMeta.textContent = 'Star a few events to build a route.';
+    }
   }
 
   function openSheet() {
