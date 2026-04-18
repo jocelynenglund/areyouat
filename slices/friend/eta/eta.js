@@ -9,7 +9,7 @@ PRESENCE.renderOnTheWayBand = function (etas) {
     const bSelf = isSelf(b);
     if (aSelf && !bSelf) return -1;
     if (bSelf && !aSelf) return 1;
-    return (a.minutes || 0) - (b.minutes || 0);
+    return remainingMinutes(a) - remainingMinutes(b);
   });
   const pills = sorted.map(renderEtaPill).join('');
   return `
@@ -107,14 +107,28 @@ function isSelf(entry) {
   return PRESENCE.myNickname && entry.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
 }
 
+function remainingMinutes(entry) {
+  const mins = entry.minutes || 0;
+  if (!entry.announcedAt) return mins;
+  const arriveAt = new Date(entry.announcedAt).getTime() + mins * 60 * 1000;
+  return Math.round((arriveAt - Date.now()) / 60000);
+}
+
+function formatEta(entry) {
+  const remaining = remainingMinutes(entry);
+  if (remaining <= 0) return '~' + I18N.t('time_now');
+  return '~' + remaining + 'm';
+}
+
 function renderEtaPill(entry) {
   const self = isSelf(entry);
   const statusHtml = PRESENCE.renderStatus ? PRESENCE.renderStatus(entry, self) : '';
+  const label = formatEta(entry);
   if (self) {
     return `
       <div class="pill eta-pill eta-pill--self">
         <div class="pill-name">${escapeHtml(entry.nickname)}<span class="pill-you">${I18N.t('you_label')}</span></div>
-        <div class="eta-mins">~${entry.minutes}m</div>
+        <div class="eta-mins">${label}</div>
         <button class="eta-arrived-btn" id="eta-arrived-btn" type="button">${I18N.t('arrived')}</button>
         <button class="eta-cancel-btn" id="eta-cancel-btn" type="button" aria-label="${I18N.t('cancel_eta')}">\u00D7</button>
         ${statusHtml}
@@ -124,7 +138,7 @@ function renderEtaPill(entry) {
   return `
     <div class="pill eta-pill">
       <div class="pill-name">${escapeHtml(entry.nickname)}</div>
-      <div class="eta-mins">~${entry.minutes}m</div>
+      <div class="eta-mins">${label}</div>
       ${statusHtml}
     </div>
   `;
