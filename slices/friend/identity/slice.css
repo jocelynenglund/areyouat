@@ -1,0 +1,47 @@
+/* Nickname screen */
+
+.scandi-avatar-block {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.scandi-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 36px;
+  color: var(--ink-faint);
+  font-style: italic;
+  transition: background 0.25s, color 0.25s;
+}
+.scandi-avatar.has-name {
+  font-style: normal;
+  border: none;
+}
+.scandi-nickname-input {
+  text-align: center;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--ink);
+  width: 100%;
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0 8px;
+}
+.scandi-nickname-input::placeholder { color: var(--ink-faint); font-style: italic; }
+.scandi-hint {
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-align: center;
+  max-width: 260px;
+  letter-spacing: 0.3px;
+}
