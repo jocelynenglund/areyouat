@@ -209,12 +209,16 @@ function renderEtaPill(entry) {
   const statusHtml = PRESENCE.renderStatus ? PRESENCE.renderStatus(entry, self) : '';
   const label = formatEta(entry);
   if (self) {
+    const bellHtml = PRESENCE.bellSvg
+      ? `<div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${PRESENCE.bellSvg(false)}</button></div>`
+      : '';
     return `
       <div class="pill eta-pill eta-pill--self">
         <div class="pill-name">${escapeHtml(entry.nickname)}<span class="pill-you">${I18N.t('you_label')}</span></div>
         <div class="eta-mins">${label}</div>
         <button class="eta-arrived-btn" id="eta-arrived-btn" type="button">${I18N.t('arrived')}</button>
         <button class="eta-cancel-btn" id="eta-cancel-btn" type="button" aria-label="${I18N.t('cancel_eta')}">\u00D7</button>
+        ${bellHtml}
         ${statusHtml}
       </div>
     `;
