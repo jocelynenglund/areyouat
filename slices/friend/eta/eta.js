@@ -43,14 +43,11 @@ PRESENCE.renderEtaChooser = function () {
 PRESENCE.renderEtaPrompt = function () {
   const app = document.getElementById('app');
   const initial = PRESENCE.storedNickname || PRESENCE.myNickname || '';
-  const afterWork = minutesUntil(AFTER_WORK_HOUR, AFTER_WORK_MIN);
   const chips = [
     { minutes: 30, label: '30m' },
-    { minutes: 60, label: '1h' }
+    { minutes: 60, label: '1h' },
+    { minutes: 120, label: '2h' }
   ];
-  if (afterWork > 0) {
-    chips.push({ minutes: afterWork, label: I18N.t('eta_after_work') });
-  }
   const chipsHtml = chips.map(function (c) {
     return `<button class="eta-chip" data-eta-chip="${c.minutes}" type="button">${c.label}</button>`;
   }).join('');
@@ -77,8 +74,9 @@ PRESENCE.renderEtaPrompt = function () {
 
       <div class="eta-prompt-time">
         <div class="eta-chips">${chipsHtml}</div>
+        <div class="eta-custom-hint">${I18N.t('eta_after_work')}?</div>
         <div class="eta-custom">
-          <input class="eta-custom-input" id="eta-custom-input" type="time" aria-label="${I18N.t('eta_custom')}">
+          <input class="eta-custom-input" id="eta-custom-input" type="time" value="17:00" aria-label="${I18N.t('eta_custom')}">
           <button class="eta-custom-submit" id="eta-custom-submit" type="button">${I18N.t('eta_go')}</button>
         </div>
         <div class="eta-custom-error" id="eta-custom-error" hidden>${I18N.t('eta_invalid')}</div>

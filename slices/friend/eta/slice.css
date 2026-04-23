@@ -163,10 +163,20 @@
   padding: 0 4px;
 }
 
+.eta-custom-hint {
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: -0.2px;
+}
+
 .eta-custom {
   display: flex;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 0;
   align-items: stretch;
 }
 .eta-custom-input {
