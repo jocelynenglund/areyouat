@@ -18,8 +18,21 @@
   PRESENCE.storageKey = storageKey;
 
   if (PRESENCE.passphrase) {
-    PRESENCE.renderLoading();
-    PRESENCE.query();
+    const cached = PRESENCE.readTodayCache && PRESENCE.readTodayCache();
+    if (cached) {
+      const entries = cached.entries || [];
+      const history = cached.history || [];
+      const etas = cached.etas || [];
+      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
+      if (entries.length === 0 && history.length === 0 && etas.length === 0) {
+        PRESENCE.renderEmpty();
+      } else {
+        PRESENCE.renderPopulated(entries, history, etas);
+      }
+    } else {
+      PRESENCE.renderLoading();
+    }
+    PRESENCE.query({ silent: !!cached });
   } else {
     PRESENCE.renderPassphrase();
   }

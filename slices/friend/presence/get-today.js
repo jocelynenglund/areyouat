@@ -219,6 +219,35 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   });
 };
 
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function cacheKey() {
+  return PRESENCE.storageKey + ':today';
+}
+
+PRESENCE.readTodayCache = function () {
+  try {
+    const raw = localStorage.getItem(cacheKey());
+    if (!raw) return null;
+    const snap = JSON.parse(raw);
+    if (!snap || snap.date !== todayKey()) return null;
+    return snap;
+  } catch (_) { return null; }
+};
+
+function writeTodayCache(entries, history, etas) {
+  try {
+    localStorage.setItem(cacheKey(), JSON.stringify({
+      date: todayKey(),
+      entries: entries,
+      history: history,
+      etas: etas
+    }));
+  } catch (_) {}
+}
+
 PRESENCE.query = function (opts) {
   const silent = !!(opts && opts.silent);
   window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
@@ -226,6 +255,7 @@ PRESENCE.query = function (opts) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
       const etas = data.etas || [];
+      writeTodayCache(entries, history, etas);
       if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
       if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();
