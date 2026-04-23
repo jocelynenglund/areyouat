@@ -11,6 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Inject cache-bust version into HTML
+        run: |
+          VERSION="${GITHUB_SHA::7}"
+          echo "Cache-busting with v=${VERSION}"
+          find . -name "*.html" -not -path "./.git/*" -print0 \
+            | xargs -0 sed -i -E \
+              -e "s#(href=\"[^\"]+\\.css)\"#\\1?v=${VERSION}\"#g" \
+              -e "s#(src=\"[^\"]+\\.js)\"#\\1?v=${VERSION}\"#g"
+
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
