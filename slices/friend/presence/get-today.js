@@ -168,7 +168,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
   app.innerHTML = `
     <div class="scandi-presence">
-      ${topChrome(count)}
+      ${topChrome(count + etas.length)}
 
       ${count > 0 ? `
         <div class="scandi-count">
