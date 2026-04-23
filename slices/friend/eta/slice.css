@@ -157,3 +157,54 @@
   border-color: var(--ink);
   transform: scale(0.97);
 }
+
+.eta-custom {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: stretch;
+}
+.eta-custom-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  letter-spacing: 0.3px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.eta-custom-input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.eta-custom-submit {
+  background: transparent;
+  border: 1px solid var(--ink-soft);
+  padding: 0 16px;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.eta-custom-submit:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+.eta-custom-error {
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-style: italic;
+}

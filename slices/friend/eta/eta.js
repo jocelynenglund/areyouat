@@ -22,16 +22,39 @@ PRESENCE.renderOnTheWayBand = function (etas) {
   `;
 };
 
+const AFTER_WORK_HOUR = 17;
+const AFTER_WORK_MIN = 0;
+
+function minutesUntil(hour, minute) {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(hour, minute, 0, 0);
+  return Math.round((target - now) / 60000);
+}
+
 PRESENCE.renderEtaChooser = function () {
   if (etaChooserExpanded) {
-    const chips = [5, 15, 30, 45].map(function (m) {
-      return `<button class="eta-chip" data-eta-chip="${m}" type="button">${m}m</button>`;
+    const afterWork = minutesUntil(AFTER_WORK_HOUR, AFTER_WORK_MIN);
+    const chips = [
+      { minutes: 30, label: '30m' },
+      { minutes: 60, label: '1h' }
+    ];
+    if (afterWork > 0) {
+      chips.push({ minutes: afterWork, label: I18N.t('eta_after_work') });
+    }
+    const chipsHtml = chips.map(function (c) {
+      return `<button class="eta-chip" data-eta-chip="${c.minutes}" type="button">${c.label}</button>`;
     }).join('');
     return `
       <div class="eta-chooser eta-chooser--expanded">
         <div class="eta-prompt">${I18N.t('eta_prompt')}</div>
         <div class="eta-hint">${I18N.t('eta_hint')}</div>
-        <div class="eta-chips">${chips}</div>
+        <div class="eta-chips">${chipsHtml}</div>
+        <div class="eta-custom">
+          <input class="eta-custom-input" id="eta-custom-input" type="time" aria-label="${I18N.t('eta_custom')}">
+          <button class="eta-custom-submit" id="eta-custom-submit" type="button">${I18N.t('eta_go')}</button>
+        </div>
+        <div class="eta-custom-error" id="eta-custom-error" hidden>${I18N.t('eta_invalid')}</div>
       </div>
     `;
   }
@@ -56,6 +79,27 @@ PRESENCE.mountEtaHandlers = function () {
       const minutes = parseInt(el.getAttribute('data-eta-chip'), 10);
       commitEta(minutes);
     });
+  });
+  const customSubmit = document.getElementById('eta-custom-submit');
+  const customInput = document.getElementById('eta-custom-input');
+  const customError = document.getElementById('eta-custom-error');
+  function submitCustom() {
+    if (!customInput || !customInput.value) return;
+    const parts = customInput.value.split(':');
+    const h = parseInt(parts[0], 10);
+    const m = parseInt(parts[1], 10);
+    if (isNaN(h) || isNaN(m)) return;
+    const minutes = minutesUntil(h, m);
+    if (minutes <= 0) {
+      if (customError) customError.hidden = false;
+      return;
+    }
+    if (customError) customError.hidden = true;
+    commitEta(minutes);
+  }
+  if (customSubmit) customSubmit.addEventListener('click', submitCustom);
+  if (customInput) customInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); submitCustom(); }
   });
   const arrivedBtn = document.getElementById('eta-arrived-btn');
   if (arrivedBtn) arrivedBtn.addEventListener('click', function () {
