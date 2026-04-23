@@ -3,12 +3,20 @@ window.PRESENCE = window.PRESENCE || {};
 const HISTORY_CAP = 3;
 let historyExpanded = false;
 
-function topChrome() {
+function markTier(count) {
+  if (count == null) return 'is-empty';
+  if (count === 0) return 'is-empty';
+  if (count <= 4) return 'is-calm';
+  return 'is-busy';
+}
+
+function topChrome(count) {
+  const tier = markTier(count);
   return `
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
         <a class="live-logo" href="/about" aria-label="about">
-          <div class="mark-wrap"><span class="mark-core"></span></div>
+          <div class="mark-wrap ${tier}"><span class="mark-core"></span></div>
           <div class="live-title">${I18N.t('app_title_short')}</div>
         </a>
         <div class="live-pass">/${PRESENCE.place}</div>
@@ -21,7 +29,7 @@ function topChrome() {
 PRESENCE.renderLoading = function () {
   document.getElementById('app').innerHTML = `
     <div class="scandi-presence">
-      ${topChrome()}
+      ${topChrome(null)}
       <div class="scandi-count">
         <div class="scandi-count-sub">${I18N.t('loading')}</div>
       </div>
@@ -39,7 +47,7 @@ PRESENCE.renderEmpty = function () {
 
   app.innerHTML = `
     <div class="scandi-presence">
-      ${topChrome()}
+      ${topChrome(0)}
       <div class="scandi-empty">
         <div class="scandi-empty-heading">${I18N.t('empty_heading')}</div>
         <div class="scandi-empty-sub">${I18N.t('empty_time_sub', { time: timeStr, date: dateStr })}</div>
@@ -160,7 +168,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
   app.innerHTML = `
     <div class="scandi-presence">
-      ${topChrome()}
+      ${topChrome(count)}
 
       ${count > 0 ? `
         <div class="scandi-count">
