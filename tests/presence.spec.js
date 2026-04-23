@@ -73,6 +73,53 @@ test.describe('Announce flow', () => {
     await expect(nameInput).toHaveValue(leaveName);
   });
 
+  test('setting eta via custom time picker shows pill in on-the-way band', async ({ browser }) => {
+    // Regression guard: the backend used to hard-cap minutes to {5,15,30,45}, so
+    // any non-preset value (eg. a custom time that translated to 60 or 137 mins)
+    // silently failed and the ETA pill never appeared. This test walks the full
+    // flow from the "set eta" card through the custom time picker and asserts
+    // the self pill lands in the "på väg" band.
+    const ctx1 = await browser.newContext();
+    const ctx2 = await browser.newContext();
+    const p1 = await ctx1.newPage();
+    const p2 = await ctx2.newPage();
+
+    const sharedPass = 'eta-custom-' + Date.now();
+    const place = 'etacustom';
+
+    await p1.goto(`/${place}`);
+    await p1.fill('#pp-input', sharedPass);
+    await p1.click('button:has-text("fortsätt")');
+    await expect(p1.locator('button:has-text("men jag är!")')).toBeVisible({ timeout: 10000 });
+    await p1.click('button:has-text("men jag är!")');
+    await p1.fill('input[type="text"]', 'Ankommaren');
+    await p1.click('button:has-text("jag är här!")');
+    await expect(p1.locator('text=Ankommaren')).toBeVisible({ timeout: 10000 });
+
+    await p2.goto(`/${place}`);
+    await p2.fill('#pp-input', sharedPass);
+    await p2.click('button:has-text("fortsätt")');
+    await expect(p2.locator('text=Ankommaren')).toBeVisible({ timeout: 10000 });
+
+    await p2.click('button:has-text("sätt tid")');
+    await expect(p2.locator('#name-input')).toBeVisible();
+    await p2.fill('#name-input', 'PåVäg');
+
+    // Pick a custom time ~1 hour out (≈60 min, not a backend preset).
+    const future = new Date(Date.now() + 60 * 60 * 1000);
+    const hh = String(future.getHours()).padStart(2, '0');
+    const mm = String(future.getMinutes()).padStart(2, '0');
+    await p2.fill('#eta-custom-input', `${hh}:${mm}`);
+    await p2.click('#eta-custom-submit');
+
+    await expect(p2.locator('.eta-divider')).toBeVisible({ timeout: 10000 });
+    await expect(p2.locator('.eta-pill--self')).toBeVisible({ timeout: 10000 });
+    await expect(p2.locator('.eta-pill--self')).toContainText('PåVäg');
+
+    await ctx1.close();
+    await ctx2.close();
+  });
+
   test('second visitor with same passphrase sees first person', async ({ browser }) => {
     const ctx1 = await browser.newContext();
     const ctx2 = await browser.newContext();
