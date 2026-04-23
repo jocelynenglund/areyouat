@@ -17,6 +17,24 @@
 .eta-pill--self .pill-you {
   color: var(--ink-soft);
 }
+.eta-pill--self .pill-status--self {
+  color: var(--ink);
+  opacity: 0.75;
+}
+.eta-pill--self .pill-status--self:hover {
+  background: rgba(26,26,24,0.06);
+}
+.eta-pill--self .pill-status-input {
+  color: var(--ink);
+  border-bottom-color: rgba(26,26,24,0.2);
+}
+.eta-pill--self .pill-status-input::placeholder {
+  color: var(--ink);
+}
+.eta-pill--self .pill-status-save {
+  background: var(--ink);
+  color: var(--pill-self-ink);
+}
 
 .eta-mins {
   font-family: var(--font-mono);
