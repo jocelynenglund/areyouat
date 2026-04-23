@@ -63,6 +63,15 @@
   font-family: var(--font-body);
 }
 
+.eta-pill--self .bell-btn {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.eta-pill--self .bell-btn.is-on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
 .eta-chooser {
   margin: 8px 28px 12px;
   padding: 12px 16px;
