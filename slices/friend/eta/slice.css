@@ -158,6 +158,11 @@
   transform: scale(0.97);
 }
 
+.eta-prompt-time {
+  margin-top: 24px;
+  padding: 0 4px;
+}
+
 .eta-custom {
   display: flex;
   gap: 8px;

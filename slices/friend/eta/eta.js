@@ -1,7 +1,5 @@
 window.PRESENCE = window.PRESENCE || {};
 
-let etaChooserExpanded = false;
-
 PRESENCE.renderOnTheWayBand = function (etas) {
   if (!etas || etas.length === 0) return '';
   const sorted = [].concat(etas).sort(function (a, b) {
@@ -33,31 +31,6 @@ function minutesUntil(hour, minute) {
 }
 
 PRESENCE.renderEtaChooser = function () {
-  if (etaChooserExpanded) {
-    const afterWork = minutesUntil(AFTER_WORK_HOUR, AFTER_WORK_MIN);
-    const chips = [
-      { minutes: 30, label: '30m' },
-      { minutes: 60, label: '1h' }
-    ];
-    if (afterWork > 0) {
-      chips.push({ minutes: afterWork, label: I18N.t('eta_after_work') });
-    }
-    const chipsHtml = chips.map(function (c) {
-      return `<button class="eta-chip" data-eta-chip="${c.minutes}" type="button">${c.label}</button>`;
-    }).join('');
-    return `
-      <div class="eta-chooser eta-chooser--expanded">
-        <div class="eta-prompt">${I18N.t('eta_prompt')}</div>
-        <div class="eta-hint">${I18N.t('eta_hint')}</div>
-        <div class="eta-chips">${chipsHtml}</div>
-        <div class="eta-custom">
-          <input class="eta-custom-input" id="eta-custom-input" type="time" aria-label="${I18N.t('eta_custom')}">
-          <button class="eta-custom-submit" id="eta-custom-submit" type="button">${I18N.t('eta_go')}</button>
-        </div>
-        <div class="eta-custom-error" id="eta-custom-error" hidden>${I18N.t('eta_invalid')}</div>
-      </div>
-    `;
-  }
   return `
     <div class="eta-chooser" data-eta-toggle>
       <div class="eta-prompt">${I18N.t('eta_prompt')}</div>
@@ -67,19 +40,98 @@ PRESENCE.renderEtaChooser = function () {
   `;
 };
 
-PRESENCE.mountEtaHandlers = function () {
-  document.querySelectorAll('[data-eta-toggle]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      etaChooserExpanded = true;
-      PRESENCE.query();
-    });
-  });
+PRESENCE.renderEtaPrompt = function () {
+  const app = document.getElementById('app');
+  const initial = PRESENCE.storedNickname || PRESENCE.myNickname || '';
+  const afterWork = minutesUntil(AFTER_WORK_HOUR, AFTER_WORK_MIN);
+  const chips = [
+    { minutes: 30, label: '30m' },
+    { minutes: 60, label: '1h' }
+  ];
+  if (afterWork > 0) {
+    chips.push({ minutes: afterWork, label: I18N.t('eta_after_work') });
+  }
+  const chipsHtml = chips.map(function (c) {
+    return `<button class="eta-chip" data-eta-chip="${c.minutes}" type="button">${c.label}</button>`;
+  }).join('');
+
+  app.innerHTML = `
+    <div class="scandi-screen">
+      <div class="scandi-chrome">
+        <div class="section-label">${I18N.t('section_label_02')}</div>
+        <div class="lang-switcher"></div>
+      </div>
+
+      <div class="scandi-hero">
+        <div class="display-heading">
+          <span class="italic">${I18N.t('eta_prompt')}</span>
+        </div>
+        <div class="scandi-sub">${I18N.t('eta_hint')}</div>
+      </div>
+
+      <div class="scandi-avatar-block">
+        <div class="scandi-avatar" id="avatar">${initial && PRESENCE.nickInitials ? PRESENCE.nickInitials(initial) : '—'}</div>
+        <input class="scandi-nickname-input" id="name-input" type="text" placeholder="${I18N.t('name_placeholder')}" value="${escapeHtml(initial)}" autocomplete="off" />
+        <div class="scandi-hint">${I18N.t('name_saved_hint')}</div>
+      </div>
+
+      <div class="eta-prompt-time">
+        <div class="eta-chips">${chipsHtml}</div>
+        <div class="eta-custom">
+          <input class="eta-custom-input" id="eta-custom-input" type="time" aria-label="${I18N.t('eta_custom')}">
+          <button class="eta-custom-submit" id="eta-custom-submit" type="button">${I18N.t('eta_go')}</button>
+        </div>
+        <div class="eta-custom-error" id="eta-custom-error" hidden>${I18N.t('eta_invalid')}</div>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <div style="display:flex; gap:10px; margin-top:28px;">
+        <button class="scandi-btn scandi-btn--ghost-soft" id="cancel-btn" style="flex:1;">${I18N.t('name_cancel')}</button>
+      </div>
+    </div>
+  `;
+
+  I18N.mountSwitcher();
+
+  const input = document.getElementById('name-input');
+  const avatar = document.getElementById('avatar');
+
+  function updateAvatar() {
+    const v = input.value.trim();
+    if (v && PRESENCE.nickInitials) {
+      avatar.textContent = PRESENCE.nickInitials(v);
+      avatar.classList.add('has-name');
+      avatar.style.background = PRESENCE.nickBg(v);
+      avatar.style.color = PRESENCE.nickInk(v);
+    } else {
+      avatar.textContent = '—';
+      avatar.classList.remove('has-name');
+      avatar.style.background = '';
+      avatar.style.color = '';
+    }
+  }
+  if (initial) updateAvatar();
+  input.addEventListener('input', updateAvatar);
+
+  function submitWith(minutes) {
+    const name = input.value.trim();
+    if (!name) { input.focus(); return; }
+    PRESENCE.myNickname = name;
+    localStorage.setItem(PRESENCE.storageKey, JSON.stringify({ nickname: name, passphrase: PRESENCE.passphrase }));
+    PRESENCE.renderLoading();
+    AREYOUAT.setEta(PRESENCE.place, PRESENCE.passphrase, name, minutes)
+      .then(function () { PRESENCE.query(); })
+      .catch(function () { PRESENCE.query(); });
+  }
+
   document.querySelectorAll('[data-eta-chip]').forEach(function (el) {
     el.addEventListener('click', function () {
       const minutes = parseInt(el.getAttribute('data-eta-chip'), 10);
-      commitEta(minutes);
+      submitWith(minutes);
     });
   });
+
   const customSubmit = document.getElementById('eta-custom-submit');
   const customInput = document.getElementById('eta-custom-input');
   const customError = document.getElementById('eta-custom-error');
@@ -95,11 +147,24 @@ PRESENCE.mountEtaHandlers = function () {
       return;
     }
     if (customError) customError.hidden = true;
-    commitEta(minutes);
+    submitWith(minutes);
   }
   if (customSubmit) customSubmit.addEventListener('click', submitCustom);
   if (customInput) customInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); submitCustom(); }
+  });
+
+  document.getElementById('cancel-btn').addEventListener('click', function () {
+    PRESENCE.renderLoading();
+    PRESENCE.query();
+  });
+};
+
+PRESENCE.mountEtaHandlers = function () {
+  document.querySelectorAll('[data-eta-toggle]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      PRESENCE.renderEtaPrompt();
+    });
   });
   const arrivedBtn = document.getElementById('eta-arrived-btn');
   if (arrivedBtn) arrivedBtn.addEventListener('click', function () {
@@ -123,29 +188,6 @@ PRESENCE.selfHasEta = function (etas) {
   const me = PRESENCE.myNickname.toLowerCase();
   return etas.some(function (e) { return e.nickname.toLowerCase() === me; });
 };
-
-function commitEta(minutes) {
-  if (!PRESENCE.myNickname) {
-    PRESENCE.renderNamePrompt({
-      submitLabel: I18N.t('set_eta'),
-      onSubmit: function (nickname) {
-        AREYOUAT.setEta(PRESENCE.place, PRESENCE.passphrase, nickname, minutes)
-          .then(function () {
-            etaChooserExpanded = false;
-            PRESENCE.query();
-          })
-          .catch(function () { PRESENCE.query(); });
-      }
-    });
-    return;
-  }
-  AREYOUAT.setEta(PRESENCE.place, PRESENCE.passphrase, PRESENCE.myNickname, minutes)
-    .then(function () {
-      etaChooserExpanded = false;
-      PRESENCE.query();
-    })
-    .catch(function () { PRESENCE.query(); });
-}
 
 function isSelf(entry) {
   return PRESENCE.myNickname && entry.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
