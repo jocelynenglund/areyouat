@@ -77,6 +77,13 @@ window.I18N = window.I18N || {};
       about_back: '← tillbaka',
       bell_on: 'notiser på — klicka för att stänga av',
       bell_off: 'få notis när någon dyker upp',
+      changelog_page_title: 'Är du på? — ändringar',
+      changelog_heading: 'vad är nytt?',
+      changelog_link: 'vad är nytt?',
+      cl_type_feature: 'nytt',
+      cl_type_fix: 'fix',
+      cl_type_refactor: 'förbättrat',
+      cl_type_update: 'uppdatering',
       date_locale: 'sv-SE'
     },
     en: {
@@ -154,6 +161,13 @@ window.I18N = window.I18N || {};
       about_back: '← back',
       bell_on: 'alerts on — tap to mute',
       bell_off: 'get pinged when someone rolls up',
+      changelog_page_title: 'You in? — what\'s new',
+      changelog_heading: 'what\'s new?',
+      changelog_link: 'what\'s new?',
+      cl_type_feature: 'new',
+      cl_type_fix: 'fix',
+      cl_type_refactor: 'improved',
+      cl_type_update: 'update',
       date_locale: 'en-US'
     }
   };

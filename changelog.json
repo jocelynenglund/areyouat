@@ -1,0 +1,365 @@
+{
+  "generated": "2026-04-24T03:34:11.677Z",
+  "commits": [
+    {
+      "hash": "7a4490f7ba11cf1f0ff65557fa10f409a760ba78",
+      "shortHash": "7a4490f",
+      "message": "feat(welcome): show welcome screen instead of immediate passphrase gate",
+      "date": "2026-04-24",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Show welcome screen instead of immediate passphrase gate"
+    },
+    {
+      "hash": "70ce67616438dfbd620158c2c25ff1f4d2e99fdf",
+      "shortHash": "70ce676",
+      "message": "feat(eta): show eta chooser on empty room so you can say you're on the way",
+      "date": "2026-04-24",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Show eta chooser on empty room so you can say you're on the way"
+    },
+    {
+      "hash": "5775f009d008a8a70c0bbc683f98445934578a9a",
+      "shortHash": "5775f00",
+      "message": "feat(presence): instant load via stale-while-revalidate cache",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Instant load via stale-while-revalidate cache"
+    },
+    {
+      "hash": "1472462100b71554d2d644814388dc09c9bb6ea4",
+      "shortHash": "1472462",
+      "message": "fix(eta): make status text visible on transparent self eta pill",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Make status text visible on transparent self eta pill"
+    },
+    {
+      "hash": "3ab9fbba68102202bf1810b3dd40f2898a21b1e3",
+      "shortHash": "3ab9fbb",
+      "message": "fix(eta): make bell button visible on transparent self eta pill",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Make bell button visible on transparent self eta pill"
+    },
+    {
+      "hash": "51987b91d1c570afab0575a300205e6398176c14",
+      "shortHash": "51987b9",
+      "message": "feat(eta): subscribe bell on the self eta pill",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Subscribe bell on the self eta pill"
+    },
+    {
+      "hash": "bd2fd2722696d551dd8faec76d30f17c5ecb5523",
+      "shortHash": "bd2fd27",
+      "message": "test(eta): custom time picker lands in the on-the-way band",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "update",
+      "displayMessage": "Custom time picker lands in the on-the-way band"
+    },
+    {
+      "hash": "a2ab9285a6e05d0983fbfaa25a615646a188b6bb",
+      "shortHash": "a2ab928",
+      "message": "feat(eta): minute-only chips; time input defaults to 17:00 w/ hint",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Minute-only chips; time input defaults to 17:00 w/ hint"
+    },
+    {
+      "hash": "fd7c8ff0e8f66cd71ff9946d2c1cd18530800475",
+      "shortHash": "fd7c8ff",
+      "message": "feat(pulse): count etas toward tier + bolder calm/busy pulse",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Count etas toward tier + bolder calm/busy pulse"
+    },
+    {
+      "hash": "071352ccec3e7581c2168ac84b87973918ded417",
+      "shortHash": "071352c",
+      "message": "feat(eta): combine name + time into a single prompt screen",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Combine name + time into a single prompt screen"
+    },
+    {
+      "hash": "6008010ee28ce39bbb6aed9f6e959420d7f02c87",
+      "shortHash": "6008010",
+      "message": "feat(eta): replace 5/15/30/45 chips with 30m/1h/after-work + custom time",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Replace 5/15/30/45 chips with 30m/1h/after-work + custom time"
+    },
+    {
+      "hash": "4c678a070864fa4c9687d4921524fbd3990183ed",
+      "shortHash": "4c678a0",
+      "message": "feat(presence): occupancy-driven pulse on the brand mark",
+      "date": "2026-04-23",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Occupancy-driven pulse on the brand mark"
+    },
+    {
+      "hash": "6276aeb84f876a0d084793804604015a7a91a323",
+      "shortHash": "6276aeb",
+      "message": "feat(kulturnatt): top-level Import button for friend share links",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Top-level Import button for friend share links"
+    },
+    {
+      "hash": "92c0028a8f7d115e1caa02c90fb1aa2d3c73a1ff",
+      "shortHash": "92c0028",
+      "message": "feat(kulturnatt): walking-route button opens favorites in Google Maps",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Walking-route button opens favorites in Google Maps"
+    },
+    {
+      "hash": "1e32098c00e732e6ca98cf866ea2a001bd6f734e",
+      "shortHash": "1e32098",
+      "message": "fix(kulturnatt): accept Swedish svIds in import + share URLs",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Accept Swedish svIds in import + share URLs"
+    },
+    {
+      "hash": "2515ed7720996350c92564fed126311bd25a0996",
+      "shortHash": "2515ed7",
+      "message": "fix: ETA pill now shows remaining minutes, not the original value",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "ETA pill now shows remaining minutes, not the original value"
+    },
+    {
+      "hash": "960199371ca3b1ba27bf544957d74aa42faf5e6b",
+      "shortHash": "9601993",
+      "message": "feat: check-in ripples on the brand mark",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Check-in ripples on the brand mark"
+    },
+    {
+      "hash": "68a5ad48925cff6cbe5ce103999c35da3a22aabd",
+      "shortHash": "68a5ad4",
+      "message": "feat(kulturnatt): standalone planner page for Kulturnatten Stockholm 2026",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Standalone planner page for Kulturnatten Stockholm 2026"
+    },
+    {
+      "hash": "8f413487d85bf8d0b58688f3c8351fcc1432bd54",
+      "shortHash": "8f41348",
+      "message": "refactor: split presence/slice.css into shared scandi primitives + per-slice files",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "refactor",
+      "displayMessage": "Split presence/slice.css into shared scandi primitives + per-slice files"
+    },
+    {
+      "hash": "d6e3c3cc114f7f6bd435ee47b3f0a9f1e1dc9f76",
+      "shortHash": "d6e3c3c",
+      "message": "feat: replace N°01 chrome label with favicon brand mark",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Replace N°01 chrome label with favicon brand mark"
+    },
+    {
+      "hash": "fed8c43c2b2a1d0c5c038c8e5cb6387747a96c92",
+      "shortHash": "fed8c43",
+      "message": "feat: per-place dynamic PWA manifest",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Per-place dynamic PWA manifest"
+    },
+    {
+      "hash": "c92035c1cf8aa11746555dea3e1ddc29b676a219",
+      "shortHash": "c92035c",
+      "message": "feat: favicon + PWA manifest + move debug pill to bottom-left",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Favicon + PWA manifest + move debug pill to bottom-left"
+    },
+    {
+      "hash": "29cabb80634032c83a38e1638d9c713cc875bcf6",
+      "shortHash": "29cabb8",
+      "message": "feat: debug slice with ?debug event log pill",
+      "date": "2026-04-18",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Debug slice with ?debug event log pill"
+    },
+    {
+      "hash": "fd90480aeaab1166126a28f685323440fcaaa1b9",
+      "shortHash": "fd90480",
+      "message": "style: actions above pill list, restore 'jag med!' copy",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "refactor",
+      "displayMessage": "Actions above pill list, restore 'jag med!' copy"
+    },
+    {
+      "hash": "55f567d1f95d4251a1a9acfabebef1e79405cec7",
+      "shortHash": "55f567d",
+      "message": "feat: logo links to /about",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Logo links to /about"
+    },
+    {
+      "hash": "457d3d1c1495c70a24703e68e8d7f9bec4e73d1f",
+      "shortHash": "457d3d1",
+      "message": "style: actions above eta chooser, tighten chooser",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "refactor",
+      "displayMessage": "Actions above eta chooser, tighten chooser"
+    },
+    {
+      "hash": "a466360992d27581e9e51704f02b48a4da767417",
+      "shortHash": "a466360",
+      "message": "refactor: extract identity slice + mobile affordances",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "refactor",
+      "displayMessage": "Extract identity slice + mobile affordances"
+    },
+    {
+      "hash": "68b9acec7e57be21353e088611d2fb445ef1b1cf",
+      "shortHash": "68b9ace",
+      "message": "feat: status + eta slices, history cap",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Status + eta slices, history cap"
+    },
+    {
+      "hash": "43a874f43016e7bb5c04e2b30690cbdff7453b32",
+      "shortHash": "43a874f",
+      "message": "fix(landing): place field first + restore 'är du på? / are you in?'",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Place field first + restore 'är du på? / are you in?'"
+    },
+    {
+      "hash": "0296e580840d75f149a6824576df33e1c489892a",
+      "shortHash": "0296e58",
+      "message": "feat: scandi visual port + share sheet",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Scandi visual port + share sheet"
+    },
+    {
+      "hash": "92c113fd358d4c683577d44c15d419f3151da25a",
+      "shortHash": "92c113f",
+      "message": "fix(i18n): english title to 'you in?' + 'resets at midnight'",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "English title to 'you in?' + 'resets at midnight'"
+    },
+    {
+      "hash": "34aa51e77f896a35f52d4b529a685e8fae30fd00",
+      "shortHash": "34aa51e",
+      "message": "feat: i18n slice with sv/en language switcher",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "I18n slice with sv/en language switcher"
+    },
+    {
+      "hash": "eea4ed4d65cfb7c51f36bfb3cb0325b0fed67053",
+      "shortHash": "eea4ed4",
+      "message": "fix: show magicword in plaintext instead of password field",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Show magicword in plaintext instead of password field"
+    },
+    {
+      "hash": "b23d7bb91e47178d4b7cfd27372be8963d109410",
+      "shortHash": "b23d7bb",
+      "message": "feat: pre-fill nickname when rejoining after leave",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Pre-fill nickname when rejoining after leave"
+    },
+    {
+      "hash": "c888b36b71161c5a579d0f6045542be8464ef9eb",
+      "shortHash": "c888b36",
+      "message": "feat: bell button + push subscribe slice",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Bell button + push subscribe slice"
+    },
+    {
+      "hash": "d0ac863693b14a4a67f9b276f39f9693e1f6737d",
+      "shortHash": "d0ac863",
+      "message": "feat: service worker for web push notifications",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Service worker for web push notifications"
+    },
+    {
+      "hash": "a3dab95148864b7eee426876a2dee584772c3332",
+      "shortHash": "a3dab95",
+      "message": "fix: rename URL param pp to magicword",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Rename URL param pp to magicword"
+    },
+    {
+      "hash": "3082f6041a72b0fed9cc1b765b170eddb7f30c62",
+      "shortHash": "3082f60",
+      "message": "feat: rename passphrase to magicword, UI copy 'vad brukar vi säga?'",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "Rename passphrase to magicword, UI copy 'vad brukar vi säga?'"
+    },
+    {
+      "hash": "aea1c975e9949dea197efbfbfe664139a7e2a6f0",
+      "shortHash": "aea1c97",
+      "message": "style: center there-banner",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "refactor",
+      "displayMessage": "Center there-banner"
+    },
+    {
+      "hash": "c2fa33ae363410764fd7fe2838c169eb6f774f7a",
+      "shortHash": "c2fa33a",
+      "message": "fix: remove dot from there-banner, red logo dot when empty",
+      "date": "2026-04-17",
+      "author": "Jocelyn Englund 🍜",
+      "type": "fix",
+      "displayMessage": "Remove dot from there-banner, red logo dot when empty"
+    }
+  ]
+}

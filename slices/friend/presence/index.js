@@ -4,7 +4,7 @@
   }
 
   const place = window.location.pathname.replace(/^\//, '').split('/')[0] || '';
-  if (!place || place === 'about') return;
+  if (!place || place === 'about' || place === 'changelog') return;
 
   const params = new URLSearchParams(window.location.search);
   const storageKey = `areyouat:${place}`;

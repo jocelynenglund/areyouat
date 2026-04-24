@@ -231,6 +231,19 @@
   text-align: center;
 }
 
+.cl-landing-link {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  text-align: center;
+}
+.cl-landing-link:hover { color: var(--ink); }
+
 .history-toggle {
   display: block;
   margin: 10px auto 0;
