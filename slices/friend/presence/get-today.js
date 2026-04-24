@@ -16,7 +16,7 @@ function topChrome(count) {
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
         <a class="live-logo" href="/about" aria-label="about">
-          <div class="mark-wrap ${tier}"><span class="mark-core"></span></div>
+          <div class="mark-wrap ${tier}">${BRAND.mark({ size: 18 })}</div>
           <div class="live-title">${I18N.t('app_title_short')}</div>
         </a>
         <div class="live-pass">/${PRESENCE.place}</div>

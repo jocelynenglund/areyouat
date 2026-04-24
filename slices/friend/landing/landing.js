@@ -7,13 +7,7 @@
   app.innerHTML = `
     <div class="scandi-screen">
       <div class="scandi-chrome">
-        <a class="brand-mark" href="/about" aria-label="about">
-          <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
-            <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
-            <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
-            <circle cx="16" cy="16" r="4" fill="currentColor"/>
-          </svg>
-        </a>
+        <a class="brand-mark" href="/about" aria-label="about">${BRAND.mark()}</a>
         <div class="lang-switcher"></div>
       </div>
 
