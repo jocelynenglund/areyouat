@@ -34,6 +34,6 @@
     }
     PRESENCE.query({ silent: !!cached });
   } else {
-    PRESENCE.renderPassphrase();
+    PRESENCE.renderWelcome();
   }
 })();

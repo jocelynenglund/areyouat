@@ -30,6 +30,44 @@ PRESENCE.nickBg = nickBg;
 PRESENCE.nickInk = nickInk;
 PRESENCE.nickInitials = nickInitials;
 
+PRESENCE.renderWelcome = function () {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="scandi-screen">
+      <div class="scandi-chrome">
+        <a class="brand-mark" href="/about" aria-label="about">
+          <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+            <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"/>
+            <circle cx="16" cy="16" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="16" cy="16" r="4" fill="currentColor"/>
+          </svg>
+        </a>
+        <div class="lang-switcher"></div>
+      </div>
+
+      <div class="scandi-hero">
+        <div class="display-heading">
+          ${I18N.t('enter_heading_a')}<br/>
+          <span class="italic">${I18N.t('enter_heading_b')}</span>
+        </div>
+        <div class="scandi-sub">/${PRESENCE.place}</div>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <button class="scandi-btn" id="welcome-checkin-btn">
+        <span>${I18N.t('but_im_here')}</span><span>→</span>
+      </button>
+    </div>
+  `;
+
+  I18N.mountSwitcher();
+
+  document.getElementById('welcome-checkin-btn').addEventListener('click', function () {
+    PRESENCE.renderPassphrase();
+  });
+};
+
 PRESENCE.renderPassphrase = function (errorMsg) {
   const app = document.getElementById('app');
   app.innerHTML = `
