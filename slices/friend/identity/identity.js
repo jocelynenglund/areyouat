@@ -153,6 +153,7 @@ PRESENCE.renderNamePrompt = function (opts) {
     const val = input.value.trim();
     if (!val) { input.focus(); return; }
     PRESENCE.myNickname = val;
+    PRESENCE.storedNickname = val;
     localStorage.setItem(PRESENCE.storageKey, JSON.stringify({ nickname: val, passphrase: PRESENCE.passphrase }));
     PRESENCE.renderLoading();
     onSubmit(val);

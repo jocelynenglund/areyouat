@@ -62,12 +62,12 @@ test.describe('Announce flow', () => {
     await page.click('button:has-text("jag är här!")');
     await expect(page.locator(`text=${leaveName}`)).toBeVisible({ timeout: 10000 });
 
-    // Leave
+    // Leave — user moves into history, so the view stays populated (count=0 + 1 history)
     await page.click('button:has-text("lämna")');
-    await expect(page.locator('button:has-text("men jag är!")')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('button:has-text("jag med!")')).toBeVisible({ timeout: 10000 });
 
-    // Rejoin — name should be pre-filled
-    await page.click('button:has-text("men jag är!")');
+    // Rejoin — name should be pre-filled from storedNickname
+    await page.click('button:has-text("jag med!")');
     const nameInput = page.locator('input[type="text"]');
     await expect(nameInput).toBeVisible();
     await expect(nameInput).toHaveValue(leaveName);
