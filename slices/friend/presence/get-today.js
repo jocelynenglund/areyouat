@@ -61,6 +61,8 @@ PRESENCE.renderEmpty = function () {
       <div class="scandi-actions">
         <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
       </div>
+
+      ${PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
     </div>
   `;
 
@@ -71,6 +73,7 @@ PRESENCE.renderEmpty = function () {
     PRESENCE.renderLoading();
     PRESENCE.query();
   });
+  if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
 };
 
 PRESENCE.renderPopulated = function (entries, history, etas) {
