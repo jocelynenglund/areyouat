@@ -46,7 +46,7 @@
       </button>
 
       <div class="scandi-footer-note">${I18N.t('landing_about2')}</div>
-      <a class="cl-landing-link" href="/changelog">${I18N.t('changelog_link')}</a>
+      <a class="cl-landing-link" href="/changelog.html">${I18N.t('changelog_link')}</a>
     </div>
   `;
 

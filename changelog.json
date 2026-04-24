@@ -1,6 +1,15 @@
 {
-  "generated": "2026-04-24T03:34:11.677Z",
+  "generated": "2026-04-24T04:09:41.681Z",
   "commits": [
+    {
+      "hash": "81c75081527c1c6a66f6b257576b710ea9d5d512",
+      "shortHash": "81c7508",
+      "message": "feat(changelog): what's-new page generated from git log",
+      "date": "2026-04-24",
+      "author": "Jocelyn Englund 🍜",
+      "type": "feature",
+      "displayMessage": "What's-new page generated from git log"
+    },
     {
       "hash": "7a4490f7ba11cf1f0ff65557fa10f409a760ba78",
       "shortHash": "7a4490f",
@@ -351,15 +360,6 @@
       "author": "Jocelyn Englund 🍜",
       "type": "refactor",
       "displayMessage": "Center there-banner"
-    },
-    {
-      "hash": "c2fa33ae363410764fd7fe2838c169eb6f774f7a",
-      "shortHash": "c2fa33a",
-      "message": "fix: remove dot from there-banner, red logo dot when empty",
-      "date": "2026-04-17",
-      "author": "Jocelyn Englund 🍜",
-      "type": "fix",
-      "displayMessage": "Remove dot from there-banner, red logo dot when empty"
     }
   ]
 }
