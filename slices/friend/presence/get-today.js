@@ -123,6 +123,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   const pillsHtml = sorted.map(function (e) {
     const isMe = PRESENCE.myNickname && e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
     const statusHtml = PRESENCE.renderStatus ? PRESENCE.renderStatus(e, isMe) : '';
+    const leavingHtml = PRESENCE.renderLeavingBadge ? PRESENCE.renderLeavingBadge(e, isMe) : '';
     if (isMe) {
       return `
         <div class="pill pill--self">
@@ -131,6 +132,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
           <button class="pill-leave-btn" id="leave-btn">${I18N.t('leave')}</button>
           <div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${bellSvg(false)}</button></div>
           ${statusHtml}
+          ${leavingHtml}
         </div>
       `;
     }
@@ -139,6 +141,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
         <div class="pill-name">${e.nickname}</div>
         <div class="pill-time">${fmt(e.announcedAt)}</div>
         ${statusHtml}
+        ${leavingHtml}
       </div>
     `;
   }).join('');
@@ -215,6 +218,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   if (bellBtn) PRESENCE.initBell(bellBtn);
   if (PRESENCE.mountStatusEditor) PRESENCE.mountStatusEditor();
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
+  if (PRESENCE.mountLeavingHandlers) PRESENCE.mountLeavingHandlers();
   const historyToggle = document.getElementById('history-toggle-btn');
   if (historyToggle) historyToggle.addEventListener('click', function () {
     historyExpanded = !historyExpanded;
