@@ -3,7 +3,10 @@ window.PRESENCE = window.PRESENCE || {};
 (function () {
   const MAX_RIPPLES = 6;
   const DEDUPE_MS = 1000;
-  const POLL_MS = 20000;
+  // Safety-net poll: realtime via SignalR is the primary update path
+  // (slices/friend/realtime/realtime.js). This longer interval covers
+  // the rare case where the websocket is down past the auto-reconnect.
+  const POLL_MS = 120000;
   const RIPPLE_LIFETIME_MS = 5200;
 
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

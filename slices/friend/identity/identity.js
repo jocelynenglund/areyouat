@@ -76,6 +76,7 @@ PRESENCE.renderPassphrase = function (errorMsg) {
     const val = input.value.trim();
     if (!val) { input.focus(); return; }
     PRESENCE.passphrase = val;
+    if (PRESENCE.realtime && PRESENCE.realtime.rejoinIfChanged) PRESENCE.realtime.rejoinIfChanged();
     PRESENCE.renderLoading();
     PRESENCE.query();
   }

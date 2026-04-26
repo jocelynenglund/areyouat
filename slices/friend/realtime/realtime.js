@@ -1,0 +1,83 @@
+// Realtime updates via SignalR. Connects to /hubs/areyouat, joins the
+// {place}-{passphraseHash} group, and on every "refresh" message triggers
+// a silent PRESENCE.query() so the UI catches up instantly.
+//
+// On reconnect (automatic, exponential backoff per signalR defaults) we
+// re-call JoinPlace and force a refetch so any messages missed while the
+// connection was down are recovered. The ripple-slice safety-net poll
+// stays in place at a longer interval to cover the worst case where the
+// reconnect itself fails for a long stretch.
+
+window.PRESENCE = window.PRESENCE || {};
+
+(function () {
+  if (!window.signalR) {
+    console.warn('signalR global missing — realtime disabled');
+    return;
+  }
+
+  const HUB_BASE = (window.AREYOUAT && window.AREYOUAT.apiBase)
+    || 'https://labsapi-hmeva5cfhdfkejhz.westeurope-01.azurewebsites.net';
+
+  let connection = null;
+  let joinedKey = null;
+
+  function placeKey() {
+    if (!PRESENCE.place || !PRESENCE.passphrase) return null;
+    return PRESENCE.place + '\x00' + PRESENCE.passphrase;
+  }
+
+  async function joinCurrent() {
+    if (!connection || connection.state !== 'Connected') return;
+    const place = PRESENCE.place;
+    const pp = PRESENCE.passphrase;
+    if (!place || !pp) return;
+    try {
+      await connection.invoke('JoinPlace', place, pp);
+      joinedKey = placeKey();
+    } catch (e) {
+      console.warn('JoinPlace failed', e);
+    }
+  }
+
+  async function start() {
+    if (connection) return;
+    connection = new signalR.HubConnectionBuilder()
+      .withUrl(HUB_BASE + '/hubs/areyouat')
+      .withAutomaticReconnect()
+      .build();
+
+    connection.on('refresh', function () {
+      if (PRESENCE.passphrase && PRESENCE.query) PRESENCE.query({ silent: true });
+    });
+
+    connection.onreconnected(async function () {
+      await joinCurrent();
+      if (PRESENCE.passphrase && PRESENCE.query) PRESENCE.query({ silent: true });
+    });
+
+    try {
+      await connection.start();
+      await joinCurrent();
+    } catch (e) {
+      console.warn('SignalR start failed', e);
+    }
+  }
+
+  PRESENCE.realtime = {
+    start: start,
+    rejoinIfChanged: async function () {
+      // Called after passphrase/place changes (e.g. user enters passphrase
+      // for the first time). Joins the new group; old subscriptions stay
+      // until the page reloads — fine because broadcasts on a stale group
+      // are simply ignored by handlers that check passphrase.
+      if (placeKey() !== joinedKey) await joinCurrent();
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+})();
