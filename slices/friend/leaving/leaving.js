@@ -35,7 +35,7 @@ PRESENCE.renderLeavingBadge = function (entry, isSelf) {
     return `
       <div class="leaving-affordance" data-leaving-root>
         <button class="leaving-trigger" data-leaving-trigger type="button">${I18N.t('set_leaving')}</button>
-        <div class="leaving-chips" data-leaving-chips hidden>${chips}</div>
+        <div class="leaving-chips is-hidden" data-leaving-chips>${chips}</div>
       </div>
     `;
   }
@@ -49,8 +49,8 @@ PRESENCE.mountLeavingHandlers = function () {
       if (!root) return;
       const chips = root.querySelector('[data-leaving-chips]');
       if (!chips) return;
-      chips.hidden = false;
-      el.hidden = true;
+      chips.classList.remove('is-hidden');
+      el.classList.add('is-hidden');
     });
   });
 

@@ -11,7 +11,7 @@
   padding: 2px 0 0;
 }
 
-.pill .pill-status {
+.pill:not(.pill--self) .pill-status {
   flex-basis: 100%;
   order: 3;
 }
@@ -34,12 +34,16 @@
 }
 
 .pill-status-edit {
-  flex-basis: 100%;
-  order: 3;
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 2px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.pill:not(.pill--self) .pill-status-edit {
+  flex-basis: 100%;
+  order: 3;
 }
 
 .pill-status-input {

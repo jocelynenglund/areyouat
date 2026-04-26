@@ -4,7 +4,7 @@ module.exports = defineConfig({
   testDir: './tests',
   timeout: 15000,
   use: {
-    baseURL: 'https://rdp.itsybit.se',
+    baseURL: process.env.PW_BASE_URL || 'https://rdp.itsybit.se',
     channel: 'chrome',
     headless: true,
   },

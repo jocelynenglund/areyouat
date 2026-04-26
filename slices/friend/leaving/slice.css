@@ -13,7 +13,7 @@
   color: var(--pill-self-ink, var(--bg));
   border-color: rgba(255,255,255,0.45);
 }
-.pill .leaving-badge {
+.pill:not(.pill--self) .leaving-badge {
   align-self: flex-start;
 }
 
@@ -28,11 +28,13 @@
 }
 
 .leaving-affordance {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 6px;
-  align-items: flex-start;
+  align-items: center;
 }
+.leaving-affordance .is-hidden { display: none; }
 
 .leaving-trigger {
   background: transparent;

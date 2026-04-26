@@ -127,12 +127,15 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
     if (isMe) {
       return `
         <div class="pill pill--self">
-          <div class="pill-name">${e.nickname}<span class="pill-you">${I18N.t('you_label')}</span></div>
-          <div class="pill-time">${I18N.t('time_now')}</div>
-          <button class="pill-leave-btn" id="leave-btn">${I18N.t('leave')}</button>
-          <div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${bellSvg(false)}</button></div>
-          ${statusHtml}
-          ${leavingHtml}
+          <div class="pill-self-row pill-self-row--primary">
+            <div class="pill-name">${e.nickname}<span class="pill-you">${I18N.t('you_label')}</span></div>
+            <button class="pill-leave-btn" id="leave-btn">${I18N.t('leave')}</button>
+            <div class="bell-wrap"><button class="bell-btn" id="bell-btn" aria-label="notifications" type="button">${bellSvg(false)}</button></div>
+          </div>
+          <div class="pill-self-row pill-self-row--secondary">
+            ${statusHtml}
+            ${leavingHtml}
+          </div>
         </div>
       `;
     }
