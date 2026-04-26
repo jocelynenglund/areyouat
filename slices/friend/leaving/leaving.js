@@ -2,20 +2,31 @@ window.PRESENCE = window.PRESENCE || {};
 
 const CHIPS = [5, 15, 30];
 
+PRESENCE.formatLeavingTime = function (remaining) {
+  if (remaining <= 0) return I18N.t('leaving_now');
+  return '→ ' + remaining + 'm';
+};
+
+function leaveAtMs(entry) {
+  if (!entry || !entry.leavingAnnouncedAt) return 0;
+  return new Date(entry.leavingAnnouncedAt).getTime() + (entry.leavingMinutes || 0) * 60 * 1000;
+}
+
 PRESENCE.renderLeavingBadge = function (entry, isSelf) {
   const hasLeaving = entry && entry.leavingMinutes && entry.leavingAnnouncedAt;
   if (hasLeaving) {
     const remaining = remainingMinutes(entry);
-    const label = remaining <= 0 ? I18N.t('leaving_now') : '→ ' + remaining + 'm';
+    const label = PRESENCE.formatLeavingTime(remaining);
+    const targetAt = leaveAtMs(entry);
     if (isSelf) {
       return `
         <div class="leaving-badge leaving-badge--self">
-          <span class="leaving-mins">${label}</span>
+          <span class="leaving-mins" data-tick-leaving data-target-at="${targetAt}">${label}</span>
           <button class="leaving-cancel-btn" data-leaving-cancel type="button" aria-label="${I18N.t('cancel_leaving')}">×</button>
         </div>
       `;
     }
-    return `<div class="leaving-badge">${label}</div>`;
+    return `<div class="leaving-badge"><span data-tick-leaving data-target-at="${targetAt}">${label}</span></div>`;
   }
   if (isSelf) {
     const chips = CHIPS.map(function (m) {

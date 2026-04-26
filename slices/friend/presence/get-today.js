@@ -288,3 +288,27 @@ function bellSvg(on) {
 }
 
 PRESENCE.bellSvg = bellSvg;
+
+PRESENCE.tickCountdowns = function () {
+  const now = Date.now();
+  document.querySelectorAll('[data-tick-eta][data-target-at]').forEach(function (el) {
+    const target = parseInt(el.getAttribute('data-target-at'), 10);
+    if (!target) return;
+    const remaining = Math.round((target - now) / 60000);
+    if (PRESENCE.formatEtaTime) el.textContent = PRESENCE.formatEtaTime(remaining);
+  });
+  document.querySelectorAll('[data-tick-leaving][data-target-at]').forEach(function (el) {
+    const target = parseInt(el.getAttribute('data-target-at'), 10);
+    if (!target) return;
+    const remaining = Math.round((target - now) / 60000);
+    if (PRESENCE.formatLeavingTime) el.textContent = PRESENCE.formatLeavingTime(remaining);
+  });
+};
+
+if (!PRESENCE._tickerInstalled) {
+  PRESENCE._tickerInstalled = true;
+  setInterval(PRESENCE.tickCountdowns, 30000);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) PRESENCE.tickCountdowns();
+  });
+}

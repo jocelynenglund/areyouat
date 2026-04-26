@@ -198,10 +198,18 @@ function remainingMinutes(entry) {
   return Math.round((arriveAt - Date.now()) / 60000);
 }
 
-function formatEta(entry) {
-  const remaining = remainingMinutes(entry);
+PRESENCE.formatEtaTime = function (remaining) {
   if (remaining <= 0) return '~' + I18N.t('time_now');
   return '~' + remaining + 'm';
+};
+
+function arriveAtMs(entry) {
+  const base = entry.announcedAt ? new Date(entry.announcedAt).getTime() : Date.now();
+  return base + (entry.minutes || 0) * 60 * 1000;
+}
+
+function formatEta(entry) {
+  return PRESENCE.formatEtaTime(remainingMinutes(entry));
 }
 
 function renderEtaPill(entry) {
@@ -215,7 +223,7 @@ function renderEtaPill(entry) {
     return `
       <div class="pill eta-pill eta-pill--self">
         <div class="pill-name">${escapeHtml(entry.nickname)}<span class="pill-you">${I18N.t('you_label')}</span></div>
-        <div class="eta-mins">${label}</div>
+        <div class="eta-mins" data-tick-eta data-target-at="${arriveAtMs(entry)}">${label}</div>
         <button class="eta-arrived-btn" id="eta-arrived-btn" type="button">${I18N.t('arrived')}</button>
         <button class="eta-cancel-btn" id="eta-cancel-btn" type="button" aria-label="${I18N.t('cancel_eta')}">\u00D7</button>
         ${bellHtml}
@@ -226,7 +234,7 @@ function renderEtaPill(entry) {
   return `
     <div class="pill eta-pill">
       <div class="pill-name">${escapeHtml(entry.nickname)}</div>
-      <div class="eta-mins">${label}</div>
+      <div class="eta-mins" data-tick-eta data-target-at="${arriveAtMs(entry)}">${label}</div>
       ${statusHtml}
     </div>
   `;
