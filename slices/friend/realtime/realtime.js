@@ -78,6 +78,22 @@ window.PRESENCE = window.PRESENCE || {};
     },
   };
 
+  // Browsers throttle/suspend websockets on hidden tabs. When the tab comes
+  // back to foreground, give the connection a nudge: re-join the group if
+  // it dropped, and refetch once so we catch up on anything missed while
+  // backgrounded. The ripple-slice already triggers a refetch here too —
+  // this hook focuses on the connection side.
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState !== 'visible') return;
+    if (!connection) return;
+    if (connection.state === 'Connected') {
+      // Force a re-join in case the server lost our group membership.
+      joinedKey = null;
+      joinIfReady();
+    }
+    // start() / onreconnected handle the not-Connected cases automatically.
+  });
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', start);
   } else {
