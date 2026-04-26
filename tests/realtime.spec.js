@@ -24,59 +24,57 @@ test('SignalR refresh via ?magicword= auto-login: B sees A announce within 5s', 
     p.on('console', m => { if (m.type() === 'error') console.log(`[${name} ERR]`, m.text()); });
   }
 
-  // Each tab needs an identity. Set one up via the manual flow first so they
-  // both have a stored nickname; subsequent navigations to ?magicword= will
-  // skip the name prompt and land on the populated screen. After this setup
-  // we leave on both, then re-test the live-update path.
-  async function setupIdentity(page, nick) {
-    await page.goto('https://rdp.itsybit.se/' + place);
-    await page.fill('#pp-input', pp);
-    await page.click('button:has-text("fortsätt")');
-    const joinBtn = page.locator('#announce-btn, #join-btn').first();
-    await joinBtn.waitFor({ state: 'visible', timeout: 15000 });
-    await joinBtn.click();
-    await page.fill('#name-input', nick);
-    await page.click('button:has-text("jag är här")');
-    await expect(page.locator('.pill--self').filter({ hasText: nick }).first()).toBeVisible({ timeout: 15000 });
-    // Leave so the next reload starts from a clean populated/empty room.
-    await page.locator('#leave-btn').click();
-    await page.waitForTimeout(800);
-  }
-
   const nickA = 'rt-A-' + Date.now();
   const nickB = 'rt-B-' + Date.now();
-  await setupIdentity(a, nickA);
-  await setupIdentity(b, nickB);
 
-  // Now exercise the auto-login path: navigate both with ?magicword=, then
-  // have A re-announce. B should refresh within a few seconds via SignalR.
+  // Seed localStorage on each context so the magic-word path lands on the
+  // populated screen with the join button (no name-prompt needed). This
+  // avoids the "name typing" race and isolates what we're testing: SignalR
+  // push from announce-on-A to render-on-B.
+  async function seedIdentity(ctx, nick) {
+    await ctx.addInitScript(([key, nick, pp]) => {
+      localStorage.setItem(key, JSON.stringify({ nickname: nick, passphrase: pp, checkedIn: false }));
+    }, [`areyouat:${place}`, nick, pp]);
+  }
+  await seedIdentity(ctxA, nickA);
+  await seedIdentity(ctxB, nickB);
+
+  // Open B first; let SignalR settle.
+  console.log('B: navigating');
   await b.goto(url);
   await b.waitForLoadState('networkidle');
-  // Give the SignalR connection time to come up + JoinPlace to fire.
   await b.waitForTimeout(2000);
+  console.log('B: SignalR state =', await b.evaluate(() => ({
+    pp: !!window.PRESENCE && PRESENCE.passphrase,
+    rt: !!(window.PRESENCE && PRESENCE.realtime),
+  })));
 
+  // Open A and announce.
+  console.log('A: navigating');
   await a.goto(url);
   await a.waitForLoadState('networkidle');
-  await a.waitForTimeout(1000);
-
-  // Re-announce on A by clicking the announce/join button.
+  console.log('A: page loaded, looking for join button');
   const aJoin = a.locator('#announce-btn, #join-btn').first();
-  await aJoin.waitFor({ state: 'visible', timeout: 5000 });
+  await aJoin.waitFor({ state: 'visible', timeout: 10000 });
   await aJoin.click();
-  // Name is pre-filled from localStorage; just confirm.
+  console.log('A: clicked join, filling name');
+  await a.locator('#name-input').waitFor({ state: 'visible', timeout: 5000 });
+  await a.fill('#name-input', nickA);
   await a.click('#confirm-btn');
+  console.log('A: confirmed announce, waiting for self pill');
   await expect(a.locator('.pill--self').filter({ hasText: nickA }).first())
     .toBeVisible({ timeout: 10000 });
+  console.log('A: self pill visible');
 
-  // Without doing anything on B, expect A's pill to appear via SignalR push.
+  // The big assertion: B sees A's pill via SignalR push, with no manual reload.
+  console.log('B: waiting for A pill via realtime');
   await expect(b.locator('.pill').filter({ hasText: nickA }).first())
     .toBeVisible({ timeout: 5000 });
+  console.log('B: saw A pill — pass!');
 
-  // Cleanup.
+  // Cleanup: leave on A.
   await a.locator('#leave-btn').click().catch(() => {});
-  await b.locator('#leave-btn').click().catch(() => {});
   await a.waitForTimeout(300);
-  await b.waitForTimeout(300);
 
   await browser.close();
 });
