@@ -27,14 +27,15 @@ window.PRESENCE = window.PRESENCE || {};
     return PRESENCE.place + '\x00' + PRESENCE.passphrase;
   }
 
-  async function joinCurrent() {
-    if (!connection || connection.state !== 'Connected') return;
-    const place = PRESENCE.place;
-    const pp = PRESENCE.passphrase;
-    if (!place || !pp) return;
+  async function joinIfReady() {
+    if (!connection) return;
+    if (connection.state !== 'Connected') return; // start() will call us again on success
+    const want = placeKey();
+    if (!want) return;
+    if (want === joinedKey) return;
     try {
-      await connection.invoke('JoinPlace', place, pp);
-      joinedKey = placeKey();
+      await connection.invoke('JoinPlace', PRESENCE.place, PRESENCE.passphrase);
+      joinedKey = want;
     } catch (e) {
       console.warn('JoinPlace failed', e);
     }
@@ -52,13 +53,15 @@ window.PRESENCE = window.PRESENCE || {};
     });
 
     connection.onreconnected(async function () {
-      await joinCurrent();
+      // Force re-join after a reconnect (group membership is per-connection).
+      joinedKey = null;
+      await joinIfReady();
       if (PRESENCE.passphrase && PRESENCE.query) PRESENCE.query({ silent: true });
     });
 
     try {
       await connection.start();
-      await joinCurrent();
+      await joinIfReady();
     } catch (e) {
       console.warn('SignalR start failed', e);
     }
@@ -66,13 +69,13 @@ window.PRESENCE = window.PRESENCE || {};
 
   PRESENCE.realtime = {
     start: start,
-    rejoinIfChanged: async function () {
-      // Called after passphrase/place changes (e.g. user enters passphrase
-      // for the first time). Joins the new group; old subscriptions stay
-      // until the page reloads — fine because broadcasts on a stale group
-      // are simply ignored by handlers that check passphrase.
-      if (placeKey() !== joinedKey) await joinCurrent();
-    }
+    // Called when PRESENCE.passphrase changes (URL load, localStorage, manual
+    // entry). Safe to call before the connection finishes connecting — start()
+    // will trigger the join itself once Connected. If we're already connected,
+    // we join right away.
+    rejoinIfChanged: function () {
+      return joinIfReady();
+    },
   };
 
   if (document.readyState === 'loading') {

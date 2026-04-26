@@ -18,6 +18,11 @@
   PRESENCE.storageKey = storageKey;
 
   if (PRESENCE.passphrase) {
+    // Realtime started its connection at DOMContentLoaded with no passphrase
+    // available yet. Now that we have one (from ?magicword= or localStorage),
+    // join the right group. Identity.submitPassphrase does the same on manual
+    // entry — this covers the auto-login paths.
+    if (PRESENCE.realtime && PRESENCE.realtime.rejoinIfChanged) PRESENCE.realtime.rejoinIfChanged();
     const cached = PRESENCE.readTodayCache && PRESENCE.readTodayCache();
     if (cached) {
       const entries = cached.entries || [];
