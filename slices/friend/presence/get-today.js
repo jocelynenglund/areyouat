@@ -12,6 +12,7 @@ function markTier(count) {
 
 function topChrome(count) {
   const tier = markTier(count);
+  const pinHtml = PRESENCE.renderPinChip ? PRESENCE.renderPinChip() : '';
   return `
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
@@ -20,6 +21,7 @@ function topChrome(count) {
           <div class="live-title">${I18N.t('app_title_short')}</div>
         </a>
         <div class="live-pass">/${PRESENCE.place}</div>
+        ${pinHtml}
       </div>
       <div class="lang-switcher"></div>
     </div>
@@ -36,6 +38,7 @@ PRESENCE.renderLoading = function () {
     </div>
   `;
   I18N.mountSwitcher();
+  if (PRESENCE.mountPinChip) PRESENCE.mountPinChip();
 };
 
 PRESENCE.renderEmpty = function () {
@@ -67,6 +70,7 @@ PRESENCE.renderEmpty = function () {
   `;
 
   I18N.mountSwitcher();
+  if (PRESENCE.mountPinChip) PRESENCE.mountPinChip();
 
   document.getElementById('announce-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   document.getElementById('check-btn').addEventListener('click', function () {
@@ -207,6 +211,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   `;
 
   I18N.mountSwitcher();
+  if (PRESENCE.mountPinChip) PRESENCE.mountPinChip();
 
   if (joinLabel) document.getElementById('join-btn').addEventListener('click', PRESENCE.renderNamePrompt);
   const shareBtn = document.getElementById('share-btn');
@@ -247,13 +252,14 @@ PRESENCE.readTodayCache = function () {
   } catch (_) { return null; }
 };
 
-function writeTodayCache(entries, history, etas) {
+function writeTodayCache(entries, history, etas, pin) {
   try {
     localStorage.setItem(cacheKey(), JSON.stringify({
       date: todayKey(),
       entries: entries,
       history: history,
-      etas: etas
+      etas: etas,
+      pin: pin || null
     }));
   } catch (_) {}
 }
@@ -265,7 +271,8 @@ PRESENCE.query = function (opts) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
       const etas = data.etas || [];
-      writeTodayCache(entries, history, etas);
+      PRESENCE.pin = data.pin || null;
+      writeTodayCache(entries, history, etas, PRESENCE.pin);
       if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
       if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();

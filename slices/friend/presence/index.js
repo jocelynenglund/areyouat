@@ -28,6 +28,7 @@
       const entries = cached.entries || [];
       const history = cached.history || [];
       const etas = cached.etas || [];
+      PRESENCE.pin = cached.pin || null;
       if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
       if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();

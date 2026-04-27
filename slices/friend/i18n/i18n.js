@@ -87,6 +87,12 @@ window.I18N = window.I18N || {};
       cl_type_fix: 'fix',
       cl_type_refactor: 'förbättrat',
       cl_type_update: 'uppdatering',
+      pin_open: 'öppna i kartan',
+      pin_drop: 'sätt pin',
+      pin_replace: 'flytta pin',
+      pin_locating: 'letar dig…',
+      pin_denied: 'platsåtkomst nekades',
+      pin_unavailable: 'kunde inte hitta dig',
       date_locale: 'sv-SE'
     },
     en: {
@@ -174,6 +180,12 @@ window.I18N = window.I18N || {};
       cl_type_fix: 'fix',
       cl_type_refactor: 'improved',
       cl_type_update: 'update',
+      pin_open: 'open in maps',
+      pin_drop: 'drop a pin',
+      pin_replace: 'move pin',
+      pin_locating: 'finding you…',
+      pin_denied: 'location access denied',
+      pin_unavailable: 'couldn\'t find you',
       date_locale: 'en-US'
     }
   };

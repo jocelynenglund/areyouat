@@ -1,0 +1,75 @@
+.pin-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.6;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 120ms ease;
+}
+
+.pin-chip:hover,
+.pin-chip:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.pin-chip__glyph {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.pin-chip__add-label {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.pin-chip__edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  padding: 0;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.pin-chip__edit:hover,
+.pin-chip__edit:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.pin-chip--busy {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.pin-chip--busy .pin-chip__glyph {
+  animation: pin-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes pin-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
