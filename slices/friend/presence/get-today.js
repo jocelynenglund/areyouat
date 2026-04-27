@@ -28,9 +28,15 @@ function topChrome(count) {
 
 function pinRow() {
   const html = PRESENCE.renderPinChip ? PRESENCE.renderPinChip() : '';
-  if (!html) return '';
-  return `<div class="scandi-pin-row">${html}</div>`;
+  return `<div class="scandi-pin-row" id="pin-host">${html}</div>`;
 }
+
+PRESENCE.updatePinChip = function () {
+  const host = document.getElementById('pin-host');
+  if (!host) return;
+  host.innerHTML = PRESENCE.renderPinChip ? PRESENCE.renderPinChip() : '';
+  if (PRESENCE.mountPinChip) PRESENCE.mountPinChip();
+};
 
 PRESENCE.renderLoading = function () {
   document.getElementById('app').innerHTML = `
@@ -86,42 +92,11 @@ PRESENCE.renderEmpty = function () {
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
 };
 
-PRESENCE.renderPopulated = function (entries, history, etas) {
-  history = history || [];
-  etas = etas || [];
-  const app = document.getElementById('app');
-  const count = entries.length;
-  const locale = I18N.t('date_locale');
+function fmtTime(iso, locale) {
+  return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+}
 
-  const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
-    return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
-  });
-  const selfHasEta = PRESENCE.selfHasEta ? PRESENCE.selfHasEta(etas) : false;
-  const showEtaChooser = !isAlreadyHere && !selfHasEta;
-
-  const others = isAlreadyHere ? count - 1 : count;
-  let subLabel;
-  if (count === 0) {
-    subLabel = '';
-  } else if (isAlreadyHere && count === 1) {
-    subLabel = I18N.t('sub_alone');
-  } else if (isAlreadyHere && others === 1) {
-    subLabel = I18N.t('sub_you_plus_one');
-  } else if (isAlreadyHere) {
-    subLabel = I18N.t('sub_you_plus_many', { n: others });
-  } else {
-    subLabel = count === 1 ? I18N.t('banner_one') : '';
-  }
-
-  const joinLabel = isAlreadyHere ? null
-    : count === 0 ? I18N.t('join_zero')
-    : count === 1 ? I18N.t('join_one')
-    : I18N.t('join_many');
-
-  function fmt(iso) {
-    return new Date(iso).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
-  }
-
+function buildPillsHtml(entries, locale) {
   const sorted = [].concat(entries).sort(function (a, b) {
     const aSelf = PRESENCE.myNickname && a.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
     const bSelf = PRESENCE.myNickname && b.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
@@ -129,8 +104,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
     if (bSelf && !aSelf) return 1;
     return new Date(b.announcedAt) - new Date(a.announcedAt);
   });
-
-  const pillsHtml = sorted.map(function (e) {
+  return sorted.map(function (e) {
     const isMe = PRESENCE.myNickname && e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
     const statusHtml = PRESENCE.renderStatus ? PRESENCE.renderStatus(e, isMe) : '';
     const leavingHtml = PRESENCE.renderLeavingBadge ? PRESENCE.renderLeavingBadge(e, isMe) : '';
@@ -152,12 +126,78 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
     return `
       <div class="pill">
         <div class="pill-name">${e.nickname}</div>
-        <div class="pill-time">${fmt(e.announcedAt)}</div>
+        <div class="pill-time">${fmtTime(e.announcedAt, locale)}</div>
         ${statusHtml}
         ${leavingHtml}
       </div>
     `;
   }).join('');
+}
+
+function buildCountBannerHtml(entries) {
+  const count = entries.length;
+  if (count === 0) {
+    return `<div class="scandi-empty"><div class="scandi-empty-heading">${I18N.t('banner_zero')}</div></div>`;
+  }
+  const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
+    return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+  });
+  const others = isAlreadyHere ? count - 1 : count;
+  let subLabel;
+  if (isAlreadyHere && count === 1) subLabel = I18N.t('sub_alone');
+  else if (isAlreadyHere && others === 1) subLabel = I18N.t('sub_you_plus_one');
+  else if (isAlreadyHere) subLabel = I18N.t('sub_you_plus_many', { n: others });
+  else subLabel = count === 1 ? I18N.t('banner_one') : '';
+  return `
+    <div class="scandi-count">
+      <div class="scandi-count-num">${count}<span class="suffix">${I18N.t('banner_here')}</span></div>
+      ${subLabel ? `<div class="scandi-count-sub">${subLabel}</div>` : ''}
+    </div>
+  `;
+}
+
+PRESENCE.updatePillsSection = function (entries) {
+  const host = document.getElementById('pills-host');
+  if (!host) return;
+  const locale = I18N.t('date_locale');
+  host.innerHTML = buildPillsHtml(entries || [], locale);
+  // Re-mount pill-internal handlers (status edit, leaving, leave btn, bell).
+  const leaveBtn = document.getElementById('leave-btn');
+  if (leaveBtn) leaveBtn.addEventListener('click', PRESENCE.leave);
+  const bellBtn = document.getElementById('bell-btn');
+  if (bellBtn && PRESENCE.initBell) PRESENCE.initBell(bellBtn);
+  if (PRESENCE.mountStatusEditor) PRESENCE.mountStatusEditor();
+  if (PRESENCE.mountLeavingHandlers) PRESENCE.mountLeavingHandlers();
+};
+
+PRESENCE.updateCountBanner = function (entries) {
+  const host = document.getElementById('count-host');
+  if (!host) return;
+  host.innerHTML = buildCountBannerHtml(entries || []);
+};
+
+PRESENCE.renderPopulated = function (entries, history, etas) {
+  history = history || [];
+  etas = etas || [];
+  const app = document.getElementById('app');
+  const count = entries.length;
+  const locale = I18N.t('date_locale');
+
+  const isAlreadyHere = PRESENCE.myNickname && entries.some(function (e) {
+    return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
+  });
+  const selfHasEta = PRESENCE.selfHasEta ? PRESENCE.selfHasEta(etas) : false;
+  const showEtaChooser = !isAlreadyHere && !selfHasEta;
+
+  const joinLabel = isAlreadyHere ? null
+    : count === 0 ? I18N.t('join_zero')
+    : count === 1 ? I18N.t('join_one')
+    : I18N.t('join_many');
+
+  function fmt(iso) { return fmtTime(iso, locale); }
+
+  const pillsHtml = buildPillsHtml(entries, locale);
+  const countBannerHtml = buildCountBannerHtml(entries);
 
   const hiddenCount = Math.max(0, history.length - HISTORY_CAP);
   const visibleHistory = historyExpanded ? history : history.slice(0, HISTORY_CAP);
@@ -189,16 +229,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
     <div class="scandi-presence">
       ${topChrome(count + etas.length)}
 
-      ${count > 0 ? `
-        <div class="scandi-count">
-          <div class="scandi-count-num">${count}<span class="suffix">${I18N.t('banner_here')}</span></div>
-          ${subLabel ? `<div class="scandi-count-sub">${subLabel}</div>` : ''}
-        </div>
-      ` : `
-        <div class="scandi-empty">
-          <div class="scandi-empty-heading">${I18N.t('banner_zero')}</div>
-        </div>
-      `}
+      <div id="count-host">${countBannerHtml}</div>
 
       ${pinRow()}
 
@@ -208,7 +239,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
         <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
       </div>
 
-      ${pillsHtml ? `<div class="scandi-pills">${pillsHtml}</div>` : ''}
+      <div class="scandi-pills" id="pills-host">${pillsHtml}</div>
 
       ${PRESENCE.renderOnTheWayBand ? PRESENCE.renderOnTheWayBand(etas) : ''}
 
@@ -274,7 +305,7 @@ function writeTodayCache(entries, history, etas, pin) {
 
 PRESENCE.query = function (opts) {
   const silent = !!(opts && opts.silent);
-  window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
+  return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
     .then(function (data) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
@@ -287,6 +318,7 @@ PRESENCE.query = function (opts) {
       } else {
         PRESENCE.renderPopulated(entries, history, etas);
       }
+      return data;
     })
     .catch(function () {
       if (silent) return;
@@ -294,6 +326,61 @@ PRESENCE.query = function (opts) {
       PRESENCE.myNickname = null;
       PRESENCE.renderPassphrase(I18N.t('error_wrong_pass'));
     });
+};
+
+// Partial-update dispatcher used by the SignalR refresh handler.
+// On a known event type, refetch state but only mutate the relevant section
+// of the DOM — preserves any open sheets, focused inputs, scroll position,
+// and avoids the visible flicker of a full innerHTML swap.
+//
+// Falls back to a full PRESENCE.query() for any event type we don't have a
+// targeted updater for, so adding a new event type is at worst no regression.
+PRESENCE.applyPartialUpdate = function (payload) {
+  const type = payload && payload.type;
+  // Only the pin-chip subtree changes for Place/PinSet — keep everything else.
+  if (type === 'Place/PinSet') {
+    return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
+      .then(function (data) {
+        const entries = data.presences || [];
+        const history = data.history || [];
+        const etas = data.etas || [];
+        PRESENCE.pin = data.pin || null;
+        writeTodayCache(entries, history, etas, PRESENCE.pin);
+        PRESENCE.updatePinChip();
+      })
+      .catch(function () { /* silent */ });
+  }
+  // Presence/* events change pills + count banner; pin/eta band/history may
+  // also change so this is a strict subset of full re-render but skips the
+  // chrome and pin chip (the high-flicker regions).
+  if (typeof type === 'string' && type.startsWith('Presence/')) {
+    return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
+      .then(function (data) {
+        const entries = data.presences || [];
+        const history = data.history || [];
+        const etas = data.etas || [];
+        PRESENCE.pin = data.pin || null;
+        writeTodayCache(entries, history, etas, PRESENCE.pin);
+        if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
+        // If the host elements aren't on the page yet (e.g. we were on the
+        // empty/passphrase screen), fall back to a full render.
+        const haveHosts = document.getElementById('pills-host') && document.getElementById('count-host');
+        if (!haveHosts) {
+          if (entries.length === 0 && history.length === 0 && etas.length === 0) {
+            PRESENCE.renderEmpty();
+          } else {
+            PRESENCE.renderPopulated(entries, history, etas);
+          }
+          return;
+        }
+        PRESENCE.updateCountBanner(entries);
+        PRESENCE.updatePillsSection(entries);
+        PRESENCE.updatePinChip();
+      })
+      .catch(function () { /* silent */ });
+  }
+  // Default: full refetch + re-render. Same as the safety-net poll behavior.
+  return PRESENCE.query({ silent: true });
 };
 
 function bellSvg(on) {

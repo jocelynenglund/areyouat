@@ -48,8 +48,13 @@ window.PRESENCE = window.PRESENCE || {};
       .withAutomaticReconnect()
       .build();
 
-    connection.on('refresh', function () {
-      if (PRESENCE.passphrase && PRESENCE.query) PRESENCE.query({ silent: true });
+    connection.on('refresh', function (payload) {
+      if (!PRESENCE.passphrase) return;
+      // Partial updates per event type when possible (no chrome flicker, open
+      // sheets / status edits / scroll position survive). Falls back to full
+      // query inside applyPartialUpdate for unknown types.
+      if (PRESENCE.applyPartialUpdate) PRESENCE.applyPartialUpdate(payload);
+      else if (PRESENCE.query) PRESENCE.query({ silent: true });
     });
 
     connection.onreconnected(async function () {

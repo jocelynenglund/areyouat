@@ -151,15 +151,18 @@ function geolocate(onOk, onErr) {
 }
 
 function saveAndRefresh(lat, lng, onSaved) {
+  // Optimistic update: flip the chip immediately, then confirm via API.
+  // SignalR's Place/PinSet broadcast (echoed back to all clients including
+  // this one) re-confirms the authoritative state, so we don't need to
+  // re-query on success. On failure, revert locally and surface via chip.
+  const prev = PRESENCE.pin;
+  PRESENCE.pin = { lat: lat, lng: lng, setAt: new Date().toISOString(), nickname: PRESENCE.myNickname || null };
+  if (PRESENCE.updatePinChip) PRESENCE.updatePinChip();
+  if (onSaved) onSaved();
   AREYOUAT.setPlacePin(PRESENCE.place, PRESENCE.passphrase, lat, lng, PRESENCE.myNickname || null)
-    .then(function () {
-      PRESENCE.pin = { lat: lat, lng: lng, setAt: new Date().toISOString(), nickname: PRESENCE.myNickname || null };
-      if (onSaved) onSaved();
-      PRESENCE.query();
-    })
     .catch(function () {
-      // Surface a generic error via the chip on next render.
-      PRESENCE.query();
+      PRESENCE.pin = prev;
+      if (PRESENCE.updatePinChip) PRESENCE.updatePinChip();
     });
 }
 
@@ -173,13 +176,16 @@ function copyMapsLink(pin, btn) {
 function confirmRemove(btn) {
   if (btn.__confirming) {
     btn.__confirming = false;
+    // Optimistic clear: chip flips to empty immediately; API + SignalR confirm.
+    const prev = PRESENCE.pin;
+    PRESENCE.pin = null;
+    if (PRESENCE.updatePinChip) PRESENCE.updatePinChip();
+    if (PRESENCE._closePinSheet) PRESENCE._closePinSheet();
     AREYOUAT.setPlacePin(PRESENCE.place, PRESENCE.passphrase, null, null, PRESENCE.myNickname || null)
-      .then(function () {
-        PRESENCE.pin = null;
-        if (PRESENCE._closePinSheet) PRESENCE._closePinSheet();
-        PRESENCE.query();
-      })
-      .catch(function () { PRESENCE.query(); });
+      .catch(function () {
+        PRESENCE.pin = prev;
+        if (PRESENCE.updatePinChip) PRESENCE.updatePinChip();
+      });
     return;
   }
   btn.__confirming = true;
