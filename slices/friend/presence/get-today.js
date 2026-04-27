@@ -12,7 +12,6 @@ function markTier(count) {
 
 function topChrome(count) {
   const tier = markTier(count);
-  const pinHtml = PRESENCE.renderPinChip ? PRESENCE.renderPinChip() : '';
   return `
     <div class="scandi-presence-chrome">
       <div class="live-chrome">
@@ -21,11 +20,16 @@ function topChrome(count) {
           <div class="live-title">${I18N.t('app_title_short')}</div>
         </a>
         <div class="live-pass">/${PRESENCE.place}</div>
-        ${pinHtml}
       </div>
       <div class="lang-switcher"></div>
     </div>
   `;
+}
+
+function pinRow() {
+  const html = PRESENCE.renderPinChip ? PRESENCE.renderPinChip() : '';
+  if (!html) return '';
+  return `<div class="scandi-pin-row">${html}</div>`;
 }
 
 PRESENCE.renderLoading = function () {
@@ -55,6 +59,8 @@ PRESENCE.renderEmpty = function () {
         <div class="scandi-empty-heading">${I18N.t('empty_heading')}</div>
         <div class="scandi-empty-sub">${I18N.t('empty_time_sub', { time: timeStr, date: dateStr })}</div>
       </div>
+
+      ${pinRow()}
 
       <div class="scandi-actions" style="padding: 24px 28px 8px;">
         <button class="scandi-btn" id="announce-btn" style="max-width:280px;">
@@ -193,6 +199,8 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
           <div class="scandi-empty-heading">${I18N.t('banner_zero')}</div>
         </div>
       `}
+
+      ${pinRow()}
 
       <div class="scandi-actions">
         ${joinLabel ? `<button class="scandi-btn--ghost" id="join-btn">${joinLabel}</button>` : ''}
