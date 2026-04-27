@@ -118,7 +118,7 @@ function buildPillsHtml(entries, locale) {
           </div>
           <div class="pill-self-row pill-self-row--secondary">
             ${statusHtml}
-            ${leavingHtml}
+            <div data-leaving-slot>${leavingHtml}</div>
           </div>
         </div>
       `;

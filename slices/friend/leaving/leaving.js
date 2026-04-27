@@ -42,8 +42,19 @@ PRESENCE.renderLeavingBadge = function (entry, isSelf) {
   return '';
 };
 
+function replaceLeavingSlot(html) {
+  const slot = document.querySelector('.pill--self [data-leaving-slot]');
+  if (!slot) return null;
+  const prev = slot.innerHTML;
+  slot.innerHTML = html;
+  PRESENCE.mountLeavingHandlers();
+  return prev;
+}
+
 PRESENCE.mountLeavingHandlers = function () {
   document.querySelectorAll('[data-leaving-trigger]').forEach(function (el) {
+    if (el.__lvBound) return;
+    el.__lvBound = true;
     el.addEventListener('click', function () {
       const root = el.closest('[data-leaving-root]');
       if (!root) return;
@@ -55,22 +66,39 @@ PRESENCE.mountLeavingHandlers = function () {
   });
 
   document.querySelectorAll('[data-leaving-chip]').forEach(function (el) {
+    if (el.__lvBound) return;
+    el.__lvBound = true;
     el.addEventListener('click', function () {
       if (!PRESENCE.myNickname) return;
       const minutes = parseInt(el.getAttribute('data-leaving-chip'), 10);
       if (!minutes) return;
+      // Optimistic: flip the slot to the badge state immediately. SignalR
+      // re-confirms via Presence/LeavingAnnounced; on API error we revert.
+      const fakeEntry = {
+        nickname: PRESENCE.myNickname,
+        leavingMinutes: minutes,
+        leavingAnnouncedAt: new Date().toISOString(),
+      };
+      const prev = replaceLeavingSlot(PRESENCE.renderLeavingBadge(fakeEntry, true));
       AREYOUAT.setLeaving(PRESENCE.place, PRESENCE.passphrase, PRESENCE.myNickname, minutes)
-        .then(function () { PRESENCE.query(); })
-        .catch(function () { PRESENCE.query(); });
+        .catch(function () {
+          if (prev !== null) replaceLeavingSlot(prev);
+        });
     });
   });
 
   document.querySelectorAll('[data-leaving-cancel]').forEach(function (el) {
+    if (el.__lvBound) return;
+    el.__lvBound = true;
     el.addEventListener('click', function () {
       if (!PRESENCE.myNickname) return;
+      // Optimistic: flip back to the empty affordance immediately.
+      const fakeEntry = { nickname: PRESENCE.myNickname };
+      const prev = replaceLeavingSlot(PRESENCE.renderLeavingBadge(fakeEntry, true));
       AREYOUAT.cancelLeaving(PRESENCE.place, PRESENCE.passphrase, PRESENCE.myNickname)
-        .then(function () { PRESENCE.query(); })
-        .catch(function () { PRESENCE.query(); });
+        .catch(function () {
+          if (prev !== null) replaceLeavingSlot(prev);
+        });
     });
   });
 };
