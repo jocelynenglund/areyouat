@@ -333,6 +333,9 @@ PRESENCE.query = function (opts) {
       PRESENCE.pin = data.pin || null;
       writeTodayCache(entries, history, etas, PRESENCE.pin);
       if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
+      if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
+        PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(etas));
+      }
       if (entries.length === 0 && history.length === 0 && etas.length === 0) {
         PRESENCE.renderEmpty();
       } else {
@@ -392,6 +395,9 @@ PRESENCE.applyPartialUpdate = function (payload) {
             PRESENCE.renderPopulated(entries, history, etas);
           }
           return;
+        }
+        if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
+          PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(etas));
         }
         PRESENCE.updateCountBanner(entries);
         PRESENCE.updatePillsSection(entries);

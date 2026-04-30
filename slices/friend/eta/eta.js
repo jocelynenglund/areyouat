@@ -187,6 +187,59 @@ PRESENCE.selfHasEta = function (etas) {
   return etas.some(function (e) { return e.nickname.toLowerCase() === me; });
 };
 
+PRESENCE.findSelfEta = function (etas) {
+  if (!etas || !PRESENCE.myNickname) return null;
+  const me = PRESENCE.myNickname.toLowerCase();
+  return etas.find(function (e) { return e.nickname.toLowerCase() === me; }) || null;
+};
+
+// Lead time for the "arriving soon" prompt — fires 3 min before the ETA
+// elapses ("din eta går ut snart — är du framme?"). Short enough to be
+// useful, long enough that you can tap "i'm here" without sprinting.
+const ETA_LEAD_MS = 3 * 60 * 1000;
+
+// Single tab-scoped timer. Clearing + re-scheduling on every query response
+// keeps it in sync with whatever the server says is true; we don't need to
+// manually clear on arrived/cancel because the next response has no self ETA.
+let etaNotifTimer = null;
+let etaNotifAt = 0;
+
+PRESENCE.scheduleEtaNotification = function (selfEta) {
+  if (etaNotifTimer) {
+    clearTimeout(etaNotifTimer);
+    etaNotifTimer = null;
+    etaNotifAt = 0;
+  }
+  if (!selfEta || !selfEta.minutes || !selfEta.announcedAt) return;
+  if (typeof Notification === 'undefined') return;
+  if (Notification.permission !== 'granted') return;
+
+  const elapseAt = new Date(selfEta.announcedAt).getTime() + selfEta.minutes * 60 * 1000;
+  const fireAt = elapseAt - ETA_LEAD_MS;
+  const ms = fireAt - Date.now();
+  if (ms <= 0) return; // already too late for the heads-up
+
+  etaNotifAt = fireAt;
+  etaNotifTimer = setTimeout(function () {
+    etaNotifTimer = null;
+    etaNotifAt = 0;
+    try {
+      const title = I18N.t('app_title_short');
+      const body = I18N.t('eta_arriving_soon');
+      const n = new Notification(title, {
+        body: body,
+        icon: '/icons/apple-touch-icon.png',
+        tag: 'eta-arriving',
+        data: { url: '/' + (PRESENCE.place || '') }
+      });
+      n.onclick = function () {
+        try { window.focus(); } catch (_) {}
+        n.close();
+      };
+    } catch (_) { /* permission revoked or browser quirk */ }
+  }, ms);
+};
+
 function isSelf(entry) {
   return PRESENCE.myNickname && entry.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
 }
