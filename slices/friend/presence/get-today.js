@@ -176,6 +176,49 @@ PRESENCE.updateCountBanner = function (entries) {
   host.innerHTML = buildCountBannerHtml(entries || []);
 };
 
+function buildHistoryHtml(history, locale) {
+  history = history || [];
+  if (!history.length) return '';
+  const hiddenCount = Math.max(0, history.length - HISTORY_CAP);
+  const visibleHistory = historyExpanded ? history : history.slice(0, HISTORY_CAP);
+  const toggleLabel = historyExpanded
+    ? I18N.t('show_less')
+    : I18N.t('show_more', { n: hiddenCount });
+  return `
+    <div class="history-divider">
+      <div class="rule"></div>
+      <div class="section-label">${I18N.t('history_label')}</div>
+      <div class="rule"></div>
+    </div>
+    <div class="scandi-pills">
+      ${visibleHistory.map(function (e) {
+        return `
+          <div class="pill pill--history">
+            <div class="pill-name">${e.nickname}</div>
+            <div class="pill-time">${fmtTime(e.announcedAt, locale)}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    ${hiddenCount > 0 || historyExpanded ? `
+      <button class="history-toggle" id="history-toggle-btn">${toggleLabel}</button>
+    ` : ''}
+  `;
+}
+
+PRESENCE.updateHistorySection = function (history) {
+  const host = document.getElementById('history-host');
+  if (!host) return;
+  const locale = I18N.t('date_locale');
+  PRESENCE._historyCache = history || [];
+  host.innerHTML = buildHistoryHtml(PRESENCE._historyCache, locale);
+  const toggle = document.getElementById('history-toggle-btn');
+  if (toggle) toggle.addEventListener('click', function () {
+    historyExpanded = !historyExpanded;
+    PRESENCE.updateHistorySection(PRESENCE._historyCache);
+  });
+};
+
 PRESENCE.renderPopulated = function (entries, history, etas) {
   history = history || [];
   etas = etas || [];
@@ -199,31 +242,8 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   const pillsHtml = buildPillsHtml(entries, locale);
   const countBannerHtml = buildCountBannerHtml(entries);
 
-  const hiddenCount = Math.max(0, history.length - HISTORY_CAP);
-  const visibleHistory = historyExpanded ? history : history.slice(0, HISTORY_CAP);
-  const toggleLabel = historyExpanded
-    ? I18N.t('show_less')
-    : I18N.t('show_more', { n: hiddenCount });
-  const historyHtml = history.length ? `
-    <div class="history-divider">
-      <div class="rule"></div>
-      <div class="section-label">${I18N.t('history_label')}</div>
-      <div class="rule"></div>
-    </div>
-    <div class="scandi-pills">
-      ${visibleHistory.map(function (e) {
-        return `
-          <div class="pill pill--history">
-            <div class="pill-name">${e.nickname}</div>
-            <div class="pill-time">${fmt(e.announcedAt)}</div>
-          </div>
-        `;
-      }).join('')}
-    </div>
-    ${hiddenCount > 0 || historyExpanded ? `
-      <button class="history-toggle" id="history-toggle-btn">${toggleLabel}</button>
-    ` : ''}
-  ` : '';
+  PRESENCE._historyCache = history;
+  const historyHtml = buildHistoryHtml(history, locale);
 
   app.innerHTML = `
     <div class="scandi-presence">
@@ -245,7 +265,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
       ${showEtaChooser && PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
 
-      ${historyHtml}
+      <div id="history-host">${historyHtml}</div>
     </div>
   `;
 
@@ -269,7 +289,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   const historyToggle = document.getElementById('history-toggle-btn');
   if (historyToggle) historyToggle.addEventListener('click', function () {
     historyExpanded = !historyExpanded;
-    PRESENCE.renderPopulated(entries, history, etas);
+    PRESENCE.updateHistorySection(PRESENCE._historyCache);
   });
 };
 
@@ -375,6 +395,7 @@ PRESENCE.applyPartialUpdate = function (payload) {
         }
         PRESENCE.updateCountBanner(entries);
         PRESENCE.updatePillsSection(entries);
+        PRESENCE.updateHistorySection(history);
         PRESENCE.updatePinChip();
       })
       .catch(function () { /* silent */ });
