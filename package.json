@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "playwright test",
+    "check:html": "node scripts/check-html-parity.js",
     "generate:changelog": "node scripts/generate-changelog.js"
   },
   "repository": {
