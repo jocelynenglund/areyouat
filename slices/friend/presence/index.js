@@ -25,17 +25,10 @@
     if (PRESENCE.realtime && PRESENCE.realtime.rejoinIfChanged) PRESENCE.realtime.rejoinIfChanged();
     const cached = PRESENCE.readTodayCache && PRESENCE.readTodayCache();
     if (cached) {
-      const entries = cached.entries || [];
-      const history = cached.history || [];
-      const etas = cached.etas || [];
-      const spirits = cached.spirits || [];
-      PRESENCE.pin = cached.pin || null;
-      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
-      if (entries.length === 0 && history.length === 0 && etas.length === 0 && spirits.length === 0) {
-        PRESENCE.renderEmpty();
-      } else {
-        PRESENCE.renderPopulated(entries, history, etas, spirits);
-      }
+      const snap = PRESENCE.normalizeToday(cached);
+      PRESENCE.pin = snap.pin;
+      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(snap.entries);
+      PRESENCE.renderToday(snap);
     } else {
       PRESENCE.renderLoading();
     }
