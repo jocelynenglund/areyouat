@@ -222,10 +222,12 @@ PRESENCE.updateHistorySection = function (history) {
   });
 };
 
-PRESENCE.renderPopulated = function (entries, history, etas, spirits) {
-  history = history || [];
-  etas = etas || [];
-  spirits = spirits || [];
+PRESENCE.renderPopulated = function (snap) {
+  snap = snap || {};
+  const entries = snap.entries || [];
+  const history = snap.history || [];
+  const etas = snap.etas || [];
+  const spirits = snap.spirits || [];
   const app = document.getElementById('app');
   const count = entries.length;
   const locale = I18N.t('date_locale');
@@ -322,38 +324,59 @@ PRESENCE.readTodayCache = function () {
   } catch (_) { return null; }
 };
 
-function writeTodayCache(entries, history, etas, pin, spirits) {
+function writeTodayCache(snap) {
   try {
     localStorage.setItem(cacheKey(), JSON.stringify({
       date: todayKey(),
-      entries: entries,
-      history: history,
-      etas: etas,
-      spirits: spirits || [],
-      pin: pin || null
+      entries: snap.entries || [],
+      history: snap.history || [],
+      etas: snap.etas || [],
+      spirits: snap.spirits || [],
+      pin: snap.pin || null
     }));
   } catch (_) {}
 }
+
+// Single source of truth for the today read-model shape. Accepts both the
+// server response (`presences`) and a cache snapshot (`entries`). Adding a new
+// presence signal means adding one line here — every render/cache/dispatch path
+// flows through this, so signals can't be silently dropped on one path.
+PRESENCE.normalizeToday = function (data) {
+  data = data || {};
+  return {
+    entries: data.presences || data.entries || data.presence || [],
+    history: data.history || [],
+    etas: data.etas || [],
+    spirits: data.spirits || [],
+    pin: data.pin || null
+  };
+};
+
+// The empty-vs-populated decision, in exactly one place. A room with only
+// "in spirit" people (no one here, on the way, or in history) is still
+// populated — it has a band to show.
+PRESENCE.renderToday = function (snap) {
+  if (!snap.entries.length && !snap.history.length && !snap.etas.length && !snap.spirits.length) {
+    PRESENCE.renderEmpty();
+  } else {
+    PRESENCE.renderPopulated(snap);
+  }
+};
+
+PRESENCE.cacheToday = function (snap) { writeTodayCache(snap); };
 
 PRESENCE.query = function (opts) {
   const silent = !!(opts && opts.silent);
   return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
     .then(function (data) {
-      const entries = data.presences || data.presence || data || [];
-      const history = data.history || [];
-      const etas = data.etas || [];
-      const spirits = data.spirits || [];
-      PRESENCE.pin = data.pin || null;
-      writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
-      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
+      const snap = PRESENCE.normalizeToday(data);
+      PRESENCE.pin = snap.pin;
+      writeTodayCache(snap);
+      if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(snap.entries);
       if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
-        PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(etas));
+        PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(snap.etas));
       }
-      if (entries.length === 0 && history.length === 0 && etas.length === 0 && spirits.length === 0) {
-        PRESENCE.renderEmpty();
-      } else {
-        PRESENCE.renderPopulated(entries, history, etas, spirits);
-      }
+      PRESENCE.renderToday(snap);
       return data;
     })
     .catch(function () {
@@ -377,12 +400,9 @@ PRESENCE.applyPartialUpdate = function (payload) {
   if (type === 'Place/PinSet') {
     return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
       .then(function (data) {
-        const entries = data.presences || [];
-        const history = data.history || [];
-        const etas = data.etas || [];
-        const spirits = data.spirits || [];
-        PRESENCE.pin = data.pin || null;
-        writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
+        const snap = PRESENCE.normalizeToday(data);
+        PRESENCE.pin = snap.pin;
+        writeTodayCache(snap);
         PRESENCE.updatePinChip();
       })
       .catch(function () { /* silent */ });
@@ -393,31 +413,24 @@ PRESENCE.applyPartialUpdate = function (payload) {
   if (typeof type === 'string' && type.startsWith('Presence/')) {
     return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
       .then(function (data) {
-        const entries = data.presences || [];
-        const history = data.history || [];
-        const etas = data.etas || [];
-        const spirits = data.spirits || [];
-        PRESENCE.pin = data.pin || null;
-        writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
-        if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
+        const snap = PRESENCE.normalizeToday(data);
+        PRESENCE.pin = snap.pin;
+        writeTodayCache(snap);
+        if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(snap.entries);
         // If the host elements aren't on the page yet (e.g. we were on the
         // empty/passphrase screen), fall back to a full render.
         const haveHosts = document.getElementById('pills-host') && document.getElementById('count-host');
         if (!haveHosts) {
-          if (entries.length === 0 && history.length === 0 && etas.length === 0 && spirits.length === 0) {
-            PRESENCE.renderEmpty();
-          } else {
-            PRESENCE.renderPopulated(entries, history, etas, spirits);
-          }
+          PRESENCE.renderToday(snap);
           return;
         }
         if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
-          PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(etas));
+          PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(snap.etas));
         }
-        PRESENCE.updateCountBanner(entries);
-        PRESENCE.updatePillsSection(entries);
-        if (PRESENCE.updateSpiritSection) PRESENCE.updateSpiritSection(spirits);
-        PRESENCE.updateHistorySection(history);
+        PRESENCE.updateCountBanner(snap.entries);
+        PRESENCE.updatePillsSection(snap.entries);
+        if (PRESENCE.updateSpiritSection) PRESENCE.updateSpiritSection(snap.spirits);
+        PRESENCE.updateHistorySection(snap.history);
         PRESENCE.updatePinChip();
       })
       .catch(function () { /* silent */ });

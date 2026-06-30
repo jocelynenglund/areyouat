@@ -165,10 +165,10 @@ function defaultAnnounceSubmit(nickname) {
   window.AREYOUAT.announcePresence(PRESENCE.place, PRESENCE.passphrase, nickname)
     .then(function () { return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase); })
     .then(function (data) {
-      const entries = data.presences || data.presence || data || [];
-      const history = data.history || [];
-      const etas = data.etas || [];
-      PRESENCE.renderPopulated(entries, history, etas);
+      const snap = PRESENCE.normalizeToday(data);
+      PRESENCE.pin = snap.pin;
+      PRESENCE.cacheToday(snap);
+      PRESENCE.renderToday(snap);
     })
     .catch(function () { PRESENCE.renderPassphrase(I18N.t('error_generic')); });
 }
