@@ -13,6 +13,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check index.html / 404.html parity
+        run: node scripts/check-html-parity.js
+
       - name: Generate changelog
         run: node scripts/generate-changelog.js
 
