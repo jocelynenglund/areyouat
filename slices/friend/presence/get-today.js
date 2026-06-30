@@ -78,6 +78,8 @@ PRESENCE.renderEmpty = function () {
       </div>
 
       ${PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
+
+      ${PRESENCE.renderSpiritTrigger ? PRESENCE.renderSpiritTrigger() : ''}
     </div>
   `;
 
@@ -90,6 +92,7 @@ PRESENCE.renderEmpty = function () {
     PRESENCE.query();
   });
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
+  if (PRESENCE.mountSpiritHandlers) PRESENCE.mountSpiritHandlers();
 };
 
 function fmtTime(iso, locale) {
@@ -219,9 +222,10 @@ PRESENCE.updateHistorySection = function (history) {
   });
 };
 
-PRESENCE.renderPopulated = function (entries, history, etas) {
+PRESENCE.renderPopulated = function (entries, history, etas, spirits) {
   history = history || [];
   etas = etas || [];
+  spirits = spirits || [];
   const app = document.getElementById('app');
   const count = entries.length;
   const locale = I18N.t('date_locale');
@@ -230,7 +234,9 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
     return e.nickname.toLowerCase() === PRESENCE.myNickname.toLowerCase();
   });
   const selfHasEta = PRESENCE.selfHasEta ? PRESENCE.selfHasEta(etas) : false;
-  const showEtaChooser = !isAlreadyHere && !selfHasEta;
+  const selfInSpirit = PRESENCE.selfInSpirit ? PRESENCE.selfInSpirit(spirits) : false;
+  const showEtaChooser = !isAlreadyHere && !selfHasEta && !selfInSpirit;
+  const showSpiritTrigger = !isAlreadyHere && !selfHasEta && !selfInSpirit;
 
   const joinLabel = isAlreadyHere ? null
     : count === 0 ? I18N.t('join_zero')
@@ -263,7 +269,11 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
 
       ${PRESENCE.renderOnTheWayBand ? PRESENCE.renderOnTheWayBand(etas) : ''}
 
+      <div id="spirit-host">${PRESENCE.renderSpiritBand ? PRESENCE.renderSpiritBand(spirits) : ''}</div>
+
       ${showEtaChooser && PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
+
+      ${showSpiritTrigger && PRESENCE.renderSpiritTrigger ? PRESENCE.renderSpiritTrigger() : ''}
 
       <div id="history-host">${historyHtml}</div>
     </div>
@@ -286,6 +296,7 @@ PRESENCE.renderPopulated = function (entries, history, etas) {
   if (PRESENCE.mountStatusEditor) PRESENCE.mountStatusEditor();
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
   if (PRESENCE.mountLeavingHandlers) PRESENCE.mountLeavingHandlers();
+  if (PRESENCE.mountSpiritHandlers) PRESENCE.mountSpiritHandlers();
   const historyToggle = document.getElementById('history-toggle-btn');
   if (historyToggle) historyToggle.addEventListener('click', function () {
     historyExpanded = !historyExpanded;
@@ -311,13 +322,14 @@ PRESENCE.readTodayCache = function () {
   } catch (_) { return null; }
 };
 
-function writeTodayCache(entries, history, etas, pin) {
+function writeTodayCache(entries, history, etas, pin, spirits) {
   try {
     localStorage.setItem(cacheKey(), JSON.stringify({
       date: todayKey(),
       entries: entries,
       history: history,
       etas: etas,
+      spirits: spirits || [],
       pin: pin || null
     }));
   } catch (_) {}
@@ -330,16 +342,17 @@ PRESENCE.query = function (opts) {
       const entries = data.presences || data.presence || data || [];
       const history = data.history || [];
       const etas = data.etas || [];
+      const spirits = data.spirits || [];
       PRESENCE.pin = data.pin || null;
-      writeTodayCache(entries, history, etas, PRESENCE.pin);
+      writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
       if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
       if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
         PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(etas));
       }
-      if (entries.length === 0 && history.length === 0 && etas.length === 0) {
+      if (entries.length === 0 && history.length === 0 && etas.length === 0 && spirits.length === 0) {
         PRESENCE.renderEmpty();
       } else {
-        PRESENCE.renderPopulated(entries, history, etas);
+        PRESENCE.renderPopulated(entries, history, etas, spirits);
       }
       return data;
     })
@@ -367,8 +380,9 @@ PRESENCE.applyPartialUpdate = function (payload) {
         const entries = data.presences || [];
         const history = data.history || [];
         const etas = data.etas || [];
+        const spirits = data.spirits || [];
         PRESENCE.pin = data.pin || null;
-        writeTodayCache(entries, history, etas, PRESENCE.pin);
+        writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
         PRESENCE.updatePinChip();
       })
       .catch(function () { /* silent */ });
@@ -382,17 +396,18 @@ PRESENCE.applyPartialUpdate = function (payload) {
         const entries = data.presences || [];
         const history = data.history || [];
         const etas = data.etas || [];
+        const spirits = data.spirits || [];
         PRESENCE.pin = data.pin || null;
-        writeTodayCache(entries, history, etas, PRESENCE.pin);
+        writeTodayCache(entries, history, etas, PRESENCE.pin, spirits);
         if (PRESENCE.ripple && PRESENCE.ripple.observe) PRESENCE.ripple.observe(entries);
         // If the host elements aren't on the page yet (e.g. we were on the
         // empty/passphrase screen), fall back to a full render.
         const haveHosts = document.getElementById('pills-host') && document.getElementById('count-host');
         if (!haveHosts) {
-          if (entries.length === 0 && history.length === 0 && etas.length === 0) {
+          if (entries.length === 0 && history.length === 0 && etas.length === 0 && spirits.length === 0) {
             PRESENCE.renderEmpty();
           } else {
-            PRESENCE.renderPopulated(entries, history, etas);
+            PRESENCE.renderPopulated(entries, history, etas, spirits);
           }
           return;
         }
@@ -401,6 +416,7 @@ PRESENCE.applyPartialUpdate = function (payload) {
         }
         PRESENCE.updateCountBanner(entries);
         PRESENCE.updatePillsSection(entries);
+        if (PRESENCE.updateSpiritSection) PRESENCE.updateSpiritSection(spirits);
         PRESENCE.updateHistorySection(history);
         PRESENCE.updatePinChip();
       })

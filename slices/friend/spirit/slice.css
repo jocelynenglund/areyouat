@@ -1,0 +1,105 @@
+/* "In spirit" band — people rooting from afar. Softer and quieter than the
+   present/ETA pills: they're not here, just with you. */
+
+.spirit-pills {
+  opacity: 0.95;
+}
+
+.spirit-pill {
+  border-style: dotted;
+  opacity: 0.8;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.spirit-pill--self {
+  border-style: dotted;
+  border-width: 1.5px;
+  border-color: var(--ink-soft);
+  background: transparent;
+  color: var(--ink);
+  opacity: 1;
+}
+.spirit-pill--self .pill-name {
+  color: var(--ink);
+}
+.spirit-pill--self .pill-you {
+  color: var(--ink-soft);
+}
+
+.spirit-note {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.spirit-undo-btn {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 0 0;
+  margin-top: 2px;
+}
+.spirit-undo-btn:hover {
+  color: var(--ink);
+}
+
+/* The invitation card shown when you're not here / not on the way. */
+.spirit-trigger {
+  margin: 4px 28px 12px;
+  text-align: center;
+}
+.spirit-trigger-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: -0.2px;
+  cursor: pointer;
+  padding: 6px 8px;
+  transition: color 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.spirit-trigger-btn:hover {
+  color: var(--ink);
+}
+
+/* Optional one-liner on the spirit prompt screen. */
+.spirit-note-block {
+  margin-top: 20px;
+  padding: 0 4px;
+}
+.spirit-note-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.spirit-note-input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.spirit-note-input::placeholder {
+  color: var(--ink-soft);
+  font-style: italic;
+}
