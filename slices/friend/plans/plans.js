@@ -130,7 +130,7 @@ window.PRESENCE = window.PRESENCE || {};
       .then(function (data) {
         const snap = PRESENCE.normalizeToday(data);
         if (PRESENCE.cacheToday) PRESENCE.cacheToday(snap);
-        if (!PRESENCE.updatePlansSection(snap.plans)) PRESENCE.renderToday(snap);
+        if (!PRESENCE.updatePlansSection(snap.plans) && !PRESENCE.isFormOpen()) PRESENCE.renderToday(snap);
       })
       .catch(function () { PRESENCE.query({ silent: true }); });
   }

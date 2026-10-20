@@ -375,6 +375,15 @@ PRESENCE.renderToday = function (snap) {
 
 PRESENCE.cacheToday = function (snap) { writeTodayCache(snap); };
 
+// True while a full-screen form (name, ETA, spirit, plan prompts) owns #app.
+// Background refreshes — the safety-net poll, the visibilitychange refetch,
+// SignalR pushes — must not paint the board over it, or switching apps to
+// check a calendar wipes a half-filled form. They still refresh the cache, so
+// the board is current the moment the form submits or is cancelled.
+PRESENCE.isFormOpen = function () {
+  return !!document.querySelector('#app > .scandi-screen');
+};
+
 PRESENCE.query = function (opts) {
   const silent = !!(opts && opts.silent);
   return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
@@ -386,6 +395,7 @@ PRESENCE.query = function (opts) {
       if (PRESENCE.scheduleEtaNotification && PRESENCE.findSelfEta) {
         PRESENCE.scheduleEtaNotification(PRESENCE.findSelfEta(snap.etas));
       }
+      if (silent && PRESENCE.isFormOpen()) return data;
       PRESENCE.renderToday(snap);
       return data;
     })
@@ -441,6 +451,7 @@ PRESENCE.applyPartialUpdate = function (payload) {
         // empty/passphrase screen), fall back to a full render.
         const haveHosts = document.getElementById('pills-host') && document.getElementById('count-host');
         if (!haveHosts) {
+          if (PRESENCE.isFormOpen()) return;
           PRESENCE.renderToday(snap);
           return;
         }
