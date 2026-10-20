@@ -65,4 +65,38 @@ test.describe('Plans', () => {
     await ctx1.close();
     await ctx2.close();
   });
+
+  test('a half-filled plan form survives switching apps and live updates', async ({ browser }) => {
+    const ctx1 = await browser.newContext();
+    const ctx2 = await browser.newContext();
+    const p1 = await ctx1.newPage();
+    const p2 = await ctx2.newPage();
+    const place = 'planbort';
+    const pass = 'plans-away-' + Date.now();
+
+    await enter(p1, place, pass);
+    await p1.click('[data-plan-new]');
+    await p1.fill('#name-input', 'Anna');
+    await p1.fill('#plan-title-input', 'Grillkväll');
+
+    // Coming back from another app fires visibilitychange → background refetch.
+    await p1.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+    // Someone else checking in pushes a SignalR refresh.
+    await enter(p2, place, pass);
+    await p2.click('#announce-btn');
+    await p2.fill('#name-input', 'Erik');
+    await p2.keyboard.press('Enter');
+    await expect(p2.locator('.pill--self')).toContainText('Erik', { timeout: 10000 });
+    await p1.waitForTimeout(1500);
+
+    await expect(p1.locator('#plan-title-input')).toHaveValue('Grillkväll');
+
+    // Submitting still lands on a fresh board that includes Erik.
+    await p1.click('#plan-submit');
+    await expect(p1.locator('.plan-card')).toContainText('Grillkväll', { timeout: 10000 });
+    await expect(p1.locator('#pills-host')).toContainText('Erik');
+
+    await ctx1.close();
+    await ctx2.close();
+  });
 });
