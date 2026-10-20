@@ -80,6 +80,8 @@ PRESENCE.renderEmpty = function () {
       ${PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
 
       ${PRESENCE.renderSpiritTrigger ? PRESENCE.renderSpiritTrigger() : ''}
+
+      ${PRESENCE.plansHost ? PRESENCE.plansHost(PRESENCE._plans) : ''}
     </div>
   `;
 
@@ -93,6 +95,7 @@ PRESENCE.renderEmpty = function () {
   });
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
   if (PRESENCE.mountSpiritHandlers) PRESENCE.mountSpiritHandlers();
+  if (PRESENCE.mountPlansHandlers) PRESENCE.mountPlansHandlers();
 };
 
 function fmtTime(iso, locale) {
@@ -278,6 +281,8 @@ PRESENCE.renderPopulated = function (snap) {
       ${showSpiritTrigger && PRESENCE.renderSpiritTrigger ? PRESENCE.renderSpiritTrigger() : ''}
 
       <div id="history-host">${historyHtml}</div>
+
+      ${PRESENCE.plansHost ? PRESENCE.plansHost(snap.plans) : ''}
     </div>
   `;
 
@@ -299,6 +304,7 @@ PRESENCE.renderPopulated = function (snap) {
   if (PRESENCE.mountEtaHandlers) PRESENCE.mountEtaHandlers();
   if (PRESENCE.mountLeavingHandlers) PRESENCE.mountLeavingHandlers();
   if (PRESENCE.mountSpiritHandlers) PRESENCE.mountSpiritHandlers();
+  if (PRESENCE.mountPlansHandlers) PRESENCE.mountPlansHandlers();
   const historyToggle = document.getElementById('history-toggle-btn');
   if (historyToggle) historyToggle.addEventListener('click', function () {
     historyExpanded = !historyExpanded;
@@ -332,6 +338,7 @@ function writeTodayCache(snap) {
       history: snap.history || [],
       etas: snap.etas || [],
       spirits: snap.spirits || [],
+      plans: snap.plans || [],
       pin: snap.pin || null
     }));
   } catch (_) {}
@@ -348,14 +355,17 @@ PRESENCE.normalizeToday = function (data) {
     history: data.history || [],
     etas: data.etas || [],
     spirits: data.spirits || [],
+    plans: data.plans || [],
     pin: data.pin || null
   };
 };
 
 // The empty-vs-populated decision, in exactly one place. A room with only
 // "in spirit" people (no one here, on the way, or in history) is still
-// populated — it has a band to show.
+// populated — it has a band to show. Plans don't count: they're about later,
+// so a room with only plans still reads as "ingen e här" with the plans below.
 PRESENCE.renderToday = function (snap) {
+  PRESENCE._plans = snap.plans || [];
   if (!snap.entries.length && !snap.history.length && !snap.etas.length && !snap.spirits.length) {
     PRESENCE.renderEmpty();
   } else {
@@ -404,6 +414,16 @@ PRESENCE.applyPartialUpdate = function (payload) {
         PRESENCE.pin = snap.pin;
         writeTodayCache(snap);
         PRESENCE.updatePinChip();
+      })
+      .catch(function () { /* silent */ });
+  }
+  // Plan/* events only touch the plans band.
+  if (typeof type === 'string' && type.startsWith('Plan/') && document.getElementById('plans-host')) {
+    return window.AREYOUAT.getPresenceToday(PRESENCE.place, PRESENCE.passphrase)
+      .then(function (data) {
+        const snap = PRESENCE.normalizeToday(data);
+        writeTodayCache(snap);
+        PRESENCE.updatePlansSection(snap.plans);
       })
       .catch(function () { /* silent */ });
   }
