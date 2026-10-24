@@ -35,7 +35,8 @@ window.PRESENCE = window.PRESENCE || {};
     let day;
     if (days === 0) day = I18N.t('plan_today');
     else if (days === 1) day = I18N.t('plan_tomorrow');
-    else day = d.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' });
+    // sv-SE abbreviates as "tors 29 okt." — drop the abbreviation dot.
+    else day = d.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' }).replace(/\.$/, '');
     return day + ' · ' + time;
   }
 
@@ -62,7 +63,7 @@ window.PRESENCE = window.PRESENCE || {};
       return `
         <button class="plan-chip${mine === a ? ' is-mine' : ''}" type="button"
                 data-plan-rsvp="${a}" data-plan-id="${escapeHtml(plan.planId)}" aria-pressed="${mine === a}">
-          <span>${I18N.t('plan_answer_' + a)}</span>${n ? `<span class="plan-chip-n">${n}</span>` : ''}
+          ${mine === a ? '<span class="plan-chip-check" aria-hidden="true">✓</span>' : ''}<span>${I18N.t('plan_answer_' + a)}</span>${n ? `<span class="plan-chip-n">${n}</span>` : ''}
         </button>
       `;
     }).join('');
@@ -72,7 +73,7 @@ window.PRESENCE = window.PRESENCE || {};
       const names = byAnswer[a].map(function (r) {
         return `<span class="${sameNick(r.nickname, me()) ? 'plan-who-self' : ''}">${escapeHtml(r.nickname)}</span>`;
       }).join(', ');
-      return `<div class="plan-who"><span class="plan-who-label">${I18N.t('plan_answer_' + a)}</span> ${names}</div>`;
+      return `<div class="plan-who"><span class="plan-who-label">${I18N.t('plan_who_' + a)}</span> ${names}</div>`;
     }).join('');
 
     const cancelLabel = pendingCancel === plan.planId ? I18N.t('plan_cancel_confirm') : I18N.t('plan_cancel');

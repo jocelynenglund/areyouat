@@ -196,7 +196,7 @@ function renderRoomCard(state, url) {
   return ensureCardFonts().then(function () {
     const bg = cssVar('--bg', '#FAFAF7');
     const ink = cssVar('--ink', '#1A1A18');
-    const inkSoft = cssVar('--ink-soft', '#86867E');
+    const inkSoft = cssVar('--ink-soft', '#6E6E66');
     const inkFaint = cssVar('--ink-faint', '#C4C4BC');
     const pillBg = cssVar('--accent-soft', '#EDEDE6');
 
