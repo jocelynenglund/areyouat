@@ -74,7 +74,7 @@ PRESENCE.renderEmpty = function () {
         </button>
       </div>
       <div class="scandi-actions">
-        <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
+        <button class="scandi-btn--ghost-soft" id="check-btn"><span aria-hidden="true">↻ </span>${I18N.t('check_again')}</button>
       </div>
 
       ${PRESENCE.renderEtaChooser ? PRESENCE.renderEtaChooser() : ''}
@@ -267,7 +267,7 @@ PRESENCE.renderPopulated = function (snap) {
       <div class="scandi-actions">
         ${joinLabel ? `<button class="scandi-btn--ghost" id="join-btn">${joinLabel}</button>` : ''}
         <button class="scandi-btn--ghost" id="share-btn">+ ${I18N.t('share')}</button>
-        <button class="scandi-btn--ghost-soft" id="check-btn">${I18N.t('check_again')}</button>
+        <button class="scandi-btn--ghost-soft" id="check-btn"><span aria-hidden="true">↻ </span>${I18N.t('check_again')}</button>
       </div>
 
       <div class="scandi-pills" id="pills-host">${pillsHtml}</div>
